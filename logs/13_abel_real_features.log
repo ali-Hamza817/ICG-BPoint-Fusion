@@ -1,0 +1,15 @@
+beats 12014, with features 11238
+                                 MAE_vs_rater1_ms  coverage
+arbol2017-isoelectric-crossings             33.06     0.939
+arbol2017-second-derivative                 45.72     0.941
+arbol2017-third-derivative                  47.94     0.941
+debski1993-second-derivative                23.42     0.901
+drost2022                                   21.87     0.941
+forouzanfar2018                             27.35     0.924
+lozano2007-linear-regression                20.88     0.941
+lozano2007-quadratic-regression             27.25     0.941
+miljkovic2022                               27.98     0.941
+pale2021                                   107.05     0.941
+sherwood1990                                30.71     0.906
+stern1985                                   33.69     0.938
+beats with >=1 missing rule: 1603 of 11903

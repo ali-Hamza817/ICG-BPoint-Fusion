@@ -1,0 +1,5 @@
+EA beats: 106 from 24 subjects (0 EmpkinS, 106 Guardian); X (106, 465)
+mean BCF 0.939; beats per EA beat median 31; labelled per EA median 29
+           BCF  n_surv  RB_label  RB_label_sd
+dataset                                      
+Guardian  0.94   29.86    105.18        17.04

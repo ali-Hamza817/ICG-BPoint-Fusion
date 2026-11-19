@@ -1,0 +1,231 @@
+<title>ICG Patient Beats</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&display=swap">
+<style>
+/* Layout: patient list left, selected patient right (cards, three charts, beat table). Overview table when nothing is selected. */
+:root{--bg:#f3f5f7;--surface:#ffffff;--fg:#14202b;--muted:#5b6b7a;--line:#d9e0e6;--accent:#0b6e99;--accent-soft:#e1f0f6;--warn:#9a4a07;--warn-soft:#fbeedd;
+--p0:#0072B2;--p1:#D55E00;--p2:#009E73;--p3:#CC79A7;--p4:#E69F00;--font-head:"Space Grotesk",system-ui,sans-serif;--font-body:"Inter",system-ui,sans-serif;--font-mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1519;--surface:#162027;--fg:#e6edf2;--muted:#8fa1b0;--line:#26343e;--accent:#4cb8e0;--accent-soft:#16303b;--warn:#f0a35c;--warn-soft:#33260f;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0f1519;--surface:#162027;--fg:#e6edf2;--muted:#8fa1b0;--line:#26343e;--accent:#4cb8e0;--accent-soft:#16303b;--warn:#f0a35c;--warn-soft:#33260f;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:14px/1.5 var(--font-body);padding-block:0;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1280px;margin:0 auto;padding-block:20px 40px}
+h1,h2,h3{font-family:var(--font-head);font-weight:600;margin:0;text-wrap:balance}
+h1{font-size:24px;letter-spacing:-.01em}h2{font-size:17px}h3{font-size:14px;color:var(--muted);font-weight:500;letter-spacing:.04em;text-transform:uppercase}
+a{color:var(--accent)}
+.top{display:flex;flex-wrap:wrap;gap:6px 24px;align-items:baseline;justify-content:space-between;margin-bottom:14px}
+.sub{color:var(--muted);max-width:75ch;margin:4px 0 0}
+.def{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:12px 14px;margin-bottom:16px;display:grid;gap:4px;font-size:13px}
+.def b{font-weight:600}
+.layout{display:grid;grid-template-columns:230px minmax(0,1fr);gap:16px;align-items:start}
+@media(max-width:820px){.layout{grid-template-columns:minmax(0,1fr)}}
+.list{background:var(--surface);border:1px solid var(--line);border-radius:6px;max-height:80vh;overflow:auto}
+.list h3{padding:10px 12px 6px;position:sticky;top:0;background:var(--surface);border-bottom:1px solid var(--line)}
+.list button{display:flex;justify-content:space-between;width:100%;text-align:left;font:inherit;color:inherit;background:none;border:0;border-bottom:1px solid var(--line);padding:7px 12px;cursor:pointer}
+.list button:hover{background:var(--accent-soft)}
+.list button[aria-current="true"]{background:var(--accent-soft);box-shadow:inset 3px 0 0 var(--accent);font-weight:600}
+.list small{color:var(--muted);font-variant-numeric:tabular-nums}
+.list button:focus-visible,.chip:focus-visible,tr[tabindex]:focus-visible,.back:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:10px 0 14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:10px 12px}
+.card .k{color:var(--muted);font-size:12px}.card .v{font:600 20px var(--font-head);font-variant-numeric:tabular-nums}.card .s{color:var(--muted);font-size:12px;font-variant-numeric:tabular-nums}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 12px}
+.chip{display:inline-flex;gap:6px;align-items:center;border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:999px;padding:3px 10px;font:inherit;font-size:12px;cursor:pointer}
+.chip i{width:9px;height:9px;border-radius:50%;display:inline-block}
+.chip[aria-pressed="false"]{opacity:.45}
+.grid2{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:12px;margin-bottom:12px}
+@media(max-width:900px){.grid2{grid-template-columns:minmax(0,1fr)}}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:12px;min-width:0}
+.panel p{margin:2px 0 8px;color:var(--muted);font-size:12px}
+canvas{width:100%;display:block}
+.tablewrap{overflow:auto;max-height:380px;border:1px solid var(--line);border-radius:6px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums;font-size:13px}
+th,td{padding:5px 10px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
+th{position:sticky;top:0;background:var(--surface);color:var(--muted);font-weight:500;font-size:12px;z-index:1}
+td:first-child,th:first-child,td.l,th.l{text-align:left}
+tbody tr[tabindex]{cursor:pointer}tbody tr[tabindex]:hover{background:var(--accent-soft)}
+tr.sel{background:var(--accent-soft);box-shadow:inset 3px 0 0 var(--accent)}
+tr.bad td{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--warn)}
+.flag{color:var(--warn);font-size:12px}
+.sp{display:block;width:110px;height:30px}
+.back{background:none;border:0;color:var(--accent);font:inherit;cursor:pointer;padding:0;margin-bottom:6px}
+.note{color:var(--muted);font-size:12px;margin-top:10px}
+.pill{font-size:11px;border-radius:999px;padding:1px 8px;background:var(--accent-soft);color:var(--accent);font-weight:600}
+.pill.g{background:var(--warn-soft);color:var(--warn)}
+</style>
+<div class="wrap">
+  <div class="top">
+    <div>
+      <h1>ICG Patient Beats</h1>
+      <p class="sub">Every heartbeat of every patient in the public Abel et al. 2026 datasets (EmpkinS n=15, Guardian n=24): its R-peak, its B-point and Q-onset from the manual annotation, and its PEP.</p>
+    </div>
+  </div>
+  <div class="def">
+    <span><b>PEP</b> = B-point time minus Q-wave onset, both from the manual annotation by rater 1 (rater 2 shown for comparison). <b>RB</b> = B-point time after the R-peak.</span>
+    <span><b>R-peak</b> is found in the cleaned ECG next to the annotated Q onset. Waveform = ICG dZ/dt, band-pass 0.5 to 40 Hz, aligned at the R-peak (0 ms).</span>
+    <span><b>Usable beats</b> have a B label and a PEP between 20 and 250 ms. The rest are flagged as annotation artefacts and drawn struck-through in the tables.</span>
+  </div>
+  <div class="layout">
+    <nav class="list" aria-label="Patients"><h3>Patients</h3><div id="plist"></div></nav>
+    <main id="main" aria-live="polite"></main>
+  </div>
+</div>
+<script>
+"use strict";
+var PH_COL=["--p0","--p1","--p2","--p3","--p4"];
+var S={ov:null,cur:null,hidden:{},sel:-1};
+var $=function(i){return document.getElementById(i)};
+function css(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim()}
+function fmt(x,d){return x==null?"–":Number(x).toFixed(d==null?0:d)}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function hashOf(id){return id.replace("_","-")}
+function idOf(h){return S.ov.patients.map(function(p){return p.id}).filter(function(i){return hashOf(i)===h})[0]}
+function mean(a){return a.length?a.reduce(function(x,y){return x+y},0)/a.length:NaN}
+function sd(a){var m=mean(a);return a.length>1?Math.sqrt(mean(a.map(function(x){return (x-m)*(x-m)}))*a.length/(a.length-1)):NaN}
+
+fetch("data/patients.json").then(function(r){return r.json()}).then(function(d){S.ov=d;buildList();route()}).catch(function(e){$("main").innerHTML='<p class="note">Data could not be loaded ('+esc(e)+').</p>'});
+window.addEventListener("hashchange",route);
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change",function(){redraw()});
+new MutationObserver(function(){redraw()}).observe(document.documentElement,{attributes:true,attributeFilter:["data-theme"]});
+window.addEventListener("resize",function(){redraw()});
+
+function buildList(){
+  var h="";["EmpkinS","Guardian"].forEach(function(ds){
+    h+='<h3>'+ds+'</h3>';
+    S.ov.patients.filter(function(p){return p.dataset===ds}).forEach(function(p){h+='<button data-id="'+p.id+'"><span>'+esc(p.patient)+'</span><small>PEP '+fmt(p.PEP)+'</small></button>'});
+  });
+  $("plist").innerHTML=h;
+  $("plist").addEventListener("click",function(e){var b=e.target.closest("button");if(b)location.hash=hashOf(b.dataset.id)});
+}
+function route(){
+  var h=location.hash.replace("#",""),id=h&&idOf(h);
+  [].forEach.call($("plist").querySelectorAll("button"),function(b){b.setAttribute("aria-current",String(b.dataset.id===id))});
+  if(!id){S.cur=null;overview();return}
+  $("main").innerHTML='<p class="note">Loading '+esc(id)+'…</p>';
+  fetch("data/"+id+".json").then(function(r){return r.json()}).then(function(d){S.cur=d;S.hidden={};S.sel=-1;patientView()}).catch(function(e){$("main").innerHTML='<p class="note">Could not load patient data ('+esc(e)+').</p>'});
+}
+
+/* ---------- overview ---------- */
+function overview(){
+  var P=S.ov.patients,n=P.reduce(function(a,p){return a+p.n_beats},0),u=P.reduce(function(a,p){return a+p.n_usable},0);
+  var h='<h2>All 39 patients</h2><p class="sub">'+n.toLocaleString()+' annotated heartbeats, '+u.toLocaleString()+' usable. Pick a patient on the left, or a row below, to see every beat. The small curve is the patient\'s average ICG beat (−50 to 450 ms around the R-peak).</p>';
+  h+='<div class="tablewrap" style="margin-top:12px;max-height:none"><table><thead><tr><th>Patient</th><th class="l">Dataset</th><th>Beats</th><th>Usable</th><th>HR (bpm)</th><th>PEP mean ± SD (ms)</th><th>PEP range</th><th>RB (ms)</th><th>Rater gap (ms)</th><th class="l">Average beat</th></tr></thead><tbody>';
+  P.forEach(function(p,i){h+='<tr tabindex="0" data-id="'+p.id+'"><td>'+esc(p.patient)+'</td><td class="l">'+p.dataset+'</td><td>'+p.n_beats+'</td><td>'+p.n_usable+'</td><td>'+fmt(p.HR,0)+'</td><td>'+fmt(p.PEP,0)+' ± '+fmt(p.PEP_sd,0)+'</td><td>'+fmt(p.PEP_min)+' to '+fmt(p.PEP_max)+'</td><td>'+fmt(p.RB,0)+'</td><td>'+fmt(p.IR_MAE,1)+'</td><td class="l"><canvas class="sp" data-i="'+i+'"></canvas></td></tr>'});
+  h+='</tbody></table></div><p class="note">Rater gap = mean absolute difference between the two raters\' PEP for that patient. HR = mean heart rate of the usable beats.</p>';
+  $("main").innerHTML=h;
+  $("main").querySelector("tbody").addEventListener("click",function(e){var r=e.target.closest("tr");if(r)location.hash=hashOf(r.dataset.id)});
+  $("main").querySelector("tbody").addEventListener("keydown",function(e){if(e.key==="Enter"){var r=e.target.closest("tr");if(r)location.hash=hashOf(r.dataset.id)}});
+  drawSparks();
+}
+function drawSparks(){
+  var cs=document.querySelectorAll("canvas.sp");if(!cs.length)return;
+  var col=css("--accent"),line=css("--line");
+  [].forEach.call(cs,function(c){
+    var p=S.ov.patients[+c.dataset.i],dpr=window.devicePixelRatio||1,w=110,h=30;c.width=w*dpr;c.height=h*dpr;var g=c.getContext("2d");g.scale(dpr,dpr);
+    var m=p.mean,lo=Math.min.apply(null,m),hi=Math.max.apply(null,m);g.strokeStyle=line;g.beginPath();g.moveTo(w*0.1,0);g.lineTo(w*0.1,h);g.stroke();
+    g.strokeStyle=col;g.lineWidth=1.5;g.beginPath();m.forEach(function(v,k){var x=k/(m.length-1)*(w-2)+1,y=h-2-(v-lo)/(hi-lo||1)*(h-4);k?g.lineTo(x,y):g.moveTo(x,y)});g.stroke();
+  });
+}
+
+/* ---------- patient view ---------- */
+function visible(i){var d=S.cur;return !S.hidden[d.beats[i][1]]}
+function patientView(){
+  var d=S.cur,B=d.beats,ok=B.map(function(b){return b[11]===1}),us=B.filter(function(b){return b[11]===1});
+  var pep=us.map(function(b){return b[8]}),hr=us.map(function(b){return b[4]}).filter(function(x){return x!=null}),rb=us.map(function(b){return b[6]});
+  var gap=us.filter(function(b){return b[9]!=null}).map(function(b){return Math.abs(b[8]-b[9])});
+  var h='<button class="back" onclick="location.hash=\'\'">← All patients</button><h2>'+esc(d.patient)+' <span class="pill'+(d.dataset==="Guardian"?" g":"")+'">'+d.dataset+' · '+d.fs+' Hz</span></h2>';
+  h+='<div class="cards"><div class="card"><div class="k">Heartbeats</div><div class="v">'+B.length+'</div><div class="s">'+us.length+' usable, '+(B.length-us.length)+' flagged</div></div>'
+   +'<div class="card"><div class="k">PEP mean</div><div class="v">'+fmt(mean(pep),0)+' ms</div><div class="s">SD '+fmt(sd(pep),0)+', range '+fmt(Math.min.apply(null,pep))+' to '+fmt(Math.max.apply(null,pep))+'</div></div>'
+   +'<div class="card"><div class="k">RB (B after R)</div><div class="v">'+fmt(mean(rb),0)+' ms</div><div class="s">SD '+fmt(sd(rb),0)+'</div></div>'
+   +'<div class="card"><div class="k">Heart rate</div><div class="v">'+fmt(mean(hr),0)+' bpm</div><div class="s">'+fmt(Math.min.apply(null,hr))+' to '+fmt(Math.max.apply(null,hr))+'</div></div>'
+   +'<div class="card"><div class="k">Rater gap (PEP)</div><div class="v">'+fmt(mean(gap),1)+' ms</div><div class="s">mean |rater 1 − rater 2|</div></div></div>';
+  h+='<div class="chips" id="chips" role="group" aria-label="Phases">'+d.phases.map(function(p,i){return '<button class="chip" aria-pressed="true" data-ph="'+i+'"><i style="background:var('+PH_COL[i%5]+')"></i>'+esc(p)+' ('+B.filter(function(b){return b[1]===i}).length+')</button>'}).join("")+'</div>';
+  h+='<div class="grid2"><div class="panel"><h3>ICG waveform, every beat aligned at the R-peak</h3><p id="wfnote"></p><canvas id="cwf" height="300"></canvas></div><div class="panel"><h3>PEP distribution</h3><p>Usable beats of the shown phases.</p><canvas id="chist" height="300"></canvas></div></div>';
+  h+='<div class="panel" style="margin-bottom:12px"><h3>PEP of every beat over the recording</h3><p>Each dot is one heartbeat; colour = phase. Click a dot to pick that beat.</p><canvas id="cpep" height="240"></canvas></div>';
+  h+='<h3 style="margin:14px 0 6px">All beats</h3><div class="tablewrap"><table><thead><tr><th>Beat</th><th class="l">Phase</th><th>Time (s)</th><th>RR (ms)</th><th>HR</th><th>Q (ms)</th><th>B rater 1</th><th>B rater 2</th><th>PEP rater 1</th><th>PEP rater 2</th><th>C (ms)</th><th class="l"></th></tr></thead><tbody id="tb"></tbody></table></div>';
+  h+='<p class="note">Times in ms are relative to the R-peak (Q, B, C) unless stated. Click a row to draw that beat\'s own waveform with its Q, R and B marks. Time is seconds since the first annotated beat of this patient\'s recording.</p>';
+  $("main").innerHTML=h;
+  $("chips").addEventListener("click",function(e){var b=e.target.closest(".chip");if(!b)return;var i=+b.dataset.ph;S.hidden[i]=!S.hidden[i];b.setAttribute("aria-pressed",String(!S.hidden[i]));redraw();fillTable()});
+  fillTable();redraw();
+  $("cpep").addEventListener("click",function(e){pickScatter(e)});
+}
+function fillTable(){
+  var d=S.cur,h="";
+  d.beats.forEach(function(b,i){if(S.hidden[b[1]])return;
+    h+='<tr tabindex="0" data-i="'+i+'" class="'+(b[11]?"":"bad")+(i===S.sel?" sel":"")+'"><td>'+b[0]+'</td><td class="l">'+esc(d.phases[b[1]])+'</td><td>'+fmt(b[2],1)+'</td><td>'+fmt(b[3])+'</td><td>'+fmt(b[4])+'</td><td>'+fmt(b[5])+'</td><td>'+fmt(b[6])+'</td><td>'+fmt(b[7])+'</td><td>'+fmt(b[8])+'</td><td>'+fmt(b[9])+'</td><td>'+fmt(b[10])+'</td><td class="l">'+(b[11]?"":'<span class="flag">flagged</span>')+'</td></tr>'});
+  $("tb").innerHTML=h;
+  $("tb").onclick=function(e){var r=e.target.closest("tr");if(r)selectBeat(+r.dataset.i,false)};
+  $("tb").onkeydown=function(e){if(e.key==="Enter"){var r=e.target.closest("tr");if(r)selectBeat(+r.dataset.i,false)}};
+}
+function selectBeat(i,scroll){
+  S.sel=i;[].forEach.call($("tb").querySelectorAll("tr"),function(r){r.classList.toggle("sel",+r.dataset.i===i)});
+  if(scroll){var r=$("tb").querySelector('tr[data-i="'+i+'"]');if(r)r.scrollIntoView({block:"nearest"})}
+  redraw();
+}
+function redraw(){
+  if(S.cur&&$("cwf")){drawWave();drawHist();drawPep()}
+  else drawSparks();
+}
+function setup(c,h){var dpr=window.devicePixelRatio||1,w=c.clientWidth;c.width=Math.round(w*dpr);c.height=Math.round(h*dpr);c.style.height=h+"px";var g=c.getContext("2d");g.setTransform(dpr,0,0,dpr,0,0);return {g:g,w:w,h:h}}
+function axes(g,x0,y0,x1,y1,xt,yt,xl,yl,fx,fy,mut,line){
+  g.strokeStyle=line;g.fillStyle=mut;g.font="11px "+css("--font-body");g.lineWidth=1;
+  xt.forEach(function(t){var x=fx(t);g.beginPath();g.moveTo(x,y0);g.lineTo(x,y1);g.stroke();g.textAlign="center";g.fillText(t,x,y0+14)});
+  yt.forEach(function(t){var y=fy(t);g.beginPath();g.moveTo(x0,y);g.lineTo(x1,y);g.stroke();g.textAlign="right";g.fillText(t,x0-6,y+4)});
+  g.textAlign="center";g.fillText(xl,(x0+x1)/2,y0+30);g.save();g.translate(12,(y0+y1)/2);g.rotate(-Math.PI/2);g.fillText(yl,0,0);g.restore();
+}
+function drawWave(){
+  var d=S.cur,c=$("cwf"),o=setup(c,300),g=o.g,mut=css("--muted"),line=css("--line"),acc=css("--accent"),fg=css("--fg"),warn=css("--warn");
+  var x0=44,x1=o.w-10,y0=o.h-38,y1=10,T=d.t_ms,i0=0,n=T.length;
+  var idx=[];d.beats.forEach(function(b,i){if(b[11]&&!S.hidden[b[1]])idx.push(i)});
+  var all=[];idx.forEach(function(i){d.wf[i].forEach(function(v){all.push(v/1000)})});
+  var lo=-2,hi=4;if(all.length){all.sort(function(a,b){return a-b});lo=all[Math.floor(all.length*0.005)];hi=all[Math.floor(all.length*0.995)]}
+  var pad=(hi-lo)*0.08;lo-=pad;hi+=pad;
+  var fx=function(t){return x0+(t+50)/500*(x1-x0)},fy=function(v){return y0-(v-lo)/(hi-lo)*(y0-y1)};
+  var yt=[];var st=Math.max(1,Math.round((hi-lo)/5));for(var v=Math.ceil(lo);v<=hi;v+=st)yt.push(v);
+  axes(g,x0,y0,x1,y1,[-50,0,100,200,300,400],yt,"time after R-peak (ms)","dZ/dt",fx,fy,mut,line);
+  g.save();g.beginPath();g.rect(x0,y1,x1-x0,y0-y1);g.clip();
+  var step=Math.max(1,Math.ceil(idx.length/140));g.lineWidth=1;
+  idx.forEach(function(i,k){if(k%step)return;var w=d.wf[i];g.beginPath();g.strokeStyle=hexA(acc,0.16);w.forEach(function(v,j){var x=fx(T[j]),y=fy(v/1000);j?g.lineTo(x,y):g.moveTo(x,y)});g.stroke()});
+  if(idx.length){var m=T.map(function(_,j){return mean(idx.map(function(i){return d.wf[i][j]}))/1000});g.beginPath();g.strokeStyle=fg;g.lineWidth=2.4;m.forEach(function(v,j){var x=fx(T[j]),y=fy(v);j?g.lineTo(x,y):g.moveTo(x,y)});g.stroke()}
+  g.restore();
+  g.strokeStyle=mut;g.setLineDash([3,3]);g.beginPath();g.moveTo(fx(0),y0);g.lineTo(fx(0),y1);g.stroke();g.setLineDash([]);g.fillStyle=mut;g.textAlign="left";g.fillText("R",fx(0)+3,y1+10);
+  var rbs=idx.map(function(i){return d.beats[i][6]}).filter(function(v){return v!=null});
+  if(rbs.length){var mb=mean(rbs);g.strokeStyle=warn;g.setLineDash([5,3]);g.beginPath();g.moveTo(fx(mb),y0);g.lineTo(fx(mb),y1);g.stroke();g.setLineDash([]);g.fillStyle=warn;g.textAlign="left";g.fillText("mean B",fx(mb)+3,y1+22)}
+  if(S.sel>=0&&S.cur.beats[S.sel]){
+    var b=d.beats[S.sel],w=d.wf[S.sel];g.lineWidth=2.4;g.strokeStyle=css("--p1");g.beginPath();w.forEach(function(v,j){var x=fx(T[j]),y=fy(v/1000);j?g.lineTo(x,y):g.moveTo(x,y)});g.stroke();
+    var at=function(t){var f=(t+50)/5,a=Math.floor(f),r=f-a;if(a<0||a>=w.length-1)return null;return (w[a]*(1-r)+w[a+1]*r)/1000};
+    [[b[5],"Q"],[0,"R"],[b[6],"B"],[b[7],"B2"]].forEach(function(p){if(p[0]==null)return;var y=at(p[0]);if(y==null)return;g.fillStyle=css("--p1");g.beginPath();g.arc(fx(p[0]),fy(y),4,0,7);g.fill();g.fillStyle=fg;g.textAlign="center";g.fillText(p[1],fx(p[0]),fy(y)-8)});
+    $("wfnote").textContent="Selected: beat "+b[0]+" ("+d.phases[b[1]]+"). Q "+fmt(b[5])+" ms, B "+fmt(b[6])+" ms after R, PEP "+fmt(b[8])+" ms (rater 1)"+(b[11]?"":". Flagged: outside the usable PEP range.");
+  } else $("wfnote").textContent=idx.length+" usable beats drawn (thin lines, up to 140 shown), thick line = average of all usable beats in the shown phases. Select a table row to highlight one beat.";
+}
+function hexA(h,a){if(h[0]!=="#")return h;var n=parseInt(h.slice(1),16);return "rgba("+(n>>16)+","+((n>>8)&255)+","+(n&255)+","+a+")"}
+function drawHist(){
+  var d=S.cur,c=$("chist"),o=setup(c,300),g=o.g,mut=css("--muted"),line=css("--line");
+  var v=[];d.beats.forEach(function(b){if(b[11]&&!S.hidden[b[1]])v.push(b[8])});
+  var x0=40,x1=o.w-10,y0=o.h-38,y1=10;if(!v.length){g.fillStyle=mut;g.fillText("no beats",x0,40);return}
+  var lo=Math.floor(Math.min.apply(null,v)/10)*10,hi=Math.ceil(Math.max.apply(null,v)/10)*10,bw=5,nb=Math.max(1,Math.ceil((hi-lo)/bw)),cnt=new Array(nb).fill(0);
+  v.forEach(function(x){cnt[Math.min(nb-1,Math.floor((x-lo)/bw))]++});var mx=Math.max.apply(null,cnt);
+  var fx=function(t){return x0+(t-lo)/(hi-lo||1)*(x1-x0)},fy=function(t){return y0-t/mx*(y0-y1)};
+  var xt=[];for(var t=lo;t<=hi;t+=Math.max(10,Math.ceil((hi-lo)/6/10)*10))xt.push(t);var yt=[0,Math.round(mx/2),mx];
+  axes(g,x0,y0,x1,y1,xt,yt,"PEP (ms)","beats",fx,fy,mut,line);
+  g.fillStyle=css("--accent");cnt.forEach(function(k,i){var xa=fx(lo+i*bw),xb=fx(lo+(i+1)*bw);g.fillRect(xa+0.5,fy(k),Math.max(1,xb-xa-1),y0-fy(k))});
+  var m=mean(v);g.strokeStyle=css("--warn");g.setLineDash([5,3]);g.beginPath();g.moveTo(fx(m),y0);g.lineTo(fx(m),y1);g.stroke();g.setLineDash([]);g.fillStyle=css("--warn");g.textAlign="left";g.fillText("mean "+fmt(m,0),fx(m)+4,y1+10);
+}
+var PEPGEO=null;
+function drawPep(){
+  var d=S.cur,c=$("cpep"),o=setup(c,240),g=o.g,mut=css("--muted"),line=css("--line");
+  var pts=d.beats.map(function(b,i){return {i:i,t:b[2],y:b[8],ph:b[1],ok:b[11]}}).filter(function(p){return p.y!=null&&!S.hidden[p.ph]});
+  var x0=44,x1=o.w-10,y0=o.h-38,y1=10;if(!pts.length)return;
+  var tmax=Math.max.apply(null,pts.map(function(p){return p.t})),ys=pts.map(function(p){return p.y}),lo=Math.floor(Math.min.apply(null,ys)/20)*20,hi=Math.ceil(Math.max.apply(null,ys)/20)*20;
+  var fx=function(t){return x0+t/(tmax||1)*(x1-x0)},fy=function(v){return y0-(v-lo)/(hi-lo||1)*(y0-y1)};
+  var xt=[];var sx=Math.max(5,Math.ceil(tmax/6/5)*5);for(var t=0;t<=tmax;t+=sx)xt.push(t);var yt=[];for(var v=lo;v<=hi;v+=Math.max(20,Math.ceil((hi-lo)/5/20)*20))yt.push(v);
+  axes(g,x0,y0,x1,y1,xt,yt,"time since first annotated beat (s); phases are separate recording segments","PEP (ms)",fx,fy,mut,line);
+  pts.forEach(function(p){g.fillStyle=css(PH_COL[p.ph%5]);g.globalAlpha=p.ok?0.9:0.35;g.beginPath();g.arc(fx(p.t),fy(p.y),p.i===S.sel?5:2.6,0,7);g.fill();if(p.i===S.sel){g.globalAlpha=1;g.strokeStyle=css("--fg");g.lineWidth=2;g.stroke()}});g.globalAlpha=1;
+  PEPGEO={pts:pts,fx:fx,fy:fy};
+}
+function pickScatter(e){
+  if(!PEPGEO)return;var r=e.target.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top,best=null,bd=1e9;
+  PEPGEO.pts.forEach(function(p){var dx=PEPGEO.fx(p.t)-x,dy=PEPGEO.fy(p.y)-y,dd=dx*dx+dy*dy;if(dd<bd){bd=dd;best=p}});
+  if(best&&bd<400)selectBeat(best.i,true);
+}
+</script>
