@@ -1,0 +1,139 @@
+{
+ "raw_beats": 12014,
+ "cohort_beats": 11903,
+ "raw_by_dataset": {
+  "EmpkinS": 5095,
+  "Guardian": 6919
+ },
+ "cohort_by_dataset": {
+  "EmpkinS": 4990,
+  "Guardian": 6913
+ },
+ "excluded_outlier_beats": 110,
+ "missing_B1": 1,
+ "demo_cols": {
+  "emp": [
+   "participant",
+   "Age",
+   "Birth_Date",
+   "Condition_Order",
+   "Gender",
+   "Height",
+   "Weight"
+  ],
+  "gdn": [
+   "participant",
+   "Age",
+   "Gender",
+   "Height",
+   "Weight"
+  ]
+ },
+ "demographics": {
+  "EmpkinS": {
+   "n": 15,
+   "age_mean": 23.066666666666666,
+   "age_sd": 2.6313132697969515,
+   "bmi_mean": 21.8927008339032,
+   "bmi_sd": 2.387398113999376
+  },
+  "Guardian": {
+   "n": 24,
+   "age_mean": 31.208333333333332,
+   "age_sd": 11.021635508188535,
+   "bmi_mean": 23.743509969936046,
+   "bmi_sd": 3.4569422907528793
+  }
+ },
+ "target_stats": {
+  "EmpkinS": {
+   "RB_mean": 58.19498997995992,
+   "RB_sd": 23.795140556865295,
+   "RB_min": -29.0,
+   "RB_max": 194.0,
+   "PEP_mean": 88.3871743486974,
+   "PEP_sd": 25.301152585215757,
+   "skew": 0.4613898068951646,
+   "kurtosis": 0.7650211598883345
+  },
+  "Guardian": {
+   "RB_mean": 106.04426442933604,
+   "RB_sd": 27.76315184848394,
+   "RB_min": -38.0,
+   "RB_max": 226.0,
+   "PEP_mean": 138.3888326341675,
+   "PEP_sd": 27.551222334476392,
+   "skew": -0.4365116215097939,
+   "kurtosis": 0.6426202564518388
+  }
+ },
+ "ks_RB_between_datasets": {
+  "stat": 0.6521204132552679,
+  "p": 0.0
+ },
+ "between_subject_var_share_RB": {
+  "EmpkinS": 0.3376875497008735,
+  "Guardian": 0.2720096150272202
+ },
+ "spearman_HR_RB": {
+  "EmpkinS": -0.3057572675773705,
+  "Guardian": 0.18491253859286189
+ },
+ "hr_group_counts": {
+  "60\u2013100": 7065,
+  ">100": 2402,
+  "<60": 2157
+ },
+ "inter_rater": {
+  "n": 11748,
+  "mae": 8.528260129383725,
+  "sd_abs": 16.292203919099393,
+  "median_abs": 3.0,
+  "bias": 4.193054136874362,
+  "loa_low": -30.900805859316048,
+  "loa_high": 39.28691413306477,
+  "agree_pct": {
+   "EmpkinS|high \u22644 ms": 59.86367281475541,
+   "EmpkinS|medium 4\u201310 ms": 21.672012830793907,
+   "EmpkinS|low >10 ms": 18.464314354450682,
+   "Guardian|high \u22644 ms": 71.98224852071006,
+   "Guardian|medium 4\u201310 ms": 13.550295857988166,
+   "Guardian|low >10 ms": 14.467455621301776
+  },
+  "pearson_r": 0.882246260023658
+ },
+ "amplitude": {
+  "EmpkinS": {
+   "C_amp_mean": 2.999164342880249,
+   "C_amp_sd": 1.0810253620147705,
+   "C_amp_median": 2.8676514625549316
+  },
+  "Guardian": {
+   "C_amp_mean": 1.6127727031707764,
+   "C_amp_sd": 0.6342520713806152,
+   "C_amp_median": 1.638399362564087
+  }
+ },
+ "RB_vs_RC_linreg": {
+  "EmpkinS": {
+   "slope": 0.3720191692616611,
+   "intercept": 7.274735719625525,
+   "r2": 0.23100177880300204
+  },
+  "Guardian": {
+   "slope": 0.16806077243403975,
+   "intercept": 72.36238648016142,
+   "r2": 0.07080316006535194
+  }
+ },
+ "excluded_top_segments": {
+  "VP_002 tsst talk": 66,
+  "VP_028 tsst talk": 7,
+  "VP_028 tsst prep": 5,
+  "VP_028 ftsst talk": 4,
+  "VP_028 ftsst prep": 3,
+  "VP_028 tsst pause_1": 3,
+  "VP_005 tsst talk": 2,
+  "VP_028 ftsst pause_1": 2
+ }
+}
