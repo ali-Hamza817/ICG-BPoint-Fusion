@@ -49,7 +49,7 @@ Public datasets of Abel et al. (OSF): **EmpkinS** (15 participants, stress test,
 | **Usable beats** (clean rater-1 B and Q, PEP 20 to 250 ms) | **11,694** (EmpkinS 4,936, Guardian 6,758) |
 | Patients | 39 |
 
-**Artefact labels.** Both raters marked some beats as *Artefact*. The first version of the pipeline read those markers as B/Q points, so 209 beats were wrongly counted as usable. This was found and fixed on 2026-11-20 ([`pipeline/22_artefact_flags.py`](pipeline/22_artefact_flags.py)). After the fix the inter-rater B-point difference is **7.94 ± 14.26 ms** (Abel reports 8.35 ± 14.78 ms). Results computed before the fix carry a *SUPERSEDED* banner.
+**Artefact labels.** Both raters marked some beats as *Artefact*. The first version of the pipeline read those markers as B/Q points, so 209 beats were wrongly counted as usable. This was found and fixed on 2026-11-20 ([`pipeline/22_artefact_flags.py`](pipeline/22_artefact_flags.py)). After the fix the inter-rater B-point difference is **7.94 ± 14.26 ms** (Abel reports 8.35 ± 14.78 ms). Results computed before the fix carry a *SUPERSEDED* banner (`reports/V3_RESULTS.md`, `reports/RESULTS_SUMMARY.md`, `reports/EDA_REPORT.md`, `reports/ADVISOR_SUMMARY.md`).
 
 The raw data are not stored in the repository; `download_datasets.sh` fetches them (MD5-verified).
 
@@ -59,7 +59,7 @@ The raw data are not stored in the repository; `download_datasets.sh` fetches th
 - **Faithful re-implementations.** Abel's 12 B-point algorithms run unmodified (`external/` shim, fetched on demand); Sheikh's `feat_vec_465.m` ported line by line to Python and validated against his demo output (0.0 deviation on his two demo beats).
 - **Model comparison.** Abel's design vs Sheikh's AdaBoost vs a fusion, subject-wise nested cross-validation and a cross-dataset test. → [`reports/`](reports)
 - **Ensemble-averaging analysis.** Sheikh's three-stage averaging algorithm ported and applied to Abel's beats, to compare single-beat and averaged-beat evaluation.
-- **Website** with a login gate (section 8).
+- **Website** with a login gate (section 8): patient pages, Task 2 page, and a **Visualization** tab (animated heartbeat monitor, ridgeline of beats, constellation of all 39 patients).
 
 ## 5. Repository layout
 ```
@@ -89,21 +89,44 @@ run_*.sh             resumable end-to-end runners
 | 11 | `11_beat_table.py` | **Task 1** beat table and per-patient figures |
 | 12 | `12_validate_sheikh_port.py` | Validate the port against Sheikh's demo output |
 | 13 | `13_abel_real_features.py` | Abel's real 12 algorithms → 13 features |
-| 14, 15 | `14_models_v3.py`, `15_report_v3.py` | Abel replica vs Sheikh AdaBoost vs fusion; tables and tests |
+| 14, 15 | `14_models_v3.py`, `15_report_v3.py` | Sheikh features vs fusion with Abel's features; AdaBoost, RF, LightGBM, SVR; tables |
 | 16, 17 | `16_ensemble_beats.py`, `17_ea_vs_single.py` | Ensemble-averaged beats and comparison |
 | 18 | `18_export_patient_viewer.py` | Data export for the website |
 | 19, 20 | `19_task2_dataset.py`, `20_task2_plots.py` | **Task 2** dataset, features, plots |
 | 21 | `21_build_secure_site.py` | Build the encrypted website |
 | 22 | `22_artefact_flags.py` | Flag and remove artefact-labelled points |
+| 23 | `23_ada_cross_all_configs.py` | Cross-dataset AdaBoost, all 4 settings (sensitivity) |
+| 24 | `24_final_report.py` | Final results vs Abel's published numbers, `reports/RESULTS.md` |
 
-## 7. Key findings so far
-Verified and unaffected by the artefact fix:
-- Sheikh's 465 features can be computed on Abel's public data; the port reproduces his MATLAB output exactly on his demo beats.
-- Abel's own algorithms behave differently on the two datasets: his C-point finder (fixed amplitude threshold) fails on about 10 % of Guardian beats and on 0.2 % of EmpkinS beats.
-- The two datasets differ strongly (B-point about 58 ms vs 106 ms after R), which is why models trained on one transfer badly to the other.
-- His MATLAB file cannot process the 261 usable beats whose B point is more than 150 ms after R (2.2 %); the Python port covers all beats.
+## 7. Key findings
+All numbers are computed from saved predictions on the **clean beats** (11,694 usable; 11,018 evaluated, i.e. beats with at least one rule estimate). Abel's figures are his **published** results, used as the reference; his cohort (11,239 cycles) and folds differ from ours, so differences are indicative, not like-for-like. Full tables: [`reports/RESULTS.md`](reports/RESULTS.md).
 
-**Model comparison (Abel replica vs Sheikh AdaBoost vs fusion; cross-dataset).** All earlier numbers were computed before the artefact fix and are withdrawn. The corrected run is in progress; its tables will be added to [`reports/V4_RESULTS.md`](reports) and to this section. No model number is quoted here until it has been recomputed on the clean beats.
+![comparison](figures/results/final_comparison.png)
+
+**Single-beat B-point error, subject-wise cross-validation (MAE, ms)**
+
+| Model | Ours | Abel 2026 published |
+|---|---|---|
+| Sheikh 465 features + AdaBoost | **6.73** | **8.13 ± 12.12** (Random Forest on 12 rule estimates + RR) |
+| Sheikh 465 + Abel 13 features + AdaBoost | 6.73 | |
+| Sheikh 465 + Random Forest | 7.82 | |
+| Sheikh 465 + LightGBM | 8.28 | |
+| Sheikh 465 + SVR | 10.63 | |
+
+The per-subject bootstrap interval of our best model, [5.8, 9.0] ms over 39 subjects, **contains** 8.13 ms, so the gap to the published figure is not clearly outside sampling uncertainty.
+
+**Cross-dataset (train on one dataset, test on the other; MAE, ms)**
+
+| Direction | Ours (all 4 AdaBoost settings) | Abel published RF | Abel published SVR |
+|---|---|---|---|
+| EmpkinS → Guardian | 12.5 – 14.1 | 36.24 | 19.39 |
+| Guardian → EmpkinS | 25.4 – 34.5 | 52.92 | **12.70** |
+
+EmpkinS → Guardian is clearly below Abel's published values. Guardian → EmpkinS is better than his RF but **not better than his SVR (12.70 ms)**; the two datasets differ strongly in B-point timing (about 58 ms vs 106 ms after R), which produces a systematic bias in that direction.
+
+**Single beat vs ensemble-averaged beat.** Averaging the predictions of a single-beat model over a 10 s window gives 4.7 ms against the averaged-beat reference; a model trained on averaged beats gives 7.9 to 9.3 ms. It is trained on only a few hundred averaged beats, so this shows data starvation, not that averaging hurts.
+
+**Also verified:** Sheikh's `feat_vec_465.m` port reproduces his MATLAB output exactly on his demo beats; Abel's C-point finder fails on about 10 % of Guardian beats; his MATLAB file cannot read the 261 usable beats (2.2 %) whose B point is more than 150 ms after R.
 
 ## 8. The website and its login
 GitHub Pages is a static host, so there is no server to check a password. Instead:
@@ -113,7 +136,7 @@ GitHub Pages is a static host, so there is no server to check a password. Instea
 
 **What this does and does not protect.** It keeps the *website* content from casual visitors and from search engines. It is **not** server-side security: the encrypted files are downloadable (a long random password makes guessing impractical), and the same data and figures also exist **unencrypted in the public repository** (`dataset_*`, `figures/`, `docs/`). For true confidentiality use a private repository.
 
-Features: click any image or chart to enlarge (zoom, previous/next); per-patient ECG, ICG, PEP views; Task 2 overview.
+Features: click any image or chart to enlarge (zoom, previous/next); per-patient ECG, ICG and PEP views; Task 2 overview; Visualization tab.
 
 ## 9. Reproduce
 ```bash
@@ -125,12 +148,13 @@ python 03_sheikh_features.py && python 03c_sheikh_features_v2.py
 python 13_abel_real_features.py              # needs external/biopsykit_shim (see README there)
 TASKS_TAG=v4 python 14_models_v3.py 40       # resumable; heavy (AdaBoost ~2 s per tree)
 python 19_task2_dataset.py && python 20_task2_plots.py
+python 23_ada_cross_all_configs.py && python 24_final_report.py   # final results vs Abel's published numbers
 python 18_export_patient_viewer.py && python 21_build_secure_site.py --id <login>   # new random password -> private/credentials.txt
 ```
 Long steps run detached and resume where they stopped (`run_v4.sh`).
 
 ## 10. Limitations
-- Abel's algorithms run on the **annotated** heartbeats with our R-peaks, not on PEPbench's own heartbeat segmentation; a replica of his design on our data does **not** reproduce his published 8.13 ms.
+- Abel's published figures are the reference; his cohort and folds differ from ours, so comparisons are indicative. AdaBoost was run once with a small tuning grid inside Sheikh's published range, and cross-dataset results depend on the model setting (hence the 4-setting ranges).
 - Sheikh's own datasets are private. His published 3.5 ms (averaged beats) is not comparable to single-beat numbers.
 - Annotated beats span only about 30 s per phase, so Sheikh's 60 s averaging windows were impossible; 10 s and 20 s windows are used, and the label of an averaged beat is the mean rater-1 B point (an assumption).
 - The C-point of a beat is found automatically (maximum in R+50 to R+400 ms); for 1.2 % of usable beats it lies at the edge of that window.

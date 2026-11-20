@@ -1,0 +1,13 @@
+model,description,n,MAE,MAE_rep_sd,SD,MedAE,ME,subjectMAE,r,n_rep
+fus_ada,"Fusion (465+13), AdaBoost",11018,6.73,,12.784,2.0,0.146,7.259,0.905,1
+sheikh_ada,"Sheikh 465, AdaBoost",11018,6.735,,12.69,2.0,0.232,7.243,0.906,1
+fus_rf,"Fusion, RF",11018,7.743,0.055,11.848,2.97,-0.069,8.296,0.908,3
+sheikh_rf,"Sheikh 465, RF",11018,7.824,0.026,12.025,2.968,-0.079,8.369,0.906,3
+sheikh_ada+rule,"Sheikh 465, AdaBoost + featureless rule",11018,8.136,,14.524,2.0,1.198,8.442,0.872,1
+fus_ada+rule,"Fusion, AdaBoost + featureless rule",11018,8.137,,14.59,2.0,1.111,8.458,0.871,1
+fus_lgbm,"Fusion, LightGBM",11018,8.208,0.102,11.65,3.755,0.292,8.729,0.907,3
+sheikh_lgbm,"Sheikh 465, LightGBM",11018,8.278,0.065,11.802,3.736,0.222,8.793,0.905,3
+fus_svr,"Fusion, SVR",11018,10.162,0.119,12.48,5.204,0.859,10.768,0.88,3
+sheikh_svr,"Sheikh 465, SVR",11018,10.628,0.085,13.204,5.335,0.736,11.315,0.866,3
+fus_ridge,"Fusion, Ridge",11018,12.784,0.225,13.01,8.745,0.156,13.425,0.843,3
+sheikh_ridge,"Sheikh 465, Ridge",11018,13.624,0.039,13.488,9.654,0.008,14.364,0.824,3

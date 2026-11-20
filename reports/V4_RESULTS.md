@@ -1,0 +1,57 @@
+# v3 results: real Abel features vs real-Sheikh features (auto-generated from saved predictions)
+
+All numbers computed by `pipeline/15_report_v3.py` from `results/tasks_v3/`. Subject-wise grouped CV (5 folds; 3 repeats for fast models, 1 for AdaBoost); hyper-parameters tuned only by inner 3-fold group CV on the training part.
+
+## Caveats (read first)
+- Abel's 12 algorithms are Abel's own files run through a small shim (`external/biopsykit_shim`); deviations: heartbeats = annotated reference heartbeats with our R-peaks (not PEPbench's neurokit segmentation + matching).
+- Abel's C-point extractor (fixed prominence 1) fails on low-amplitude beats: 10.1 percent of Guardian beats vs 0.2 percent of EmpkinS; beats where all 12 rules failed are excluded (as Abel does). Evaluation set here: 11018 beats (Abel: 11,239).
+- Sheikh features are a line-by-line port of his MATLAB (validated exactly on his 2 demo beats). His AdaBoost was tuned on a small grid inside his published range (max_features 0.7, depth 12/20, lr 0.1/1; 100 trees inner, 500 trees final).
+- Abel's published numbers are shown as the reference only; his cohort (11,239 beats) and folds differ from ours, so differences are indicative, not like-for-like.
+
+## Pooled subject-wise CV (MAE ms vs rater 1)
+
+| model           | description                             |     n |   MAE |   MAE_rep_sd |    SD |   MedAE |    ME |   subjectMAE |    r |   n_rep |
+|:----------------|:----------------------------------------|------:|------:|-------------:|------:|--------:|------:|-------------:|-----:|--------:|
+| fus_ada         | Fusion (465+13), AdaBoost               | 11018 |  6.73 |       nan    | 12.78 |    2    |  0.15 |         7.26 | 0.91 |       1 |
+| sheikh_ada      | Sheikh 465, AdaBoost                    | 11018 |  6.73 |       nan    | 12.69 |    2    |  0.23 |         7.24 | 0.91 |       1 |
+| fus_rf          | Fusion, RF                              | 11018 |  7.74 |         0.05 | 11.85 |    2.97 | -0.07 |         8.3  | 0.91 |       3 |
+| sheikh_rf       | Sheikh 465, RF                          | 11018 |  7.82 |         0.03 | 12.03 |    2.97 | -0.08 |         8.37 | 0.91 |       3 |
+| sheikh_ada+rule | Sheikh 465, AdaBoost + featureless rule | 11018 |  8.14 |       nan    | 14.52 |    2    |  1.2  |         8.44 | 0.87 |       1 |
+| fus_ada+rule    | Fusion, AdaBoost + featureless rule     | 11018 |  8.14 |       nan    | 14.59 |    2    |  1.11 |         8.46 | 0.87 |       1 |
+| fus_lgbm        | Fusion, LightGBM                        | 11018 |  8.21 |         0.1  | 11.65 |    3.76 |  0.29 |         8.73 | 0.91 |       3 |
+| sheikh_lgbm     | Sheikh 465, LightGBM                    | 11018 |  8.28 |         0.06 | 11.8  |    3.74 |  0.22 |         8.79 | 0.9  |       3 |
+| fus_svr         | Fusion, SVR                             | 11018 | 10.16 |         0.12 | 12.48 |    5.2  |  0.86 |        10.77 | 0.88 |       3 |
+| sheikh_svr      | Sheikh 465, SVR                         | 11018 | 10.63 |         0.09 | 13.2  |    5.33 |  0.74 |        11.32 | 0.87 |       3 |
+| fus_ridge       | Fusion, Ridge                           | 11018 | 12.78 |         0.23 | 13.01 |    8.74 |  0.16 |        13.43 | 0.84 |       3 |
+| sheikh_ridge    | Sheikh 465, Ridge                       | 11018 | 13.62 |         0.04 | 13.49 |    9.65 |  0.01 |        14.36 | 0.82 |       3 |
+
+## Cross-dataset (train on source only, test on target; no selection on target)
+
+| direction         | model           |    n |   MAE |   subjectMAE |   subjectMAE_sd |    SD |    ME | best_cfg                 |
+|:------------------|:----------------|-----:|------:|-------------:|----------------:|------:|------:|:-------------------------|
+| EmpkinS->Guardian | fus_ada         | 6087 | 12.46 |        13.22 |            6.1  | 15.48 | -0.43 | {'lr': 1.0, 'depth': 20} |
+| EmpkinS->Guardian | fus_ada+rule    | 6087 | 12.47 |        13.28 |            6.1  | 15.62 | -1.04 | {'lr': 1.0, 'depth': 20} |
+| EmpkinS->Guardian | sheikh_ada      | 6087 | 13.05 |        13.84 |            6.35 | 15.95 | -0.86 | {'lr': 1.0, 'depth': 20} |
+| EmpkinS->Guardian | sheikh_ada+rule | 6087 | 13.07 |        13.92 |            6.38 | 16.11 | -1.47 | {'lr': 1.0, 'depth': 20} |
+| EmpkinS->Guardian | fus_lgbm        | 6087 | 15.49 |        16.23 |            5.94 | 14.4  |  0.62 | {'nl': 31, 'lr': 0.03}   |
+| EmpkinS->Guardian | fus_ridge       | 6087 | 15.66 |        16.33 |            5.28 | 15.58 |  1.09 | {'alpha': 10}            |
+| EmpkinS->Guardian | sheikh_lgbm     | 6087 | 16.12 |        16.83 |            5.91 | 14.6  |  0.17 | {'nl': 31, 'lr': 0.03}   |
+| EmpkinS->Guardian | fus_rf          | 6087 | 16.17 |        17.04 |            8.29 | 17.96 | -6.59 | {'mf': 0.3, 'leaf': 5}   |
+| EmpkinS->Guardian | fus_svr         | 6087 | 16.19 |        16.82 |            4.66 | 16.11 |  1.62 | {'C': 100}               |
+| EmpkinS->Guardian | sheikh_rf       | 6087 | 16.32 |        17.19 |            8.2  | 17.79 | -6.35 | {'mf': 0.3, 'leaf': 5}   |
+| EmpkinS->Guardian | sheikh_svr      | 6087 | 17.07 |        17.74 |            5.29 | 17.43 | -0.2  | {'C': 100}               |
+| EmpkinS->Guardian | sheikh_ridge    | 6087 | 17.51 |        18.14 |            5.14 | 16.5  | -2.09 | {'alpha': 10}            |
+| Guardian->EmpkinS | fus_ada+rule    | 4931 | 26.54 |        26.09 |            7.06 | 19.81 | 20.84 | {'lr': 0.1, 'depth': 20} |
+| Guardian->EmpkinS | sheikh_svr      | 4931 | 26.89 |        25.48 |            9.57 | 20.84 | 18.85 | {'C': 100}               |
+| Guardian->EmpkinS | fus_ada         | 4931 | 28.22 |        27.54 |            8.21 | 20.56 | 23.37 | {'lr': 0.1, 'depth': 20} |
+| Guardian->EmpkinS | fus_svr         | 4931 | 28.57 |        27.04 |           10.61 | 21.07 | 23.17 | {'C': 100}               |
+| Guardian->EmpkinS | sheikh_ada+rule | 4931 | 29.67 |        29.25 |            7.93 | 22.06 | 24.11 | {'lr': 0.1, 'depth': 20} |
+| Guardian->EmpkinS | fus_ridge       | 4931 | 30.24 |        29.04 |            8.7  | 21.83 | 17.74 | {'alpha': 100}           |
+| Guardian->EmpkinS | fus_lgbm        | 4931 | 30.78 |        29.78 |            9.68 | 19.5  | 26.09 | {'nl': 31, 'lr': 0.03}   |
+| Guardian->EmpkinS | sheikh_ada      | 4931 | 31.59 |        30.92 |            9.02 | 22.68 | 26.86 | {'lr': 0.1, 'depth': 20} |
+| Guardian->EmpkinS | sheikh_lgbm     | 4931 | 33.5  |        32.43 |           10.48 | 20.3  | 28.06 | {'nl': 31, 'lr': 0.03}   |
+| Guardian->EmpkinS | sheikh_ridge    | 4931 | 34.31 |        32.9  |           10.41 | 24.86 | 20.68 | {'alpha': 100}           |
+| Guardian->EmpkinS | fus_rf          | 4931 | 36.91 |        35.34 |           13.75 | 22.72 | 32.99 | {'mf': 0.6, 'leaf': 5}   |
+| Guardian->EmpkinS | sheikh_rf       | 4931 | 41.52 |        39.67 |           15.94 | 25.17 | 37.53 | {'mf': 0.3, 'leaf': 5}   |
+
+Abel 2026 reported (p.7): Emp->Gdn RF 36.24, SVR 19.39; Gdn->Emp RF 52.92 +/- 39.35, SVR 12.70 +/- 6.33 (read from the text; direction order of the first two as in the text).

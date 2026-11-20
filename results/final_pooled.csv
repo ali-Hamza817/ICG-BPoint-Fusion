@@ -1,0 +1,9 @@
+model,description,n_beats,n_repeats,MAE,SD,MedAE,subject_MAE,subject_MAE_ci95_lo,subject_MAE_ci95_hi,delta_vs_published
+fus_ada,Sheikh 465 + Abel 13 features + AdaBoost,11018,1,6.73,12.784,2.0,7.259,5.849,8.916,-1.4
+sheikh_ada,Sheikh 465 features + AdaBoost,11018,1,6.735,12.69,2.0,7.243,5.819,8.968,-1.395
+fus_rf,Fusion + Random Forest,11018,3,7.743,11.687,2.935,8.209,6.942,9.797,-0.387
+sheikh_rf,Sheikh 465 + Random Forest,11018,3,7.824,11.875,2.946,8.292,6.915,9.892,-0.306
+fus_lgbm,Fusion + LightGBM,11018,3,8.208,11.52,3.631,8.564,7.188,10.042,0.078
+sheikh_lgbm,Sheikh 465 + LightGBM,11018,3,8.278,11.659,3.551,8.598,7.218,10.209,0.148
+fus_svr,Fusion + SVR,11018,3,10.162,12.415,5.172,10.703,9.276,12.35,2.032
+sheikh_svr,Sheikh 465 + SVR,11018,3,10.628,13.153,5.241,11.258,9.703,13.068,2.498

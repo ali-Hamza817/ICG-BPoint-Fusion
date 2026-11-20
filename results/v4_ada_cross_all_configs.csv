@@ -1,0 +1,17 @@
+direction,model,lr,depth,n_test,MAE,MAE_with_featureless_rule,ME,SD
+EmpkinS->Guardian,sheikh_ada,0.1,12,6087,14.062,14.027,-2.536,16.95
+EmpkinS->Guardian,sheikh_ada,0.1,20,6087,14.077,13.987,-2.07,17.172
+EmpkinS->Guardian,sheikh_ada,1.0,12,6087,13.476,13.506,-1.922,16.223
+EmpkinS->Guardian,sheikh_ada,1.0,20,6087,13.051,13.07,-0.864,15.946
+EmpkinS->Guardian,fus_ada,0.1,12,6087,13.784,13.712,-2.019,16.683
+EmpkinS->Guardian,fus_ada,0.1,20,6087,13.878,13.783,-2.039,17.06
+EmpkinS->Guardian,fus_ada,1.0,12,6087,12.924,12.934,-1.004,15.612
+EmpkinS->Guardian,fus_ada,1.0,20,6087,12.461,12.467,-0.427,15.481
+Guardian->EmpkinS,sheikh_ada,0.1,12,4931,34.486,31.583,29.776,25.941
+Guardian->EmpkinS,sheikh_ada,0.1,20,4931,31.586,29.674,26.864,22.678
+Guardian->EmpkinS,sheikh_ada,1.0,12,4931,30.264,28.247,25.787,22.307
+Guardian->EmpkinS,sheikh_ada,1.0,20,4931,29.217,27.566,24.683,21.14
+Guardian->EmpkinS,fus_ada,0.1,12,4931,33.117,30.033,28.233,25.987
+Guardian->EmpkinS,fus_ada,0.1,20,4931,28.224,26.541,23.374,20.559
+Guardian->EmpkinS,fus_ada,1.0,12,4931,30.814,28.326,26.145,23.408
+Guardian->EmpkinS,fus_ada,1.0,20,4931,25.4,24.018,20.752,18.784

@@ -1,0 +1,25 @@
+direction,model,description,n,MAE,subjectMAE,subjectMAE_sd,SD,ME,best_cfg
+EmpkinS->Guardian,fus_ada,"Fusion (465+13), AdaBoost",6087,12.461,13.217,6.095,15.481,-0.427,"{'lr': 1.0, 'depth': 20}"
+EmpkinS->Guardian,fus_ada+rule,"Fusion, AdaBoost + featureless rule",6087,12.467,13.276,6.101,15.623,-1.038,"{'lr': 1.0, 'depth': 20}"
+EmpkinS->Guardian,sheikh_ada,"Sheikh 465, AdaBoost",6087,13.051,13.84,6.351,15.946,-0.864,"{'lr': 1.0, 'depth': 20}"
+EmpkinS->Guardian,sheikh_ada+rule,"Sheikh 465, AdaBoost + featureless rule",6087,13.07,13.922,6.377,16.11,-1.472,"{'lr': 1.0, 'depth': 20}"
+EmpkinS->Guardian,fus_lgbm,"Fusion, LightGBM",6087,15.486,16.232,5.941,14.4,0.616,"{'nl': 31, 'lr': 0.03}"
+EmpkinS->Guardian,fus_ridge,"Fusion, Ridge",6087,15.66,16.33,5.278,15.581,1.086,{'alpha': 10}
+EmpkinS->Guardian,sheikh_lgbm,"Sheikh 465, LightGBM",6087,16.123,16.83,5.91,14.598,0.173,"{'nl': 31, 'lr': 0.03}"
+EmpkinS->Guardian,fus_rf,"Fusion, RF",6087,16.17,17.041,8.289,17.959,-6.59,"{'mf': 0.3, 'leaf': 5}"
+EmpkinS->Guardian,fus_svr,"Fusion, SVR",6087,16.192,16.82,4.663,16.112,1.615,{'C': 100}
+EmpkinS->Guardian,sheikh_rf,"Sheikh 465, RF",6087,16.324,17.189,8.202,17.793,-6.347,"{'mf': 0.3, 'leaf': 5}"
+EmpkinS->Guardian,sheikh_svr,"Sheikh 465, SVR",6087,17.072,17.743,5.292,17.431,-0.204,{'C': 100}
+EmpkinS->Guardian,sheikh_ridge,"Sheikh 465, Ridge",6087,17.51,18.138,5.144,16.499,-2.092,{'alpha': 10}
+Guardian->EmpkinS,fus_ada+rule,"Fusion, AdaBoost + featureless rule",4931,26.541,26.095,7.056,19.813,20.842,"{'lr': 0.1, 'depth': 20}"
+Guardian->EmpkinS,sheikh_svr,"Sheikh 465, SVR",4931,26.886,25.482,9.575,20.844,18.855,{'C': 100}
+Guardian->EmpkinS,fus_ada,"Fusion (465+13), AdaBoost",4931,28.224,27.542,8.21,20.559,23.374,"{'lr': 0.1, 'depth': 20}"
+Guardian->EmpkinS,fus_svr,"Fusion, SVR",4931,28.572,27.043,10.608,21.066,23.17,{'C': 100}
+Guardian->EmpkinS,sheikh_ada+rule,"Sheikh 465, AdaBoost + featureless rule",4931,29.674,29.254,7.932,22.06,24.11,"{'lr': 0.1, 'depth': 20}"
+Guardian->EmpkinS,fus_ridge,"Fusion, Ridge",4931,30.241,29.035,8.705,21.83,17.738,{'alpha': 100}
+Guardian->EmpkinS,fus_lgbm,"Fusion, LightGBM",4931,30.78,29.776,9.678,19.497,26.095,"{'nl': 31, 'lr': 0.03}"
+Guardian->EmpkinS,sheikh_ada,"Sheikh 465, AdaBoost",4931,31.586,30.915,9.023,22.678,26.864,"{'lr': 0.1, 'depth': 20}"
+Guardian->EmpkinS,sheikh_lgbm,"Sheikh 465, LightGBM",4931,33.5,32.426,10.48,20.305,28.064,"{'nl': 31, 'lr': 0.03}"
+Guardian->EmpkinS,sheikh_ridge,"Sheikh 465, Ridge",4931,34.309,32.903,10.411,24.865,20.677,{'alpha': 100}
+Guardian->EmpkinS,fus_rf,"Fusion, RF",4931,36.908,35.339,13.746,22.717,32.986,"{'mf': 0.6, 'leaf': 5}"
+Guardian->EmpkinS,sheikh_rf,"Sheikh 465, RF",4931,41.525,39.674,15.939,25.166,37.535,"{'mf': 0.3, 'leaf': 5}"

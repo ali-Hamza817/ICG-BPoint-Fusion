@@ -1,4 +1,4 @@
-> **SUPERSEDED (2026-11-20).** The numbers in this report were computed before the artefact-label fix (`pipeline/22_artefact_flags.py`): 199 beats whose rater-1 B point was an "Artefact" marker were counted as usable. Corrected results: `reports/V4_RESULTS.md` (when present) and the README. Kept unchanged below for traceability.
+> **SUPERSEDED (2026-11-20).** The numbers in this report were computed before the artefact-label fix (`pipeline/22_artefact_flags.py`): 199 beats whose rater-1 B point was an "Artefact" marker were counted as usable. Corrected results: `reports/V4_RESULTS.md` (when present) and the README. These pages also contain an internal re-implementation of Abel's design that is **not** used for any claim; the reference is Abel's published results (`reports/RESULTS.md`). Kept unchanged below for traceability.
 
 # v3 results: real Abel features vs real-Sheikh features (auto-generated from saved predictions)
 

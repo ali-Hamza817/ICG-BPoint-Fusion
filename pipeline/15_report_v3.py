@@ -32,13 +32,13 @@ common = np.all([~np.isnan(p) for p in P.values()], axis=0) if P else None      
 for (mo, rep), p in P.items():
     k = ~np.isnan(p); e = np.abs(p - y)[k]; sj = pd.Series(np.abs(p - y)[k]).groupby(subj[k]).mean()
     rows.append(dict(model=mo, rep=rep, n=int(k.sum()), MAE=e.mean(), SD=e.std(), MedAE=np.median(e), ME=(p - y)[k].mean(), subjectMAE=sj.mean(), r=np.corrcoef(p[k], y[k])[0, 1]))
-R = pd.DataFrame(rows)
+R = pd.DataFrame(rows); R = R[~R.model.str.startswith("abel_")]          # own replicas of Abel's design are NOT reported; Abel's published numbers are the reference
 A = R.groupby("model").agg(n=("n", "first"), MAE=("MAE", "mean"), MAE_rep_sd=("MAE", "std"), SD=("SD", "mean"), MedAE=("MedAE", "mean"), ME=("ME", "mean"), subjectMAE=("subjectMAE", "mean"), r=("r", "mean"), n_rep=("rep", "count")).reset_index().sort_values("MAE")
 A.insert(1, "description", A.model.map(LABEL)); A.round(3).to_csv(RES / f"{TAG}_table_pooled.csv", index=False)
 
 # ---------- paired tests vs the Abel replica (rep 0 predictions, per-subject MAE) ----------
 T = []
-base = P.get(("abel_rf", 0))
+base = None                                                          # no comparison against an own replica
 if base is not None:
     kb = ~np.isnan(base); sb = pd.Series(np.abs(base - y)[kb]).groupby(subj[kb]).mean(); rng = np.random.default_rng(0)
     for mo in [m for m in A.model if m != "abel_rf"]:
@@ -58,6 +58,7 @@ for d in D:
     for var, pr in ([(d["model"], d["pred_rb"])] + ([(d["model"] + "+rule", d["pred_rb_rule"])] if "pred_rb_rule" in d else [])):
         e = np.abs(pr - y[te]); sj = pd.Series(e).groupby(subj[te]).mean()
         X.append(dict(direction=direction, model=var, description=LABEL.get(var, var), n=len(te), MAE=e.mean(), subjectMAE=sj.mean(), subjectMAE_sd=sj.std(), SD=e.std(), ME=(pr - y[te]).mean(), best_cfg=str(d["best"])))
+X = [x for x in X if not x["model"].startswith("abel_")]
 XT = pd.DataFrame(X).sort_values(["direction", "MAE"]) if X else pd.DataFrame(); XT.round(3).to_csv(RES / f"{TAG}_table_cross_dataset.csv", index=False)
 
 # ---------- figures ----------
@@ -79,7 +80,7 @@ L = ["# v3 results: real Abel features vs real-Sheikh features (auto-generated f
      "- Abel's 12 algorithms are Abel's own files run through a small shim (`external/biopsykit_shim`); deviations: heartbeats = annotated reference heartbeats with our R-peaks (not PEPbench's neurokit segmentation + matching).",
      "- Abel's C-point extractor (fixed prominence 1) fails on low-amplitude beats: 10.1 percent of Guardian beats vs 0.2 percent of EmpkinS; beats where all 12 rules failed are excluded (as Abel does). Evaluation set here: %d beats (Abel: 11,239)." % (int(A.n.max()) if len(A) else 0),
      "- Sheikh features are a line-by-line port of his MATLAB (validated exactly on his 2 demo beats). His AdaBoost was tuned on a small grid inside his published range (max_features 0.7, depth 12/20, lr 0.1/1; 100 trees inner, 500 trees final).",
-     "- Not directly comparable with the numbers published by Abel (different cohort/folds); a replica of his design on OUR data is the fair baseline.", ""]
+     "- Abel's published numbers are shown as the reference only; his cohort (11,239 beats) and folds differ from ours, so differences are indicative, not like-for-like.", ""]
 if len(A): L += ["## Pooled subject-wise CV (MAE ms vs rater 1)", "", A.round(2).to_markdown(index=False), ""]
 if len(TT): L += ["## Paired comparison with the Abel replica (rep 0; per-subject MAE; negative = candidate better)", "", TT.round(3).to_markdown(index=False), ""]
 if len(XT): L += ["## Cross-dataset (train on source only, test on target; no selection on target)", "", XT.drop(columns=["description"]).round(2).to_markdown(index=False), "",

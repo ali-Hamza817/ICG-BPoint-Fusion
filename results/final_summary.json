@@ -1,0 +1,45 @@
+{
+ "published": {
+  "pooled_MAE": 8.13,
+  "pooled_SD": 12.12,
+  "cv_fold_MAE": 8.15,
+  "n_cycles": 11239,
+  "inter_rater_MAE": 8.35,
+  "inter_rater_SD": 14.78,
+  "e2g_RF": 36.24,
+  "e2g_SVR": 19.39,
+  "g2e_RF": 52.92,
+  "g2e_SVR": 12.7
+ },
+ "n_usable_beats": 11694,
+ "n_eval_beats": 11018,
+ "best_model": "fus_ada",
+ "best_MAE": 6.730012993081577,
+ "best_subject_ci95": [
+  5.849218746645406,
+  8.91585974938156
+ ],
+ "delta_vs_published": -1.3999870069184235,
+ "cross_ada_range": {
+  "EmpkinS->Guardian|fus_ada": [
+   12.461,
+   13.878,
+   13.26175
+  ],
+  "EmpkinS->Guardian|sheikh_ada": [
+   13.051,
+   14.077,
+   13.666500000000001
+  ],
+  "Guardian->EmpkinS|fus_ada": [
+   25.4,
+   33.117,
+   29.38875
+  ],
+  "Guardian->EmpkinS|sheikh_ada": [
+   29.217,
+   34.486,
+   31.38825
+  ]
+ }
+}

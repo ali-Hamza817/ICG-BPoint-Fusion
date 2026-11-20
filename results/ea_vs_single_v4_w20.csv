@@ -1,0 +1,35 @@
+window_s,approach,n_windows,n_subjects,MAE,SD,MedAE,subjectMAE
+20,EA model: sheikh_ridge,258,35,11.499,12.118,8.885,11.644
+20,EA model: sheikh_svr,258,35,8.461,10.836,5.064,8.831
+20,EA model: sheikh_rf,258,35,9.806,13.568,5.703,10.054
+20,EA model: sheikh_lgbm,258,35,10.906,13.197,7.389,11.036
+20,EA model: sheikh_ada,258,35,9.335,13.698,5.642,9.435
+20,EA model: sheikh_ada+rule,258,35,9.105,13.59,5.642,9.856
+20,single->avg:abel_rf,253,35,6.345,10.428,2.943,5.933
+20,single-beat error (mean |pred-label| per beat): abel_rf,253,35,11.205,,,11.366
+20,single->avg:abel_svr,253,35,9.025,17.0,4.542,8.403
+20,single-beat error (mean |pred-label| per beat): abel_svr,253,35,13.905,,,13.757
+20,single->avg:fus_ada,253,35,5.044,9.913,1.865,5.398
+20,single-beat error (mean |pred-label| per beat): fus_ada,253,35,7.83,,,8.162
+20,single->avg:fus_ada+rule,253,35,5.226,10.006,1.917,5.624
+20,single-beat error (mean |pred-label| per beat): fus_ada+rule,253,35,8.268,,,9.139
+20,single->avg:fus_lgbm,253,35,5.43,9.446,2.503,5.433
+20,single-beat error (mean |pred-label| per beat): fus_lgbm,253,35,9.239,,,9.358
+20,single->avg:fus_rf,253,35,5.517,9.272,2.485,5.593
+20,single-beat error (mean |pred-label| per beat): fus_rf,253,35,8.872,,,8.963
+20,single->avg:fus_ridge,253,35,8.378,10.066,5.543,8.196
+20,single-beat error (mean |pred-label| per beat): fus_ridge,253,35,14.093,,,13.889
+20,single->avg:fus_svr,253,35,6.666,9.211,3.438,6.383
+20,single-beat error (mean |pred-label| per beat): fus_svr,253,35,11.373,,,11.293
+20,single->avg:sheikh_ada,253,35,4.972,10.066,2.0,5.32
+20,single-beat error (mean |pred-label| per beat): sheikh_ada,253,35,7.759,,,8.066
+20,single->avg:sheikh_ada+rule,253,35,5.261,10.248,2.087,5.649
+20,single-beat error (mean |pred-label| per beat): sheikh_ada+rule,253,35,8.207,,,9.055
+20,single->avg:sheikh_lgbm,253,35,5.437,9.799,2.435,5.522
+20,single-beat error (mean |pred-label| per beat): sheikh_lgbm,253,35,9.315,,,9.487
+20,single->avg:sheikh_rf,253,35,5.594,9.69,2.546,5.716
+20,single-beat error (mean |pred-label| per beat): sheikh_rf,253,35,8.967,,,9.099
+20,single->avg:sheikh_ridge,253,35,8.59,10.201,6.079,8.597
+20,single-beat error (mean |pred-label| per beat): sheikh_ridge,253,35,15.03,,,14.871
+20,single->avg:sheikh_svr,253,35,6.796,9.821,3.62,6.613
+20,single-beat error (mean |pred-label| per beat): sheikh_svr,253,35,11.904,,,11.915
