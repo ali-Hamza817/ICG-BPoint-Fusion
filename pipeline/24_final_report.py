@@ -32,7 +32,7 @@ for mo in OURS:
     boots = [sj.sample(len(sj), replace=True, random_state=int(rng.integers(1e9))).mean() for _ in range(2000)]
     rows.append(dict(model=mo, description=OURS[mo], n_beats=int(k.sum()), n_repeats=len(reps), MAE=float(np.mean(maes)), SD=float(e.std()), MedAE=float(np.median(e)), subject_MAE=float(sj.mean()),
                      subject_MAE_ci95_lo=float(np.percentile(boots, 2.5)), subject_MAE_ci95_hi=float(np.percentile(boots, 97.5)), delta_vs_published=float(np.mean(maes) - PUB["pooled_MAE"])))
-P = pd.DataFrame(rows).sort_values("MAE"); P.round(3).to_csv(RES / "final_pooled.csv", index=False)
+P = pd.DataFrame(rows).sort_values("MAE"); P.round(6).to_csv(RES / "final_pooled.csv", index=False)
 
 X = pd.read_csv(RES / "v4_table_cross_dataset.csv"); X = X[X.model.isin(OURS) | X.model.str.replace("+rule", "").isin(OURS)]
 Xc = pd.read_csv(RES / "v4_ada_cross_all_configs.csv") if (RES / "v4_ada_cross_all_configs.csv").exists() else pd.DataFrame()

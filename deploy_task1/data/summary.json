@@ -1,0 +1,152 @@
+{
+ "counts": {
+  "patients": 39,
+  "annotated": 12014,
+  "usable": 11694,
+  "empkins": 4936,
+  "guardian": 6758,
+  "evaluated": 11018,
+  "removed_artefact": 209,
+  "matlab_ok": 11433,
+  "matlab_not": 261
+ },
+ "data": {
+  "EmpkinS": {
+   "RB": 58.43152350081037,
+   "PEP": 88.61041329011346,
+   "HR": 101.09009818257782
+  },
+  "Guardian": {
+   "RB": 106.44746966558154,
+   "PEP": 138.7664989641906,
+   "HR": 67.6831750339213
+  }
+ },
+ "inter_rater": {
+  "mean": 7.942605633802817,
+  "sd": 14.264750402558642,
+  "n": 11360
+ },
+ "pooled": [
+  {
+   "model": "fus_ada",
+   "desc": "Sheikh 465 + Abel 13 features + AdaBoost",
+   "MAE": 6.730013,
+   "SD": 12.784237,
+   "MedAE": 2.0,
+   "lo": 5.849219,
+   "hi": 8.91586,
+   "reps": 1
+  },
+  {
+   "model": "sheikh_ada",
+   "desc": "Sheikh 465 features + AdaBoost",
+   "MAE": 6.734907,
+   "SD": 12.689866,
+   "MedAE": 2.0,
+   "lo": 5.818767,
+   "hi": 8.967606,
+   "reps": 1
+  },
+  {
+   "model": "fus_rf",
+   "desc": "Fusion + Random Forest",
+   "MAE": 7.743334,
+   "SD": 11.686993,
+   "MedAE": 2.934538,
+   "lo": 6.941693,
+   "hi": 9.797179,
+   "reps": 3
+  },
+  {
+   "model": "sheikh_rf",
+   "desc": "Sheikh 465 + Random Forest",
+   "MAE": 7.823506,
+   "SD": 11.87529,
+   "MedAE": 2.946009,
+   "lo": 6.915497,
+   "hi": 9.89156,
+   "reps": 3
+  },
+  {
+   "model": "fus_lgbm",
+   "desc": "Fusion + LightGBM",
+   "MAE": 8.208481,
+   "SD": 11.51979,
+   "MedAE": 3.630897,
+   "lo": 7.188158,
+   "hi": 10.042449,
+   "reps": 3
+  },
+  {
+   "model": "sheikh_lgbm",
+   "desc": "Sheikh 465 + LightGBM",
+   "MAE": 8.277526,
+   "SD": 11.659385,
+   "MedAE": 3.551439,
+   "lo": 7.218225,
+   "hi": 10.208604,
+   "reps": 3
+  },
+  {
+   "model": "fus_svr",
+   "desc": "Fusion + SVR",
+   "MAE": 10.1616,
+   "SD": 12.414542,
+   "MedAE": 5.172361,
+   "lo": 9.276045,
+   "hi": 12.35011,
+   "reps": 3
+  },
+  {
+   "model": "sheikh_svr",
+   "desc": "Sheikh 465 + SVR",
+   "MAE": 10.627842,
+   "SD": 13.152671,
+   "MedAE": 5.241029,
+   "lo": 9.703087,
+   "hi": 13.067803,
+   "reps": 3
+  }
+ ],
+ "cross": {
+  "EmpkinS->Guardian": {
+   "min": 12.461,
+   "max": 14.077,
+   "best_pick": 12.461,
+   "n_settings": 8
+  },
+  "Guardian->EmpkinS": {
+   "min": 25.4,
+   "max": 34.486,
+   "best_pick": 28.224,
+   "n_settings": 8
+  }
+ },
+ "ea": {
+  "10": {
+   "n_windows": 468,
+   "ea_best": 7.916,
+   "ea_ada": 9.315,
+   "single_avg": 4.708,
+   "single_beat": 6.881
+  },
+  "20": {
+   "n_windows": 258,
+   "ea_best": 8.461,
+   "ea_ada": 9.335,
+   "single_avg": 4.972,
+   "single_beat": 7.759
+  }
+ },
+ "published": {
+  "pooled": 8.13,
+  "pooled_sd": 12.12,
+  "inter_rater": 8.35,
+  "inter_rater_sd": 14.78,
+  "e2g_RF": 36.24,
+  "e2g_SVR": 19.39,
+  "g2e_RF": 52.92,
+  "g2e_SVR": 12.7
+ }
+}
