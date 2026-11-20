@@ -8,7 +8,7 @@ HOW THE LOGIN WORKS (GitHub Pages is a static host: there is no server to check 
 LIMITS (be honest in the README): this protects the website's content from casual visitors; it is not server-side security. Anyone can download the ciphertext and try
   passwords offline (a long random password makes that impractical).  The same data/figures also exist unencrypted in other folders of the public repository.
 Usage:  python 21_build_secure_site.py [--id advisor] [--password '...']   (no --password = generate a strong one and save it to private/credentials.txt, which is git-ignored)"""
-import argparse, base64, io, json, secrets, shutil
+import argparse, base64, hashlib, io, json, secrets, shutil
 from pathlib import Path
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.ciphers.aead import AESGCM
@@ -18,13 +18,18 @@ from PIL import Image
 ROOT = Path(__file__).resolve().parents[1]; OUT = ROOT / "site_secure"; SRC = ROOT / "site_src" / "index.html"
 DATA = ROOT / "deploy_task1" / "data"; FIG = ROOT / "figures" / "task2"; ITER = 600_000
 b64 = lambda b: base64.b64encode(b).decode()
-ap = argparse.ArgumentParser(); ap.add_argument("--id", default="advisor"); ap.add_argument("--password", default=None); a = ap.parse_args()
+ap = argparse.ArgumentParser(); ap.add_argument("--id", default="advisor"); ap.add_argument("--password", default=None); ap.add_argument("--out", default=str(OUT)); ap.add_argument("--key-file", default=str(ROOT / "private" / "site_key.bin")); a = ap.parse_args()
+OUT = Path(a.out); KEYFILE = Path(a.key_file)
 login = a.id.strip().lower()
 if a.password is None:
     alpha = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; pw = "-".join("".join(secrets.choice(alpha) for _ in range(4)) for _ in range(4))
     (ROOT / "private").mkdir(exist_ok=True); (ROOT / "private" / "credentials.txt").write_text(f"login id : {login}\npassword : {pw}\n")
 else: pw = a.password
-K = AESGCM.generate_key(bit_length=256); gcm = AESGCM(K)
+# the data key is kept in a private, git-ignored file and REUSED across rebuilds, so a browser tab opened before an update keeps working;
+# delete the key file (or pass another --key-file) to rotate it: tabs opened earlier are then sent back to the login page.
+if KEYFILE.exists(): K = KEYFILE.read_bytes()
+else: KEYFILE.parent.mkdir(exist_ok=True, parents=True); K = AESGCM.generate_key(bit_length=256); KEYFILE.write_bytes(K)
+gcm = AESGCM(K); kid = hashlib.sha256(K).hexdigest()[:16]; bid = secrets.token_hex(6)      # kid: key identity (public), bid: build id (cache busting)
 
 (OUT / "enc").mkdir(parents=True, exist_ok=True)
 def put(path, data):                                                  # path = logical name used by the page, e.g. data/patients.json
@@ -39,6 +44,6 @@ for f in sorted((FIG / "strips").glob("*.png")): put(f"task2/strips/{f.name}", f
 
 salt, iv = secrets.token_bytes(16), secrets.token_bytes(12)
 kek = PBKDF2HMAC(hashes.SHA256(), 32, salt, ITER).derive(f"{login}\n{pw}".encode())
-(OUT / "vault.json").write_text(json.dumps(dict(v=1, iter=ITER, salt=b64(salt), iv=b64(iv), ct=b64(AESGCM(kek).encrypt(iv, K, None)))))
+(OUT / "vault.json").write_text(json.dumps(dict(v=2, iter=ITER, salt=b64(salt), iv=b64(iv), ct=b64(AESGCM(kek).encrypt(iv, K, None)), kid=kid, bid=bid)))
 shutil.copy(SRC, OUT / "index.html"); (OUT / ".nojekyll").write_text("")
-print(f"encrypted {n} files -> {OUT}; login id '{login}'" + ("; password saved in private/credentials.txt" if a.password is None else ""))
+print(f"encrypted {n} files -> {OUT}; key id {kid}; login id '{login}'" + ("; password saved in private/credentials.txt" if a.password is None else ""))

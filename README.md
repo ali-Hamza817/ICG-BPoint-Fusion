@@ -134,6 +134,7 @@ GitHub Pages is a static host, so there is no server to check a password. Instea
 - All data and images are **encrypted with AES-256-GCM** and only the ciphertext is published.
 - The decryption key is itself stored encrypted under a key derived from *login ID + password* (PBKDF2-SHA256, 600,000 iterations). The browser derives it from what you type; a wrong ID or password fails to decrypt.
 - Nothing about the password is stored in the repository.
+- The data key is kept in a private, git-ignored file and reused across updates, so a browser tab left open during an update keeps working; if the key is ever rotated, an open tab is sent back to the login page automatically.
 
 **What this does and does not protect.** It keeps the *website* content from casual visitors and from search engines. It is **not** server-side security: the encrypted files are downloadable (a long random password makes guessing impractical), and the same data and figures also exist **unencrypted in the public repository** (`dataset_*`, `figures/`, `docs/`). For true confidentiality use a private repository.
 
