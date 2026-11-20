@@ -158,24 +158,25 @@ tr.sel{background:var(--accent-soft);box-shadow:inset 3px 0 0 var(--accent)}tr.b
 <script>
 "use strict";
 /* ============ crypto: unlock the vault with login id + password, then decrypt assets locally ============ */
-var te=new TextEncoder(),td=new TextDecoder(),KEY=null,CACHE={},VER="";
+var te=new TextEncoder(),td=new TextDecoder(),KEY=null,CACHE={},VER="",KID="";
 function b64(s){return Uint8Array.from(atob(s),function(c){return c.charCodeAt(0)})}
 function toB64(u){var s="";for(var i=0;i<u.length;i++)s+=String.fromCharCode(u[i]);return btoa(s)}
 async function unlock(id,pw){
-  var v=await (await fetch("vault.json",{cache:"no-store"})).json();VER=String(v.iv).replace(/[^A-Za-z0-9]/g,"").slice(0,20);
+  var v=await (await fetch("vault.json",{cache:"no-store"})).json();KID=v.kid||"";VER=v.bid||"";
   var base=await crypto.subtle.importKey("raw",te.encode(id.trim().toLowerCase()+"\n"+pw),"PBKDF2",false,["deriveKey"]);
   var kek=await crypto.subtle.deriveKey({name:"PBKDF2",salt:b64(v.salt),iterations:v.iter,hash:"SHA-256"},base,{name:"AES-GCM",length:256},false,["decrypt"]);
   var raw=await crypto.subtle.decrypt({name:"AES-GCM",iv:b64(v.iv)},kek,b64(v.ct));           /* throws when id or password is wrong */
-  await useKey(new Uint8Array(raw));try{sessionStorage.setItem("icg_k",toB64(new Uint8Array(raw)));sessionStorage.setItem("icg_v",VER)}catch(e){}
+  await useKey(new Uint8Array(raw));try{sessionStorage.setItem("icg_k",toB64(new Uint8Array(raw)));sessionStorage.setItem("icg_kid",KID)}catch(e){}
 }
 async function useKey(raw){KEY=await crypto.subtle.importKey("raw",raw,"AES-GCM",false,["decrypt"])}
 async function asset(path){
   if(CACHE[path])return CACHE[path];
   var r=await fetch("enc/"+path.replace(/\//g,"__")+".bin?v="+VER);if(!r.ok)throw new Error("missing "+path);
   var b=new Uint8Array(await r.arrayBuffer());
-  var pt=await crypto.subtle.decrypt({name:"AES-GCM",iv:b.slice(0,12),additionalData:te.encode(path)},KEY,b.slice(12));
+  var pt;try{pt=await crypto.subtle.decrypt({name:"AES-GCM",iv:b.slice(0,12),additionalData:te.encode(path)},KEY,b.slice(12))}catch(e){await staleKey();throw e}
   return (CACHE[path]=pt);
 }
+async function staleKey(){try{var vv=await (await fetch("vault.json",{cache:"no-store"})).json();if((vv.kid||"")!==KID){try{sessionStorage.clear()}catch(x){}$("main").innerHTML='<p class="note">The site was updated. Please sign in again…</p>';setTimeout(function(){location.reload()},900)}}catch(e){}}
 async function jsonAsset(p){return JSON.parse(td.decode(await asset(p)))}
 var URLS={};async function imgURL(p){if(!URLS[p])URLS[p]=URL.createObjectURL(new Blob([await asset(p)],{type:"image/png"}));return URLS[p]}
 
@@ -205,7 +206,7 @@ $("lf").addEventListener("submit",async function(e){
 });
 $("out").addEventListener("click",function(){try{sessionStorage.removeItem("icg_k")}catch(e){}location.hash="";location.reload()});
 async function boot(){
-  try{var k=sessionStorage.getItem("icg_k");if(k){VER=sessionStorage.getItem("icg_v")||"";var vv=await (await fetch("vault.json",{cache:"no-store"})).json();if(String(vv.iv).replace(/[^A-Za-z0-9]/g,"").slice(0,20)!==VER)throw 0;await useKey(b64(k));await start();return}}catch(e){KEY=null;try{sessionStorage.clear()}catch(x){}}
+  try{var k=sessionStorage.getItem("icg_k");if(k){var vv=await (await fetch("vault.json",{cache:"no-store"})).json();if((vv.kid||"")!==(sessionStorage.getItem("icg_kid")||"x"))throw 0;KID=vv.kid||"";VER=vv.bid||"";await useKey(b64(k));await start();return}}catch(e){KEY=null;try{sessionStorage.clear()}catch(x){}}
   $("login").hidden=false;$("uid").focus();
 }
 async function start(){
