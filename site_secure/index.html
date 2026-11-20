@@ -92,6 +92,13 @@ tr.sel{background:var(--accent-soft);box-shadow:inset 3px 0 0 var(--accent)}tr.b
 .thumb{background:var(--surface);border:1px solid var(--line);border-radius:6px;overflow:hidden;cursor:zoom-in;padding:0;text-align:left;color:inherit}
 .thumb img{display:block;width:100%;height:auto;background:#fff;min-height:56px}.thumb span{display:block;padding:4px 8px;font-size:12px;color:var(--muted)}
 .callout{margin-top:22px;background:var(--warn-soft);border-radius:6px;padding:10px 14px;font-size:13px;color:var(--fg)}
+/* visualization: dark, minimal, almost no text */
+.layout.one{grid-template-columns:minmax(0,1fr)}.layout.one .list{display:none}
+.vbar{display:flex;gap:10px;align-items:center;margin-bottom:12px}
+.vbar select{font:inherit;color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:6px 10px}
+.vpanel{position:relative;background:#071014;border:1px solid #17262e;border-radius:10px;overflow:hidden;margin-bottom:16px}
+.vpanel canvas{width:100%;display:block}
+.vt{position:absolute;left:18px;top:14px;font:500 11px var(--font-head);letter-spacing:.24em;text-transform:uppercase;color:rgba(200,225,235,.5);z-index:1;pointer-events:none}
 /* lightbox */
 #lb{position:fixed;inset:0;z-index:100;background:rgba(6,12,16,.9);display:grid;grid-template-rows:auto minmax(0,1fr) auto}
 #lb .bar{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 16px;color:#e6edf2}
@@ -119,7 +126,7 @@ tr.sel{background:var(--accent-soft);box-shadow:inset 3px 0 0 var(--accent)}tr.b
 
 <div class="wrap" id="app" hidden>
   <div class="top"><h1>ICG Patient Beats</h1><button class="out" id="out">Sign out</button></div>
-  <nav class="tabs" aria-label="Sections"><a href="#" id="tab1">Task 1 · Patient beats</a><a href="#task2" id="tab2">Task 2 · Dataset and features</a></nav>
+  <nav class="tabs" aria-label="Sections"><a href="#" id="tab1">Task 1 · Patient beats</a><a href="#task2" id="tab2">Task 2 · Dataset and features</a><a href="#visualization" id="tab3">Visualization</a></nav>
   <details class="def"><summary>Definitions</summary>
     <p><b>PEP</b> = B − Q (manual annotation, rater 1). <b>RB</b> = B-point time after the R-peak. <b>C</b> = main ICG peak.</p>
     <p>Usable beat: B label present and PEP 20 to 250 ms. Others are flagged. Data: public Abel et al. 2026 (EmpkinS 15, Guardian 24 patients).</p>
@@ -207,7 +214,9 @@ function buildList(){
 function route(){
   var h=location.hash.replace("#",""),id=h&&idOf(h);
   [].forEach.call($("plist").querySelectorAll("button"),function(b){b.setAttribute("aria-current",String(b.dataset.id===id))});
-  var t2=h==="task2";$("tab1").removeAttribute("aria-current");$("tab2").removeAttribute("aria-current");$(t2?"tab2":"tab1").setAttribute("aria-current","page");
+  var t2=h==="task2",tv=h==="visualization";["tab1","tab2","tab3"].forEach(function(t){$(t).removeAttribute("aria-current")});$(tv?"tab3":t2?"tab2":"tab1").setAttribute("aria-current","page");
+  S.viz=false;if(VZ.raf){cancelAnimationFrame(VZ.raf);VZ.raf=0}document.querySelector(".layout").classList.toggle("one",tv);document.querySelector("details.def").hidden=tv;
+  if(tv){S.cur=null;vizView();return}
   if(t2){S.cur=null;task2View();return}
   if(!id){S.cur=null;overview();return}
   $("main").innerHTML='<p class="note">Loading…</p>';
@@ -287,7 +296,7 @@ function fillTable(){
   $("tb").innerHTML=h;$("tb").onclick=function(e){var r=e.target.closest("tr");if(r)selectBeat(+r.dataset.i,false)};$("tb").onkeydown=function(e){if(e.key==="Enter"){var r=e.target.closest("tr");if(r)selectBeat(+r.dataset.i,false)}};
 }
 function selectBeat(i,scroll){S.sel=i;[].forEach.call($("tb").querySelectorAll("tr"),function(r){r.classList.toggle("sel",+r.dataset.i===i)});if(scroll){var r=$("tb").querySelector('tr[data-i="'+i+'"]');if(r)r.scrollIntoView({block:"nearest"})}redraw()}
-function redraw(){if(S.cur&&$("cwf")){drawWave($("cwf"),280);drawEcg($("cecg"),240);drawHist($("chist"),280);drawPep($("cpep"),220)}else drawSparks()}
+function redraw(){if(S.viz){vizRedraw();return}if(S.cur&&$("cwf")){drawWave($("cwf"),280);drawEcg($("cecg"),240);drawHist($("chist"),280);drawPep($("cpep"),220)}else drawSparks()}
 
 /* ---------- charts (K = scale factor, larger when enlarged) ---------- */
 function setup(c,h,w){var dpr=window.devicePixelRatio||1;w=w||c.clientWidth;c.width=Math.round(w*dpr);c.height=Math.round(h*dpr);if(!c.isConnected||!c.clientWidth)c.style.width=w+"px";c.style.height=h+"px";var g=c.getContext("2d");g.setTransform(dpr,0,0,dpr,0,0);return {g:g,w:w,h:h}}
@@ -378,6 +387,108 @@ function fillStrips(){
   var P=S.ov.patients.filter(function(p){return S.flt==="All"||p.dataset===S.flt});
   $("sg").innerHTML=P.map(function(p){return '<button class="thumb" data-group="strips" type="button"><img alt="'+esc(p.patient)+' ECG and ICG" data-asset="task2/thumbs/strip_'+p.id+'.png" data-full="task2/strips/'+p.id+'.png" data-title="'+esc(p.patient)+' · '+p.dataset+'" data-cap="PEP '+fmt(p.PEP)+' ms · '+p.n_usable+' usable beats"><span>'+esc(p.patient)+' · PEP '+fmt(p.PEP)+'</span></button>'}).join("");
   hydrate($("sg"));
+}
+
+/* ============ Visualization ============ */
+var VZ={raf:0,pid:null,d:null,ord:[],bi:0,start:0,last:0,paused:false,rng:null,cells:[],hot:-1};
+var RM=matchMedia("(prefers-reduced-motion: reduce)").matches;
+function pct(a,p){a=a.slice().sort(function(x,y){return x-y});return a[Math.min(a.length-1,Math.max(0,Math.floor(a.length*p)))]}
+function vizView(){
+  S.cur=null;S.viz=true;
+  var opts=["EmpkinS","Guardian"].map(function(ds){return '<optgroup label="'+ds+'">'+S.ov.patients.filter(function(p){return p.dataset===ds}).map(function(p){return '<option value="'+p.id+'">'+esc(p.patient)+'</option>'}).join("")+'</optgroup>'}).join("");
+  $("main").innerHTML='<div class="vbar"><select id="vp" aria-label="Patient">'+opts+'</select>'+(RM?'':'<button class="chip" id="vpause" type="button" aria-pressed="false">Pause</button>')+'</div>'
+   +'<section class="vpanel"><span class="vt">Heartbeat</span><canvas id="vhero" role="img" aria-label="Animated ECG and ICG of one patient with Q, R, B and C marked"></canvas></section>'
+   +'<section class="vpanel"><span class="vt">Every beat</span><canvas id="vfall" role="img" aria-label="Ridgeline plot of consecutive ICG beats"></canvas></section>'
+   +'<section class="vpanel"><span class="vt">39 patients</span><canvas id="vconst" role="img" aria-label="Average ICG beat of every patient"></canvas></section>';
+  $("vp").value=VZ.pid||"EmpkinS_VP_003";$("vp").onchange=function(){vizLoad(this.value)};
+  if($("vpause"))$("vpause").onclick=function(){VZ.paused=!VZ.paused;this.textContent=VZ.paused?"Play":"Pause";this.setAttribute("aria-pressed",String(VZ.paused))};
+  var cc=$("vconst");cc.onpointermove=function(e){var r=cc.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top,hit=-1;VZ.cells.forEach(function(c,i){if(x>=c.x&&x<c.x+c.w&&y>=c.y&&y<c.y+c.h)hit=i});if(hit!==VZ.hot){VZ.hot=hit;cc.style.cursor=hit>=0?"pointer":"default";drawConst()}};
+  cc.onpointerleave=function(){if(VZ.hot!==-1){VZ.hot=-1;drawConst()}};cc.onclick=function(){if(VZ.hot>=0)location.hash=hashOf(S.ov.patients[VZ.hot].id)};
+  drawConst();vizLoad($("vp").value);
+}
+function vizLoad(id){
+  VZ.pid=id;VZ.d=null;if(VZ.raf){cancelAnimationFrame(VZ.raf);VZ.raf=0}
+  jsonAsset("data/"+id+".json").then(function(d){
+    if(VZ.pid!==id||!S.viz)return;VZ.d=d;VZ.ord=[];d.beats.forEach(function(b,i){if(b[11]&&b[5]!=null&&b[6]!=null&&b[10]!=null)VZ.ord.push(i)});
+    var ev=[],iv=[];VZ.ord.forEach(function(i,k){if(k%2)return;d.ecg[i].forEach(function(v){ev.push(v/1000)});d.wf[i].forEach(function(v){iv.push(v/1000)})});
+    var ep=(pct(ev,.995)-pct(ev,.005))*.08,ip=(pct(iv,.995)-pct(iv,.005))*.08;VZ.rng={eLo:pct(ev,.005)-ep,eHi:pct(ev,.995)+ep,iLo:pct(iv,.005)-ip,iHi:pct(iv,.995)+ip};
+    VZ.bi=Math.floor(VZ.ord.length*0.3);VZ.start=0;VZ.last=0;drawFall();startHero();
+  });
+}
+function vizRedraw(){if(!$("vhero"))return;drawConst();drawFall();if(RM||VZ.paused||!VZ.raf)heroStatic()}
+function startHero(){
+  if(RM){heroStatic();return}
+  if(!VZ.raf)VZ.raf=requestAnimationFrame(heroLoop);
+}
+document.addEventListener("visibilitychange",function(){if(!document.hidden&&S.viz&&VZ.d&&!VZ.raf&&!RM){VZ.last=0;VZ.raf=requestAnimationFrame(heroLoop)}});
+function heroLoop(ts){
+  VZ.raf=0;if(!S.viz||!VZ.d||document.hidden||!$("vhero"))return;
+  var SW=3200,HD=2400;if(!VZ.start)VZ.start=ts;if(VZ.paused&&VZ.last)VZ.start+=ts-VZ.last;VZ.last=ts;
+  var el=ts-VZ.start;if(el>SW+HD){VZ.bi=(VZ.bi+1)%VZ.ord.length;VZ.start=ts;el=0}
+  heroDraw(Math.min(1,el/SW),el>SW);VZ.raf=requestAnimationFrame(heroLoop);
+}
+function heroStatic(){if(VZ.d)heroDraw(1,true)}
+function cv(c,h){var dpr=Math.min(2,window.devicePixelRatio||1),w=c.clientWidth||900;if(c.width!==Math.round(w*dpr)||c.height!==Math.round(h*dpr)){c.width=Math.round(w*dpr);c.height=Math.round(h*dpr);c.style.height=h+"px"}var g=c.getContext("2d");g.setTransform(dpr,0,0,dpr,0,0);return {g:g,w:w,h:h}}
+function valAt(a,t){var f=(t+50)/5,i=Math.max(0,Math.min(a.length-2,Math.floor(f))),r=Math.max(0,Math.min(1,f-i));return (a[i]*(1-r)+a[i+1]*r)/1000}
+var MK={R:"#ff6b6b",Q:"#6db3ff",B:"#ffa94d",C:"#4fe3a6"};
+function heroDraw(prog,done){
+  var d=VZ.d,c=$("vhero");if(!c||!d||!VZ.ord.length)return;var W=c.clientWidth||900,H=Math.max(300,Math.min(520,Math.round(W*0.42))),o=cv(c,H),g=o.g,w=o.w,h=o.h,R=VZ.rng;
+  var bg=g.createLinearGradient(0,0,0,h);bg.addColorStop(0,"#071014");bg.addColorStop(1,"#0b1a21");g.fillStyle=bg;g.fillRect(0,0,w,h);
+  var x0=w*.05,x1=w*.95,eT=h*.12,eB=h*.40,iT=h*.50,iB=h*.84,by=h*.93;
+  var fx=function(t){return x0+(t+50)/500*(x1-x0)},yE=function(v){return eB-(v-R.eLo)/(R.eHi-R.eLo)*(eB-eT)},yI=function(v){return iB-(v-R.iLo)/(R.iHi-R.iLo)*(iB-iT)};
+  g.strokeStyle="rgba(111,211,255,.06)";g.lineWidth=1;for(var t=-50;t<=450;t+=50){g.beginPath();g.moveTo(fx(t),h*.06);g.lineTo(fx(t),by+6);g.stroke()}
+  [eT,eB,iT,iB].forEach(function(y){g.beginPath();g.moveTo(x0,y);g.lineTo(x1,y);g.stroke()});
+  var T=d.t_ms,n=T.length,bi=VZ.ord[VZ.bi],b=d.beats[bi];
+  /* afterimages of the previous beats */
+  for(var k=5;k>=1;k--){var pi=VZ.ord[(VZ.bi-k+VZ.ord.length*8)%VZ.ord.length];g.lineWidth=1.2;g.globalAlpha=.20-.03*k;
+    g.strokeStyle="#53f2a6";g.beginPath();d.ecg[pi].forEach(function(v,j){var x=fx(T[j]),y=yE(v/1000);j?g.lineTo(x,y):g.moveTo(x,y)});g.stroke();
+    g.strokeStyle="#6fd3ff";g.beginPath();d.wf[pi].forEach(function(v,j){var x=fx(T[j]),y=yI(v/1000);j?g.lineTo(x,y):g.moveTo(x,y)});g.stroke()}
+  g.globalAlpha=1;
+  var sweep=-50+prog*500,kmax=Math.min(n-1,(sweep+50)/5);
+  function trace(arr,yf,col){g.save();g.shadowColor=col;g.shadowBlur=14;g.strokeStyle=col;g.lineWidth=2.3;g.lineJoin="round";g.beginPath();var j=0;for(;j<=Math.floor(kmax);j++){var x=fx(T[j]),y=yf(arr[j]/1000);j?g.lineTo(x,y):g.moveTo(x,y)}
+    if(kmax>Math.floor(kmax)&&j<n){var f=kmax-Math.floor(kmax),a=arr[j-1],bb=arr[j];g.lineTo(fx(T[j-1]+f*5),yf((a*(1-f)+bb*f)/1000))}g.stroke();g.restore()}
+  trace(d.ecg[bi],yE,"#53f2a6");trace(d.wf[bi],yI,"#6fd3ff");
+  if(!done){var sx=fx(sweep);var gr=g.createLinearGradient(sx-30,0,sx,0);gr.addColorStop(0,"rgba(120,220,255,0)");gr.addColorStop(1,"rgba(120,220,255,.10)");g.fillStyle=gr;g.fillRect(sx-30,h*.06,30,by-h*.06)}
+  var alpha=function(t){return done?1:Math.max(0,Math.min(1,(sweep-t)/40))};
+  function dot(t,arr,yf,kind,col,lab){var a=alpha(t);if(a<=0)return;var x=fx(t),y=yf(valAt(arr,t));g.save();g.globalAlpha=a;g.fillStyle=col;g.shadowColor=col;g.shadowBlur=10;g.beginPath();
+    if(kind==="tri"){g.moveTo(x-6,y-16);g.lineTo(x+6,y-16);g.lineTo(x,y-5);g.closePath()}else if(kind==="sq"){g.rect(x-5,y-5,10,10)}else if(kind==="dia"){g.moveTo(x,y-7);g.lineTo(x+7,y);g.lineTo(x,y+7);g.lineTo(x-7,y);g.closePath()}else{g.arc(x,y,5,0,7)}
+    g.fill();g.shadowBlur=0;g.fillStyle="rgba(235,245,250,"+a*.9+")";g.font="600 12px "+css("--font-head");g.textAlign="center";g.fillText(lab,x,kind==="tri"?y-22:y-13);g.restore()}
+  dot(0,d.ecg[bi],yE,"tri",MK.R,"R");dot(b[5],d.ecg[bi],yE,"circ",MK.Q,"Q");dot(b[6],d.wf[bi],yI,"sq",MK.B,"B");dot(b[10],d.wf[bi],yI,"dia",MK.C,"C");
+  /* PEP bracket Q -> B */
+  var ap=Math.min(alpha(b[6]),alpha(b[5]));
+  if(ap>0){var xq=fx(b[5]),xb=fx(b[6]);g.save();g.globalAlpha=ap;g.strokeStyle="rgba(255,169,77,.45)";g.setLineDash([3,4]);g.beginPath();g.moveTo(xq,yE(valAt(d.ecg[bi],b[5])));g.lineTo(xq,by);g.moveTo(xb,yI(valAt(d.wf[bi],b[6])));g.lineTo(xb,by);g.stroke();g.setLineDash([]);
+    g.strokeStyle="#ffa94d";g.lineWidth=2;g.beginPath();g.moveTo(xq,by);g.lineTo(xb,by);g.moveTo(xq,by-6);g.lineTo(xq,by+6);g.moveTo(xb,by-6);g.lineTo(xb,by+6);g.stroke();
+    g.fillStyle="#ffa94d";g.font="600 11px "+css("--font-head");g.textAlign="center";g.fillText("PEP",(xq+xb)/2,by-10);
+    g.fillStyle="rgba(255,255,255,.95)";g.font="600 "+Math.round(Math.max(26,w*.034))+"px "+css("--font-head");g.textAlign="right";g.fillText(fmt(b[8]),x1-34,h*.17);g.font="500 13px "+css("--font-body");g.fillStyle="rgba(200,225,235,.6)";g.fillText("ms",x1,h*.17);g.restore()}
+  g.fillStyle="rgba(200,225,235,.32)";g.font="500 11px "+css("--font-body");g.textAlign="right";g.fillText(d.patient+"  ·  "+(VZ.bi+1)+" / "+VZ.ord.length,x1,h-10);
+}
+
+/* ridgeline: consecutive ICG beats stacked, drawn top to bottom so lower rows occlude upper ones */
+function drawFall(){
+  var d=VZ.d,c=$("vfall");if(!c||!d||!VZ.ord.length)return;var W=c.clientWidth||900,o=cv(c,Math.round(W*.5)),g=o.g,w=o.w,h=o.h,R=VZ.rng;
+  g.fillStyle="#060b0e";g.fillRect(0,0,w,h);var N=Math.min(64,VZ.ord.length),rows=[];for(var k=0;k<N;k++)rows.push(VZ.ord[Math.round(k*(VZ.ord.length-1)/Math.max(1,N-1))]);
+  var x0=w*.1,x1=w*.9,top=h*.2,dy=(h*.74)/N,amp=dy*10.5,T=d.t_ms,fx=function(t){return x0+(t+50)/500*(x1-x0)};
+  rows.forEach(function(bi,k){var base=top+k*dy,col="hsl("+(196-k/(N-1||1)*168)+",85%,"+(62+k/(N||1)*4)+"%)";
+    var pts=d.wf[bi].map(function(v,j){return [fx(T[j]),base-(v/1000-R.iLo)/(R.iHi-R.iLo)*amp]});
+    g.beginPath();pts.forEach(function(p,j){j?g.lineTo(p[0],p[1]):g.moveTo(p[0],p[1])});g.lineTo(pts[pts.length-1][0],base+2);g.lineTo(pts[0][0],base+2);g.closePath();g.fillStyle="#060b0e";g.fill();
+    g.beginPath();pts.forEach(function(p,j){j?g.lineTo(p[0],p[1]):g.moveTo(p[0],p[1])});g.strokeStyle=col;g.lineWidth=1.4;g.stroke();
+    var b=d.beats[bi];if(b[6]!=null){var y=base-(valAt(d.wf[bi],b[6])-R.iLo)/(R.iHi-R.iLo)*amp;g.fillStyle="#fff";g.beginPath();g.arc(fx(b[6]),y,2.1,0,7);g.fill()}});
+}
+
+/* constellation: the average ICG beat of every patient, B and C marked */
+function drawConst(){
+  var c=$("vconst");if(!c||!S.ov)return;var P=S.ov.patients,W=c.clientWidth||900,cols=Math.max(4,Math.min(9,Math.floor(W/150))),cw=W/cols,ch=cw*.66,rows=Math.ceil(P.length/cols),o=cv(c,Math.round(rows*ch+54)),g=o.g;
+  g.fillStyle="#071014";g.fillRect(0,0,o.w,o.h);VZ.cells=[];var T=S.ov.t_ms;
+  P.forEach(function(p,i){var cx=(i%cols)*cw,cy=44+Math.floor(i/cols)*ch,pad=cw*.1,x0=cx+pad,x1=cx+cw-pad,y0=cy+ch*.12,y1=cy+ch*.68,hot=VZ.hot===i;VZ.cells.push({x:cx,y:cy-8,w:cw,h:ch});
+    var m=p.mean.map(function(v){return v/1000}),lo=Math.min.apply(null,m),hi=Math.max.apply(null,m),col=p.dataset==="EmpkinS"?"#6fd3ff":"#ffb067";
+    var fx=function(t){return x0+(t+50)/500*(x1-x0)},fy=function(v){return y1-(v-lo)/(hi-lo||1)*(y1-y0)};
+    if(hot){g.fillStyle="rgba(120,200,255,.07)";g.fillRect(cx+3,cy-6,cw-6,ch-2)}
+    g.strokeStyle="rgba(111,211,255,.10)";g.lineWidth=1;g.beginPath();g.moveTo(fx(0),y0-4);g.lineTo(fx(0),y1+4);g.stroke();
+    g.save();g.shadowColor=col;g.shadowBlur=hot?14:6;g.strokeStyle=col;g.lineWidth=hot?2.2:1.6;g.beginPath();m.forEach(function(v,j){var x=fx(T[j]),y=fy(v);j?g.lineTo(x,y):g.moveTo(x,y)});g.stroke();g.restore();
+    var at=function(t){return fy(valAt(p.mean,t))};
+    if(p.RB!=null){g.fillStyle=MK.B;g.beginPath();g.rect(fx(p.RB)-2.6,at(p.RB)-2.6,5.2,5.2);g.fill()}
+    if(p.RC!=null&&p.RC<450){g.fillStyle=MK.C;g.beginPath();g.arc(fx(p.RC),at(p.RC),2.8,0,7);g.fill()}
+    g.fillStyle=hot?"rgba(255,255,255,.95)":"rgba(200,225,235,.45)";g.font=(hot?"600 ":"500 ")+"11px "+css("--font-body");g.textAlign="center";g.fillText(p.patient.replace("GDN","G").replace("VP_","V")+(hot?"  ·  "+fmt(p.PEP)+" ms":""),cx+cw/2,y1+ch*.22);});
 }
 </script>
 </body>
