@@ -170,7 +170,7 @@ async function jsonAsset(p){return JSON.parse(td.decode(await asset(p)))}
 var URLS={};async function imgURL(p){if(!URLS[p])URLS[p]=URL.createObjectURL(new Blob([await asset(p)],{type:"image/png"}));return URLS[p]}
 
 /* ============ small helpers ============ */
-var PH_COL=["--p0","--p1","--p2","--p3","--p4"],S={ov:null,cur:null,hidden:{},sel:-1,flt:"All"},K=1;
+var PH_COL=["--p0","--p1","--p2","--p3","--p4"],S={ov:null,cur:null,hidden:{},sel:-1,flt:"All"},K=1,T0=-100,SPAN=550;
 function $(i){return document.getElementById(i)}
 function css(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim()}
 function fmt(x,d){return x==null?"–":Number(x).toFixed(d==null?0:d)}
@@ -207,7 +207,7 @@ boot();
 window.addEventListener("hashchange",function(){if(S.ov)route()});
 matchMedia("(prefers-color-scheme: dark)").addEventListener("change",function(){redraw()});
 new MutationObserver(function(){redraw()}).observe(document.documentElement,{attributes:true,attributeFilter:["data-theme"]});
-window.addEventListener("resize",function(){redraw()});
+var rzT=0;window.addEventListener("resize",function(){clearTimeout(rzT);rzT=setTimeout(redraw,120)});
 function buildList(){
   var h="";["EmpkinS","Guardian"].forEach(function(ds){h+='<h3>'+ds+'</h3>';S.ov.patients.filter(function(p){return p.dataset===ds}).forEach(function(p){h+='<button data-id="'+p.id+'"><span>'+esc(p.patient)+'</span><small>'+fmt(p.PEP)+' ms</small></button>'})});
   $("plist").innerHTML=h;$("plist").addEventListener("click",function(e){var b=e.target.closest("button");if(b)location.hash=hashOf(b.dataset.id)});
@@ -264,7 +264,7 @@ function overview(){
 function drawSparks(){
   var cs=document.querySelectorAll("canvas.sp");if(!cs.length)return;var col=css("--accent"),line=css("--line");
   [].forEach.call(cs,function(c){var p=S.ov.patients[+c.dataset.i],dpr=window.devicePixelRatio||1,w=110,h=30;c.width=w*dpr;c.height=h*dpr;var g=c.getContext("2d");g.scale(dpr,dpr);
-    var m=p.mean,lo=Math.min.apply(null,m),hi=Math.max.apply(null,m);g.strokeStyle=line;g.beginPath();g.moveTo(w*0.1,0);g.lineTo(w*0.1,h);g.stroke();
+    var m=p.mean,lo=Math.min.apply(null,m),hi=Math.max.apply(null,m);g.strokeStyle=line;g.beginPath();g.moveTo(w*(-T0/SPAN),0);g.lineTo(w*(-T0/SPAN),h);g.stroke();
     g.strokeStyle=col;g.lineWidth=1.5;g.beginPath();m.forEach(function(v,k){var x=k/(m.length-1)*(w-2)+1,y=h-2-(v-lo)/(hi-lo||1)*(h-4);k?g.lineTo(x,y):g.moveTo(x,y)});g.stroke()});
 }
 
@@ -281,8 +281,8 @@ function patientView(){
   h+='<div class="chips" id="chips" role="group" aria-label="Phases">'+d.phases.map(function(p,i){return '<button class="chip" aria-pressed="true" data-ph="'+i+'"><i style="background:var('+PH_COL[i%5]+')"></i>'+esc(p)+' '+B.filter(function(b){return b[1]===i}).length+'</button>'}).join("")+'</div>';
   h+='<div class="grid2"><div class="panel"><h3>ICG · every beat</h3><p id="wfnote"></p><canvas id="cwf" class="zoomable" height="280"></canvas></div><div class="panel"><h3>PEP histogram</h3><p>Usable beats</p><canvas id="chist" class="zoomable" height="280"></canvas></div></div>';
   h+='<div class="grid2"><div class="panel"><h3>ECG · every beat</h3><p id="ecgnote"></p><canvas id="cecg" class="zoomable" height="240"></canvas></div><div class="panel"><h3>Recording · 10 s</h3><p>Click to enlarge</p><img class="zi" alt="Continuous ECG and ICG of '+esc(d.id)+' with annotation marks" data-asset="task2/thumbs/strip_'+d.id+'.png" data-full="task2/strips/'+d.id+'.png" data-title="'+esc(d.patient)+' · ECG and ICG with annotations" data-cap="R-peak, Q onset, B point (rater 1 filled, rater 2 hollow), C point"></div></div>';
-  h+='<div class="panel" style="margin-bottom:12px"><h3>PEP per beat</h3><p>Click a dot to pick the beat</p><canvas id="cpep" class="zoomable" height="220"></canvas></div>';
-  h+='<div class="tablewrap"><table><thead><tr><th>Beat</th><th class="l">Phase</th><th>Time (s)</th><th>RR</th><th>HR</th><th>Q</th><th>B rater 1</th><th>B rater 2</th><th>PEP rater 1</th><th>PEP rater 2</th><th>C</th><th class="l"></th></tr></thead><tbody id="tb"></tbody></table></div>';
+  h+='<div class="panel" style="margin-bottom:12px"><h3>PEP per beat</h3><p>Filled = session 1, hollow = session 2 · click a dot to pick the beat</p><canvas id="cpep" class="zoomable" height="220"></canvas></div>';
+  h+='<div class="tablewrap"><table><thead><tr><th>Beat</th><th class="l">Phase</th><th class="l">Session</th><th>R time (s)</th><th>RR</th><th>HR</th><th>Q</th><th>B rater 1</th><th>B rater 2</th><th>PEP rater 1</th><th>PEP rater 2</th><th>C</th><th class="l"></th></tr></thead><tbody id="tb"></tbody></table></div>';
   $("main").innerHTML=h;hydrate($("main"));
   $("chips").addEventListener("click",function(e){var b=e.target.closest(".chip");if(!b)return;var i=+b.dataset.ph;S.hidden[i]=!S.hidden[i];b.setAttribute("aria-pressed",String(!S.hidden[i]));redraw();fillTable()});
   fillTable();redraw();
@@ -293,14 +293,14 @@ function patientView(){
 }
 function fillTable(){
   var d=S.cur,h="";d.beats.forEach(function(b,i){if(S.hidden[b[1]])return;
-    h+='<tr tabindex="0" data-i="'+i+'" class="'+(b[11]?"":"bad")+(i===S.sel?" sel":"")+'"><td>'+b[0]+'</td><td class="l">'+esc(d.phases[b[1]])+'</td><td>'+fmt(b[2],1)+'</td><td>'+fmt(b[3])+'</td><td>'+fmt(b[4])+'</td><td>'+fmt(b[5])+'</td><td>'+fmt(b[6])+'</td><td>'+fmt(b[7])+'</td><td>'+fmt(b[8])+'</td><td>'+fmt(b[9])+'</td><td>'+fmt(b[10])+'</td><td class="l">'+(b[11]?"":'<span class="flag">flagged</span>')+'</td></tr>'});
+    h+='<tr tabindex="0" data-i="'+i+'" class="'+(b[11]?"":"bad")+(i===S.sel?" sel":"")+'"><td>'+b[0]+'</td><td class="l">'+esc(d.phases[b[1]])+'</td><td class="l">'+esc(d.sessions[b[12]]||"–")+'</td><td>'+fmt(b[2],1)+'</td><td>'+fmt(b[3])+'</td><td>'+fmt(b[4])+'</td><td>'+fmt(b[5])+'</td><td>'+fmt(b[6])+'</td><td>'+fmt(b[7])+'</td><td>'+fmt(b[8])+'</td><td>'+fmt(b[9])+'</td><td>'+fmt(b[10])+'</td><td class="l">'+(b[11]?"":'<span class="flag">flagged</span>')+'</td></tr>'});
   $("tb").innerHTML=h;$("tb").onclick=function(e){var r=e.target.closest("tr");if(r)selectBeat(+r.dataset.i,false)};$("tb").onkeydown=function(e){if(e.key==="Enter"){var r=e.target.closest("tr");if(r)selectBeat(+r.dataset.i,false)}};
 }
 function selectBeat(i,scroll){S.sel=i;[].forEach.call($("tb").querySelectorAll("tr"),function(r){r.classList.toggle("sel",+r.dataset.i===i)});if(scroll){var r=$("tb").querySelector('tr[data-i="'+i+'"]');if(r)r.scrollIntoView({block:"nearest"})}redraw()}
 function redraw(){if(S.viz){vizRedraw();return}if(S.cur&&$("cwf")){drawWave($("cwf"),280);drawEcg($("cecg"),240);drawHist($("chist"),280);drawPep($("cpep"),220)}else drawSparks()}
 
 /* ---------- charts (K = scale factor, larger when enlarged) ---------- */
-function setup(c,h,w){var dpr=window.devicePixelRatio||1;w=w||c.clientWidth;c.width=Math.round(w*dpr);c.height=Math.round(h*dpr);if(!c.isConnected||!c.clientWidth)c.style.width=w+"px";c.style.height=h+"px";var g=c.getContext("2d");g.setTransform(dpr,0,0,dpr,0,0);return {g:g,w:w,h:h}}
+function setup(c,h,w){var dpr=window.devicePixelRatio||1;w=w||c.clientWidth||(c.parentElement?c.parentElement.clientWidth-24:0)||600;c.width=Math.round(w*dpr);c.height=Math.round(h*dpr);if(!c.isConnected||!c.clientWidth)c.style.width=w+"px";c.style.height=h+"px";var g=c.getContext("2d");g.setTransform(dpr,0,0,dpr,0,0);return {g:g,w:w,h:h}}
 function axes(g,x0,y0,x1,y1,xt,yt,xl,yl,fx,fy,mut,line){
   g.strokeStyle=line;g.fillStyle=mut;g.font=(11*K)+"px "+css("--font-body");g.lineWidth=1;
   xt.forEach(function(t){var x=fx(t);g.beginPath();g.moveTo(x,y0);g.lineTo(x,y1);g.stroke();g.textAlign="center";g.fillText(t,x,y0+14*K)});
@@ -314,15 +314,15 @@ function curves(g,d,key,idx,fx,fy,T,color){
 }
 function marks(g,d,key,fx,fy,list){
   var b=d.beats[S.sel],w=d[key][S.sel];g.lineWidth=2.4*K;g.strokeStyle=css("--p1");g.beginPath();w.forEach(function(v,j){var x=fx(d.t_ms[j]),y=fy(v/1000);j?g.lineTo(x,y):g.moveTo(x,y)});g.stroke();
-  var at=function(t){var f=(t+50)/5,a=Math.floor(f),r=f-a;if(a<0||a>=w.length-1)return null;return (w[a]*(1-r)+w[a+1]*r)/1000};
+  var at=function(t){var f=(t-T0)/5,a=Math.floor(f),r=f-a;if(a<0||a>=w.length-1)return null;return (w[a]*(1-r)+w[a+1]*r)/1000};
   list.forEach(function(p){if(p[0]==null)return;var y=at(p[0]);if(y==null)return;g.fillStyle=css("--p1");g.beginPath();g.arc(fx(p[0]),fy(y),4*K,0,7);g.fill();g.fillStyle=css("--fg");g.textAlign="center";g.fillText(p[1],fx(p[0]),fy(y)-8*K)});
 }
 function usable(){var d=S.cur,idx=[];d.beats.forEach(function(b,i){if(b[11]&&!S.hidden[b[1]])idx.push(i)});return idx}
 function drawWave(c,h,w){
   var d=S.cur,o=setup(c,h,w),g=o.g,mut=css("--muted"),line=css("--line"),warn=css("--warn"),x0=44*K,x1=o.w-10,y0=o.h-38*K,y1=10,T=d.t_ms,idx=usable(),all=[];
   idx.forEach(function(i){d.wf[i].forEach(function(v){all.push(v/1000)})});var lo=-2,hi=4;if(all.length){all.sort(function(a,b){return a-b});lo=all[Math.floor(all.length*0.005)];hi=all[Math.floor(all.length*0.995)]}
-  var pad=(hi-lo)*0.08;lo-=pad;hi+=pad;var fx=function(t){return x0+(t+50)/500*(x1-x0)},fy=function(v){return y0-(v-lo)/(hi-lo)*(y0-y1)},yt=[],st=Math.max(1,Math.round((hi-lo)/5));for(var v=Math.ceil(lo);v<=hi;v+=st)yt.push(v);
-  axes(g,x0,y0,x1,y1,[-50,0,100,200,300,400],yt,"time after R-peak (ms)","dZ/dt",fx,fy,mut,line);
+  var pad=(hi-lo)*0.08;lo-=pad;hi+=pad;var fx=function(t){return x0+(t-T0)/SPAN*(x1-x0)},fy=function(v){return y0-(v-lo)/(hi-lo)*(y0-y1)},yt=[],st=Math.max(1,Math.round((hi-lo)/5));for(var v=Math.ceil(lo);v<=hi;v+=st)yt.push(v);
+  axes(g,x0,y0,x1,y1,[-100,0,100,200,300,400],yt,"time after R-peak (ms)","dZ/dt",fx,fy,mut,line);
   g.save();g.beginPath();g.rect(x0,y1,x1-x0,y0-y1);g.clip();curves(g,d,"wf",idx,fx,fy,T,css("--accent"));g.restore();
   g.strokeStyle=mut;g.setLineDash([3,3]);g.beginPath();g.moveTo(fx(0),y0);g.lineTo(fx(0),y1);g.stroke();g.setLineDash([]);g.fillStyle=mut;g.textAlign="left";g.fillText("R",fx(0)+3,y1+10*K);
   var rbs=idx.map(function(i){return d.beats[i][6]}).filter(function(v){return v!=null});
@@ -334,9 +334,9 @@ function drawWave(c,h,w){
 function drawEcg(c,h,w){
   var d=S.cur;if(!d.ecg)return;var o=setup(c,h,w),g=o.g,mut=css("--muted"),line=css("--line"),x0=44*K,x1=o.w-10,y0=o.h-38*K,y1=10,T=d.t_ms,idx=usable(),all=[];
   idx.forEach(function(i){d.ecg[i].forEach(function(v){all.push(v/1000)})});var lo=-1,hi=2;if(all.length){all.sort(function(a,b){return a-b});lo=all[Math.floor(all.length*0.002)];hi=all[Math.floor(all.length*0.998)]}
-  var pad=(hi-lo)*0.1;lo-=pad;hi+=pad;var fx=function(t){return x0+(t+50)/500*(x1-x0)},fy=function(v){return y0-(v-lo)/(hi-lo)*(y0-y1)};
+  var pad=(hi-lo)*0.1;lo-=pad;hi+=pad;var fx=function(t){return x0+(t-T0)/SPAN*(x1-x0)},fy=function(v){return y0-(v-lo)/(hi-lo)*(y0-y1)};
   var yt=[],st=(hi-lo)/4,sg=Math.pow(10,Math.floor(Math.log10(st))),stp=Math.max(sg,Math.round(st/sg)*sg);for(var v=Math.ceil(lo/stp)*stp;v<=hi;v+=stp)yt.push(Math.round(v*100)/100);
-  axes(g,x0,y0,x1,y1,[-50,0,100,200,300,400],yt,"time after R-peak (ms)","ECG (a.u.)",fx,fy,mut,line);
+  axes(g,x0,y0,x1,y1,[-100,0,100,200,300,400],yt,"time after R-peak (ms)","ECG (a.u.)",fx,fy,mut,line);
   g.save();g.beginPath();g.rect(x0,y1,x1-x0,y0-y1);g.clip();curves(g,d,"ecg",idx,fx,fy,T,css("--accent"));g.restore();
   if(S.sel>=0&&d.beats[S.sel]){var b=d.beats[S.sel];marks(g,d,"ecg",fx,fy,[[b[5],"Q"],[0,"R"]]);if($("ecgnote")&&c.id==="cecg")$("ecgnote").textContent="Beat "+b[0]+" · Q "+fmt(b[5])+" ms"}
   else if($("ecgnote")&&c.id==="cecg")$("ecgnote").textContent=idx.length+" beats · thick line = mean";
@@ -353,13 +353,13 @@ function drawHist(c,h,w){
 var PEPGEO=null;
 function drawPep(c,h,w){
   var d=S.cur,o=setup(c,h,w),g=o.g,mut=css("--muted"),line=css("--line");
-  var pts=d.beats.map(function(b,i){return {i:i,t:b[2],y:b[8],ph:b[1],ok:b[11]}}).filter(function(p){return p.y!=null&&!S.hidden[p.ph]});
+  var pts=d.beats.map(function(b,i){return {i:i,t:i+1,y:b[8],ph:b[1],ok:b[11],s:b[12]}}).filter(function(p){return p.y!=null&&!S.hidden[p.ph]});
   var x0=44*K,x1=o.w-10,y0=o.h-38*K,y1=10;if(!pts.length)return;
   var tmin=Math.min.apply(null,pts.map(function(p){return p.t})),tmax=Math.max.apply(null,pts.map(function(p){return p.t})),ys=pts.map(function(p){return p.y}),lo=Math.floor(Math.min.apply(null,ys)/20)*20,hi=Math.ceil(Math.max.apply(null,ys)/20)*20;
   var fx=function(t){return x0+(t-tmin)/((tmax-tmin)||1)*(x1-x0)},fy=function(v){return y0-(v-lo)/(hi-lo||1)*(y0-y1)},xt=[],sx=Math.max(10,Math.ceil((tmax-tmin)/6/10)*10);for(var t=Math.ceil(tmin/sx)*sx;t<=tmax;t+=sx)xt.push(t);
   var yt=[];for(var v=lo;v<=hi;v+=Math.max(20,Math.ceil((hi-lo)/5/20)*20))yt.push(v);
-  axes(g,x0,y0,x1,y1,xt,yt,"R-peak time in the recording (s)","PEP (ms)",fx,fy,mut,line);
-  pts.forEach(function(p){g.fillStyle=css(PH_COL[p.ph%5]);g.globalAlpha=p.ok?0.9:0.35;g.beginPath();g.arc(fx(p.t),fy(p.y),(p.i===S.sel?5:2.6)*K,0,7);g.fill();if(p.i===S.sel){g.globalAlpha=1;g.strokeStyle=css("--fg");g.lineWidth=2;g.stroke()}});g.globalAlpha=1;
+  axes(g,x0,y0,x1,y1,xt,yt,"beat number (session 1, then session 2 if present)","PEP (ms)",fx,fy,mut,line);
+  pts.forEach(function(p){g.fillStyle=css(PH_COL[p.ph%5]);g.globalAlpha=p.ok?0.9:0.35;g.beginPath();g.arc(fx(p.t),fy(p.y),(p.i===S.sel?5:2.6)*K,0,7);if(p.s===1){g.strokeStyle=css(PH_COL[p.ph%5]);g.lineWidth=1.3*K;g.stroke()}else g.fill();if(p.i===S.sel){g.globalAlpha=1;g.strokeStyle=css("--fg");g.lineWidth=2;g.stroke()}});g.globalAlpha=1;
   if(c.id==="cpep")PEPGEO={pts:pts,fx:fx,fy:fy};
 }
 function pickScatter(e){
@@ -399,7 +399,7 @@ function vizView(){
   var opts=["EmpkinS","Guardian"].map(function(ds){return '<optgroup label="'+ds+'">'+S.ov.patients.filter(function(p){return p.dataset===ds}).map(function(p){return '<option value="'+p.id+'">'+esc(p.patient)+'</option>'}).join("")+'</optgroup>'}).join("");
   $("main").innerHTML='<div class="vbar"><select id="vp" aria-label="Patient">'+opts+'</select>'+(RM?'':'<button class="chip" id="vpause" type="button" aria-pressed="false">Pause</button>')+'</div>'
    +'<section class="vpanel"><span class="vt">Heartbeat</span><canvas id="vhero" role="img" aria-label="Animated ECG and ICG of one patient with Q, R, B and C marked"></canvas></section>'
-   +'<section class="vpanel"><span class="vt">Every beat</span><canvas id="vfall" role="img" aria-label="Ridgeline plot of consecutive ICG beats"></canvas></section>'
+   +'<section class="vpanel"><span class="vt">Beat by beat</span><canvas id="vfall" role="img" aria-label="Ridgeline plot of up to 64 evenly spaced ICG beats of one patient"></canvas></section>'
    +'<section class="vpanel"><span class="vt">39 patients</span><canvas id="vconst" role="img" aria-label="Average ICG beat of every patient"></canvas></section>';
   $("vp").value=VZ.pid||"EmpkinS_VP_003";$("vp").onchange=function(){vizLoad(this.value)};
   if($("vpause"))$("vpause").onclick=function(){VZ.paused=!VZ.paused;this.textContent=VZ.paused?"Play":"Pause";this.setAttribute("aria-pressed",String(VZ.paused))};
@@ -410,9 +410,10 @@ function vizView(){
 function vizLoad(id){
   VZ.pid=id;VZ.d=null;if(VZ.raf){cancelAnimationFrame(VZ.raf);VZ.raf=0}
   jsonAsset("data/"+id+".json").then(function(d){
-    if(VZ.pid!==id||!S.viz)return;VZ.d=d;VZ.ord=[];d.beats.forEach(function(b,i){if(b[11]&&b[5]!=null&&b[6]!=null&&b[10]!=null)VZ.ord.push(i)});
-    var ev=[],iv=[];VZ.ord.forEach(function(i,k){if(k%2)return;d.ecg[i].forEach(function(v){ev.push(v/1000)});d.wf[i].forEach(function(v){iv.push(v/1000)})});
+    if(VZ.pid!==id||!S.viz)return;VZ.d=d;var cand=[];d.beats.forEach(function(b,i){if(b[11]&&b[5]!=null&&b[6]!=null&&b[10]!=null&&b[10]>50&&b[10]<400)cand.push(i)});
+    var ev=[],iv=[];cand.forEach(function(i,k){if(k%2)return;d.ecg[i].forEach(function(v){ev.push(v/1000)});d.wf[i].forEach(function(v){iv.push(v/1000)})});
     var ep=(pct(ev,.995)-pct(ev,.005))*.08,ip=(pct(iv,.995)-pct(iv,.005))*.08;VZ.rng={eLo:pct(ev,.005)-ep,eHi:pct(ev,.995)+ep,iLo:pct(iv,.005)-ip,iHi:pct(iv,.995)+ip};
+    VZ.ord=cand.filter(function(i){var e=d.ecg[i],w=d.wf[i];for(var j=0;j<e.length;j++){var a=e[j]/1000,b=w[j]/1000;if(a<VZ.rng.eLo||a>VZ.rng.eHi||b<VZ.rng.iLo||b>VZ.rng.iHi)return false}return true});if(!VZ.ord.length)VZ.ord=cand;
     VZ.bi=Math.floor(VZ.ord.length*0.3);VZ.start=0;VZ.last=0;drawFall();startHero();
   });
 }
@@ -430,14 +431,14 @@ function heroLoop(ts){
 }
 function heroStatic(){if(VZ.d)heroDraw(1,true)}
 function cv(c,h){var dpr=Math.min(2,window.devicePixelRatio||1),w=c.clientWidth||900;if(c.width!==Math.round(w*dpr)||c.height!==Math.round(h*dpr)){c.width=Math.round(w*dpr);c.height=Math.round(h*dpr);c.style.height=h+"px"}var g=c.getContext("2d");g.setTransform(dpr,0,0,dpr,0,0);return {g:g,w:w,h:h}}
-function valAt(a,t){var f=(t+50)/5,i=Math.max(0,Math.min(a.length-2,Math.floor(f))),r=Math.max(0,Math.min(1,f-i));return (a[i]*(1-r)+a[i+1]*r)/1000}
+function valAt(a,t){var f=(t-T0)/5,i=Math.max(0,Math.min(a.length-2,Math.floor(f))),r=Math.max(0,Math.min(1,f-i));return (a[i]*(1-r)+a[i+1]*r)/1000}
 var MK={R:"#ff6b6b",Q:"#6db3ff",B:"#ffa94d",C:"#4fe3a6"};
 function heroDraw(prog,done){
   var d=VZ.d,c=$("vhero");if(!c||!d||!VZ.ord.length)return;var W=c.clientWidth||900,H=Math.max(300,Math.min(520,Math.round(W*0.42))),o=cv(c,H),g=o.g,w=o.w,h=o.h,R=VZ.rng;
   var bg=g.createLinearGradient(0,0,0,h);bg.addColorStop(0,"#071014");bg.addColorStop(1,"#0b1a21");g.fillStyle=bg;g.fillRect(0,0,w,h);
   var x0=w*.05,x1=w*.95,eT=h*.12,eB=h*.40,iT=h*.50,iB=h*.84,by=h*.93;
-  var fx=function(t){return x0+(t+50)/500*(x1-x0)},yE=function(v){return eB-(v-R.eLo)/(R.eHi-R.eLo)*(eB-eT)},yI=function(v){return iB-(v-R.iLo)/(R.iHi-R.iLo)*(iB-iT)};
-  g.strokeStyle="rgba(111,211,255,.06)";g.lineWidth=1;for(var t=-50;t<=450;t+=50){g.beginPath();g.moveTo(fx(t),h*.06);g.lineTo(fx(t),by+6);g.stroke()}
+  var fx=function(t){return x0+(t-T0)/SPAN*(x1-x0)},yE=function(v){return eB-(v-R.eLo)/(R.eHi-R.eLo)*(eB-eT)},yI=function(v){return iB-(v-R.iLo)/(R.iHi-R.iLo)*(iB-iT)};
+  g.strokeStyle="rgba(111,211,255,.06)";g.lineWidth=1;for(var t=-100;t<=450;t+=50){g.beginPath();g.moveTo(fx(t),h*.06);g.lineTo(fx(t),by+6);g.stroke()}
   [eT,eB,iT,iB].forEach(function(y){g.beginPath();g.moveTo(x0,y);g.lineTo(x1,y);g.stroke()});
   var T=d.t_ms,n=T.length,bi=VZ.ord[VZ.bi],b=d.beats[bi];
   /* afterimages of the previous beats */
@@ -445,7 +446,7 @@ function heroDraw(prog,done){
     g.strokeStyle="#53f2a6";g.beginPath();d.ecg[pi].forEach(function(v,j){var x=fx(T[j]),y=yE(v/1000);j?g.lineTo(x,y):g.moveTo(x,y)});g.stroke();
     g.strokeStyle="#6fd3ff";g.beginPath();d.wf[pi].forEach(function(v,j){var x=fx(T[j]),y=yI(v/1000);j?g.lineTo(x,y):g.moveTo(x,y)});g.stroke()}
   g.globalAlpha=1;
-  var sweep=-50+prog*500,kmax=Math.min(n-1,(sweep+50)/5);
+  var sweep=T0+prog*SPAN,kmax=Math.min(n-1,(sweep-T0)/5);
   function trace(arr,yf,col){g.save();g.shadowColor=col;g.shadowBlur=14;g.strokeStyle=col;g.lineWidth=2.3;g.lineJoin="round";g.beginPath();var j=0;for(;j<=Math.floor(kmax);j++){var x=fx(T[j]),y=yf(arr[j]/1000);j?g.lineTo(x,y):g.moveTo(x,y)}
     if(kmax>Math.floor(kmax)&&j<n){var f=kmax-Math.floor(kmax),a=arr[j-1],bb=arr[j];g.lineTo(fx(T[j-1]+f*5),yf((a*(1-f)+bb*f)/1000))}g.stroke();g.restore()}
   trace(d.ecg[bi],yE,"#53f2a6");trace(d.wf[bi],yI,"#6fd3ff");
@@ -468,7 +469,7 @@ function heroDraw(prog,done){
 function drawFall(){
   var d=VZ.d,c=$("vfall");if(!c||!d||!VZ.ord.length)return;var W=c.clientWidth||900,o=cv(c,Math.round(W*.5)),g=o.g,w=o.w,h=o.h,R=VZ.rng;
   g.fillStyle="#060b0e";g.fillRect(0,0,w,h);var N=Math.min(64,VZ.ord.length),rows=[];for(var k=0;k<N;k++)rows.push(VZ.ord[Math.round(k*(VZ.ord.length-1)/Math.max(1,N-1))]);
-  var x0=w*.1,x1=w*.9,top=h*.2,dy=(h*.74)/N,amp=dy*10.5,T=d.t_ms,fx=function(t){return x0+(t+50)/500*(x1-x0)};
+  var x0=w*.1,x1=w*.9,top=h*.2,dy=(h*.74)/N,amp=dy*10.5,T=d.t_ms,fx=function(t){return x0+(t-T0)/SPAN*(x1-x0)};
   rows.forEach(function(bi,k){var base=top+k*dy,col="hsl("+(196-k/(N-1||1)*168)+",85%,"+(62+k/(N||1)*4)+"%)";
     var pts=d.wf[bi].map(function(v,j){return [fx(T[j]),base-(v/1000-R.iLo)/(R.iHi-R.iLo)*amp]});
     g.beginPath();pts.forEach(function(p,j){j?g.lineTo(p[0],p[1]):g.moveTo(p[0],p[1])});g.lineTo(pts[pts.length-1][0],base+2);g.lineTo(pts[0][0],base+2);g.closePath();g.fillStyle="#060b0e";g.fill();
@@ -482,7 +483,7 @@ function drawConst(){
   g.fillStyle="#071014";g.fillRect(0,0,o.w,o.h);VZ.cells=[];var T=S.ov.t_ms;
   P.forEach(function(p,i){var cx=(i%cols)*cw,cy=44+Math.floor(i/cols)*ch,pad=cw*.1,x0=cx+pad,x1=cx+cw-pad,y0=cy+ch*.12,y1=cy+ch*.68,hot=VZ.hot===i;VZ.cells.push({x:cx,y:cy-8,w:cw,h:ch});
     var m=p.mean.map(function(v){return v/1000}),lo=Math.min.apply(null,m),hi=Math.max.apply(null,m),col=p.dataset==="EmpkinS"?"#6fd3ff":"#ffb067";
-    var fx=function(t){return x0+(t+50)/500*(x1-x0)},fy=function(v){return y1-(v-lo)/(hi-lo||1)*(y1-y0)};
+    var fx=function(t){return x0+(t-T0)/SPAN*(x1-x0)},fy=function(v){return y1-(v-lo)/(hi-lo||1)*(y1-y0)};
     if(hot){g.fillStyle="rgba(120,200,255,.07)";g.fillRect(cx+3,cy-6,cw-6,ch-2)}
     g.strokeStyle="rgba(111,211,255,.10)";g.lineWidth=1;g.beginPath();g.moveTo(fx(0),y0-4);g.lineTo(fx(0),y1+4);g.stroke();
     g.save();g.shadowColor=col;g.shadowBlur=hot?14:6;g.strokeStyle=col;g.lineWidth=hot?2.2:1.6;g.beginPath();m.forEach(function(v,j){var x=fx(T[j]),y=fy(v);j?g.lineTo(x,y):g.moveTo(x,y)});g.stroke();g.restore();
@@ -490,6 +491,7 @@ function drawConst(){
     if(p.RB!=null){g.fillStyle=MK.B;g.beginPath();g.rect(fx(p.RB)-2.6,at(p.RB)-2.6,5.2,5.2);g.fill()}
     if(p.RC!=null&&p.RC<450){g.fillStyle=MK.C;g.beginPath();g.arc(fx(p.RC),at(p.RC),2.8,0,7);g.fill()}
     g.fillStyle=hot?"rgba(255,255,255,.95)":"rgba(200,225,235,.45)";g.font=(hot?"600 ":"500 ")+"11px "+css("--font-body");g.textAlign="center";g.fillText(p.patient.replace("GDN","G").replace("VP_","V")+(hot?"  ·  "+fmt(p.PEP)+" ms":""),cx+cw/2,y1+ch*.22);});
+  g.fillStyle="rgba(200,225,235,.35)";g.font="500 11px "+css("--font-body");g.textAlign="right";g.fillText("each curve scaled to its own range",o.w-16,26);
 }
 </script>
 </body>
