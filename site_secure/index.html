@@ -181,7 +181,7 @@ async function jsonAsset(p){return JSON.parse(td.decode(await asset(p)))}
 var URLS={};async function imgURL(p){if(!URLS[p])URLS[p]=URL.createObjectURL(new Blob([await asset(p)],{type:"image/png"}));return URLS[p]}
 
 /* ============ small helpers ============ */
-var PH_COL=["--p0","--p1","--p2","--p3","--p4"],S={ov:null,cur:null,hidden:{},sel:-1,flt:"All"},K=1,T0=-100,SPAN=550;
+var PH_COL=["--p0","--p1","--p2","--p3","--p4"],S={ov:null,cur:null,hidden:{},sel:-1,flt:"All"},K=1,T0=-100,SPAN=550,SHOW_SUMMARY=false;   /* set true to show the Summary tab again */
 function $(i){return document.getElementById(i)}
 function css(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim()}
 function fmt(x,d){return x==null?"–":Number(x).toFixed(d==null?0:d)}
@@ -210,7 +210,7 @@ async function boot(){
   $("login").hidden=false;$("uid").focus();
 }
 async function start(){
-  S.ov=await jsonAsset("data/patients.json");$("login").hidden=true;$("app").hidden=false;buildList();route();
+  S.ov=await jsonAsset("data/patients.json");$("login").hidden=true;$("app").hidden=false;$("tab4").hidden=!SHOW_SUMMARY;buildList();route();
 }
 boot();
 
@@ -226,7 +226,7 @@ function buildList(){
 function route(){
   var h=location.hash.replace("#",""),id=h&&idOf(h);
   [].forEach.call($("plist").querySelectorAll("button"),function(b){b.setAttribute("aria-current",String(b.dataset.id===id))});
-  var t2=h==="task2",tv=h==="visualization",sm=h==="summary";["tab1","tab2","tab3","tab4"].forEach(function(t){$(t).removeAttribute("aria-current")});$(sm?"tab4":tv?"tab3":t2?"tab2":"tab1").setAttribute("aria-current","page");
+  var t2=h==="task2",tv=h==="visualization",sm=h==="summary"&&SHOW_SUMMARY;["tab1","tab2","tab3","tab4"].forEach(function(t){$(t).removeAttribute("aria-current")});$(sm?"tab4":tv?"tab3":t2?"tab2":"tab1").setAttribute("aria-current","page");
   S.viz=false;S.sumOn=false;if(VZ.raf){cancelAnimationFrame(VZ.raf);VZ.raf=0}document.querySelector(".layout").classList.toggle("one",tv||sm);document.querySelector("details.def").hidden=tv||sm;
   if(sm){S.cur=null;summaryView();return}
   if(tv){S.cur=null;vizView();return}

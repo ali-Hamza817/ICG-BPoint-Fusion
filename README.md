@@ -59,7 +59,7 @@ The raw data are not stored in the repository; `download_datasets.sh` fetches th
 - **Faithful re-implementations.** Abel's 12 B-point algorithms run unmodified (`external/` shim, fetched on demand); Sheikh's `feat_vec_465.m` ported line by line to Python and validated against his demo output (0.0 deviation on his two demo beats).
 - **Model comparison.** Abel's design vs Sheikh's AdaBoost vs a fusion, subject-wise nested cross-validation and a cross-dataset test. → [`reports/`](reports)
 - **Ensemble-averaging analysis.** Sheikh's three-stage averaging algorithm ported and applied to Abel's beats, to compare single-beat and averaged-beat evaluation.
-- **Website** with a login gate (section 8): patient pages, Task 2 page, and a **Visualization** tab (animated heartbeat monitor, ridgeline of beats, constellation of all 39 patients) and a concise **Summary** tab (scope, features, methodology, results, comparative tables).
+- **Website** with a login gate (section 8): patient pages, Task 2 page, and a **Visualization** tab (animated heartbeat monitor, ridgeline of beats, constellation of all 39 patients) (a concise Summary tab is prepared in the code and currently hidden).
 
 ## 5. Repository layout
 ```
@@ -138,7 +138,7 @@ GitHub Pages is a static host, so there is no server to check a password. Instea
 
 **What this does and does not protect.** It keeps the *website* content from casual visitors and from search engines. It is **not** server-side security: the encrypted files are downloadable (a long random password makes guessing impractical), and the same data and figures also exist **unencrypted in the public repository** (`dataset_*`, `figures/`, `docs/`). For true confidentiality use a private repository.
 
-Features: click any image or chart to enlarge (zoom, previous/next); per-patient ECG, ICG and PEP views; Task 2 overview; Visualization tab; Summary tab.
+Features: click any image or chart to enlarge (zoom, previous/next); per-patient ECG, ICG and PEP views; Task 2 overview; Visualization tab.
 
 ## 9. Reproduce
 ```bash
