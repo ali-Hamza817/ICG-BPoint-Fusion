@@ -1,3 +1,5 @@
+> **SUPERSEDED (2026-11-20).** The numbers in this report were computed before the artefact-label fix (`pipeline/22_artefact_flags.py`): 199 beats whose rater-1 B point was an "Artefact" marker were counted as usable. Corrected results: `reports/V4_RESULTS.md` (when present) and the README. Kept unchanged below for traceability.
+
 # Exploratory data analysis: EmpkinS + Guardian (beat-to-beat ICG B-point)
 
 All numbers are computed by `pipeline/02_eda.py` and stored in `results/eda_summary.json`. Labels = rater 1; rater 2 is used only for agreement.

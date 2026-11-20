@@ -10,3 +10,6 @@ venv_pepbench/
 # viewer data must be published (the rule above would otherwise ignore any folder named data/)
 !docs/data/
 !deploy_task1/data/
+
+# login credentials (never commit)
+private/

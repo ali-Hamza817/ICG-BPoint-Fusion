@@ -26,7 +26,8 @@ tab = pd.DataFrame({"row": m.row, "dataset": m.dataset, "patient": m.subject, "c
                     "Q_ms_after_R_rater1": m.Q1_ms, "B_ms_after_R_rater1": m.B1_ms, "PEP_ms_rater1": m.PEP1,
                     "B_ms_after_R_rater2": m.B2_ms, "PEP_ms_rater2": m.PEP2,
                     "C_ms_after_R": m.C_ms, "C_amplitude": m.C_amp.round(5), "ICG_at_B_amplitude": np.round(b_amp, 5), "vel_index_C_minus_B": np.round(vel, 5),
-                    "usable": m.in_cohort.astype(int), "matlab_ok": matlab_ok.astype(int)})
+                    "usable": m.in_cohort.astype(int), "matlab_ok": matlab_ok.astype(int),
+                    "rater1_artefact": m["art_rater1"].astype(int).values, "rater2_artefact": (m["art_B2"] | m["art_Q2"]).astype(int).values})
 tab.to_csv(OUT / "task2_beats.csv", index=False)
 
 # ---- per-patient NPZ (ECG + ICG windows + labels) ----

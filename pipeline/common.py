@@ -37,6 +37,11 @@ def load_beats(cohort=True):
     """-> meta DataFrame, ICG windows (n, 701; column j = R-100+j ms), ECG windows. Adds PEP, HR, C-point."""
     m = pd.read_csv(PROC / "beats_meta.csv")
     W = np.load(PROC / "beats_icg.npy"); E = np.load(PROC / "beats_ecg.npy")
+    fp = PROC / "artefact_flags.csv"                       # step 22: B/Q values that are 'Artefact' markers (not real annotations) -> NaN
+    if fp.exists():
+        fl = pd.read_csv(fp); assert len(fl) == len(m)
+        for c in ("B1", "Q1", "B2", "Q2"): m["art_" + c] = fl["art_" + c].values.astype(bool); m.loc[m["art_" + c], c + "_ms"] = np.nan
+        m["art_rater1"] = m.art_B1 | m.art_Q1; m.loc[m.art_rater1, ["B1_ms", "Q1_ms"]] = np.nan
     m["PEP1"] = m.B1_ms - m.Q1_ms
     m["PEP2"] = m.B2_ms - m.Q2_ms
     m["in_cohort"] = m.B1_ms.notna() & m.PEP1.between(20, 250)
@@ -49,3 +54,13 @@ def load_beats(cohort=True):
         k = m.in_cohort.values
         return m[k].reset_index(drop=True), W[k], E[k]
     return m, W, E
+
+
+def read_meta_clean():
+    """beats_meta.csv with 'Artefact' label points removed (B/Q set to NaN, see step 22). Row order identical to beats_meta.csv."""
+    m = pd.read_csv(PROC / "beats_meta.csv"); fp = PROC / "artefact_flags.csv"
+    if fp.exists():
+        fl = pd.read_csv(fp); assert len(fl) == len(m)
+        for c in ("B1", "Q1", "B2", "Q2"): m["art_" + c] = fl["art_" + c].values.astype(bool); m.loc[m["art_" + c], c + "_ms"] = np.nan
+        m["art_rater1"] = m.art_B1 | m.art_Q1; m.loc[m.art_rater1, ["B1_ms", "Q1_ms"]] = np.nan
+    return m

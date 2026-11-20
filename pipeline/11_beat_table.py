@@ -25,7 +25,9 @@ tab = pd.DataFrame({
     "B_point_ms_after_R_rater2": m.B2_ms, "PEP_ms_rater2": m.PEP2, "PEP_diff_raters_ms": (m.PEP1 - m.PEP2).abs(),
     "C_point_ms_after_R": m.C_ms, "C_amplitude": m.C_amp, "in_analysis_cohort": m.in_cohort,
 })
-tab["qc_note"] = np.where(m.B1_ms.isna(), "no B label", np.where(~m.in_cohort, "PEP outside 20-250 ms (label artefact)", "ok"))
+art1 = m["art_rater1"].values if "art_rater1" in m else np.zeros(len(m), bool)
+tab["rater1_artefact"] = art1.astype(int); tab["rater2_artefact"] = (m["art_B2"] | m["art_Q2"]).astype(int).values if "art_B2" in m else 0
+tab["qc_note"] = np.where(art1, "rater 1 marked artefact", np.where(m.B1_ms.isna(), "no B label", np.where(~m.in_cohort, "PEP outside 20-250 ms", "ok")))
 tab.round(3).to_csv(OUT / "beats_all_patients.csv", index=False)
 
 rows = []

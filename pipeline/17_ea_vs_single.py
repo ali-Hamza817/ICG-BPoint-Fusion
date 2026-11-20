@@ -10,7 +10,8 @@ import numpy as np, pandas as pd
 from scipy import stats
 from common import *
 
-W = int(sys.argv[1]) if len(sys.argv) > 1 else 20; TAG = f"_w{W}"
+import os
+TAGV = os.environ.get("TASKS_TAG", "v3"); W = int(sys.argv[1]) if len(sys.argv) > 1 else 20; TAG = f"_w{W}"
 spec = importlib.util.spec_from_file_location("m14", Path(__file__).with_name("14_models_v3.py")); m14 = importlib.util.module_from_spec(spec); spec.loader.exec_module(m14)
 N_FOLDS = 5
 E = pd.read_csv(PROC / f"ea_meta{TAG}.csv"); XE = np.load(PROC / f"ea_X{TAG}.npy"); y = E.RB_label.values; grp = E.subject.values
@@ -35,12 +36,12 @@ for model, X in EA_FS.items():
     if model == "sheikh_ada": res["sheikh_ada+rule"] = np.where(fless, fb, res[model])
 
 # ---------- B/C) single-beat predictions aggregated per window ----------
-meta = pd.read_csv(PROC / "beats_meta.csv"); coh = (meta.B1_ms.notna() & (meta.B1_ms - meta.Q1_ms).between(20, 250)).values
+meta = read_meta_clean(); coh = (meta.B1_ms.notna() & (meta.B1_ms - meta.Q1_ms).between(20, 250)).values
 pos = np.full(len(meta), -1); pos[coh] = np.arange(coh.sum()); Mc = pd.read_csv(PROC / "cohort_meta.csv"); yb = Mc.B1_ms.values
 single = {}
-for mo in sorted({d["model"] for d in (pickle.load(open(f, "rb")) for f in glob.glob(str(RES / "tasks_v3/pooled__*.pkl")))}):
+for mo in sorted({d["model"] for d in (pickle.load(open(f, "rb")) for f in glob.glob(str(RES / f"tasks_{TAGV}/pooled__*.pkl")))}):
     ps = {}
-    for f in glob.glob(str(RES / f"tasks_v3/pooled__{mo}__r*.pkl")):
+    for f in glob.glob(str(RES / f"tasks_{TAGV}/pooled__{mo}__r*.pkl")):
         d = pickle.load(open(f, "rb")); ps.setdefault(d["rep"], []).append(d)
     arrs = []; arrs_rule = []
     for rep, ds in ps.items():
@@ -71,5 +72,5 @@ for name, p in res.items():
     else:
         r = summarize(("EA model: " if not name.startswith("single") else "") + name, p)
         if r: rows.append(r)
-T = pd.DataFrame(rows); T.round(3).to_csv(RES / f"ea_vs_single{TAG}.csv", index=False); print(T.round(2).to_string(index=False))
-pickle.dump(dict(res=res, E=E), open(RES / f"ea_vs_single{TAG}_predictions.pkl", "wb"))
+T = pd.DataFrame(rows); T.round(3).to_csv(RES / f"ea_vs_single_{TAGV}{TAG}.csv", index=False); print(T.round(2).to_string(index=False))
+pickle.dump(dict(res=res, E=E), open(RES / f"ea_vs_single_{TAGV}{TAG}_predictions.pkl", "wb"))

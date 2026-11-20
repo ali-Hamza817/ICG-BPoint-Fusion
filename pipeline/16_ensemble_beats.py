@@ -91,7 +91,7 @@ def job(j, meta):
 
 
 if __name__ == "__main__":
-    meta = pd.read_csv(PROC / "beats_meta.csv")
+    meta = read_meta_clean()
     jobs = [("g", p.name) for p in sorted((GDN / "data_raw").iterdir()) if p.is_dir()]
     jobs += [("e", (v.name, c)) for v in sorted((EMP / "data_per_subject").iterdir()) if v.is_dir() for c in ["tsst", "ftsst"]]
     R = [o for r in Parallel(n_jobs=24, backend="loky")(delayed(job)(j, meta) for j in jobs) for o in r]

@@ -8,7 +8,7 @@ Models
                his published range) + his featureless-beat rule (no notch & no inflection -> prediction = RB_max_2D, as in his notebook)
   fus_*      : Sheikh 465 + Abel 13 (Abel features imputed for ada/svr/ridge; NaN kept for rf/lgbm)
 All errors are evaluated in ms against the rater-1 B-point, after converting predictions to ms-after-R."""
-import pickle, sys, time
+import os, pickle, sys, time
 import numpy as np, pandas as pd
 from joblib import Parallel, delayed
 from sklearn.ensemble import AdaBoostRegressor, RandomForestRegressor
@@ -21,14 +21,15 @@ from sklearn.model_selection import GroupKFold
 import lightgbm as lgb
 from common import *
 
-TASKS = RES / "tasks_v3"; TASKS.mkdir(exist_ok=True, parents=True)
+TAG = os.environ.get("TASKS_TAG", "v3")                      # v3 = results before the artefact fix (kept), v4 = after
+TASKS = RES / f"tasks_{TAG}"; TASKS.mkdir(exist_ok=True, parents=True)
 N_REPEATS, N_FOLDS = 3, 5
 ABEL_NAMES = ["arbol2017-isoelectric-crossings", "arbol2017-second-derivative", "arbol2017-third-derivative", "debski1993-second-derivative", "drost2022", "forouzanfar2018",
               "lozano2007-linear-regression", "lozano2007-quadratic-regression", "miljkovic2022", "pale2021", "sherwood1990", "stern1985"]
 
 
 def load_v3():
-    meta = pd.read_csv(PROC / "beats_meta.csv"); coh = (meta.B1_ms.notna() & (meta.B1_ms - meta.Q1_ms).between(20, 250)).values
+    meta = read_meta_clean(); coh = (meta.B1_ms.notna() & (meta.B1_ms - meta.Q1_ms).between(20, 250)).values
     m = pd.read_csv(PROC / "cohort_meta.csv"); assert coh.sum() == len(m)
     AX = pd.read_csv(PROC / "abel_real_X.csv")[coh].reset_index(drop=True)
     S = np.load(PROC / "sheikh_v2_X.npy"); aux = pd.read_csv(PROC / "sheikh_v2_aux.csv")

@@ -1,3 +1,5 @@
+> **SUPERSEDED (2026-11-20).** The numbers in this report were computed before the artefact-label fix (`pipeline/22_artefact_flags.py`): 199 beats whose rater-1 B point was an "Artefact" marker were counted as usable. Corrected results: `reports/V4_RESULTS.md` (when present) and the README. Kept unchanged below for traceability.
+
 # v3 results: real Abel features vs real-Sheikh features (auto-generated from saved predictions)
 
 All numbers computed by `pipeline/15_report_v3.py` from `results/tasks_v3/`. Subject-wise grouped CV (5 folds; 3 repeats for fast models, 1 for AdaBoost); hyper-parameters tuned only by inner 3-fold group CV on the training part.

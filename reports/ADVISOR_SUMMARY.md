@@ -1,3 +1,5 @@
+> **SUPERSEDED (2026-11-20).** The numbers in this report were computed before the artefact-label fix (`pipeline/22_artefact_flags.py`): 199 beats whose rater-1 B point was an "Artefact" marker were counted as usable. Corrected results: `reports/V4_RESULTS.md` (when present) and the README. Kept unchanged below for traceability.
+
 # Sheikh's method on Abel's public data: summary for discussion
 
 All numbers come from saved predictions (`results/tasks_v3/`, `results/ea_vs_single_w*.csv`), produced by the scripts in `pipeline/`. Full tables: `reports/V3_RESULTS.md`.

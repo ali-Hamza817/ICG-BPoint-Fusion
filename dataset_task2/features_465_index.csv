@@ -11,7 +11,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 9,Guardian,GDN0005,Pause,9,114.0,154.0,189,1,True,False
 10,Guardian,GDN0005,Pause,10,74.0,112.0,200,1,True,True
 11,Guardian,GDN0005,Pause,11,80.0,118.0,185,1,True,True
-12,Guardian,GDN0005,Pause,12,96.0,134.0,180,1,False,True
 13,Guardian,GDN0005,Pause,13,102.0,142.0,178,1,False,True
 14,Guardian,GDN0005,Pause,14,72.0,110.0,177,1,True,True
 15,Guardian,GDN0005,Pause,15,50.0,90.0,184,1,True,True
@@ -42,7 +41,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 40,Guardian,GDN0005,Pause,40,112.0,152.0,190,1,True,True
 41,Guardian,GDN0005,Pause,41,92.0,130.0,189,1,True,True
 42,Guardian,GDN0005,Pause,42,112.0,152.0,191,1,True,True
-43,Guardian,GDN0005,Pause,43,106.0,146.0,184,1,True,False
 44,Guardian,GDN0005,Pause,44,96.0,136.0,185,1,False,True
 45,Guardian,GDN0005,Pause,45,92.0,132.0,198,1,False,True
 46,Guardian,GDN0005,Pause,46,98.0,138.0,182,1,False,True
@@ -128,19 +126,16 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 126,Guardian,GDN0005,Valsalva,62,86.0,118.0,330,1,False,True
 127,Guardian,GDN0005,HoldingBreath,0,90.0,128.0,199,1,True,True
 128,Guardian,GDN0005,HoldingBreath,1,106.0,144.0,187,1,False,True
-129,Guardian,GDN0005,HoldingBreath,2,0.0,40.0,178,1,True,False
 130,Guardian,GDN0005,HoldingBreath,3,114.0,154.0,185,1,True,True
 131,Guardian,GDN0005,HoldingBreath,4,128.0,170.0,195,1,False,True
 132,Guardian,GDN0005,HoldingBreath,5,118.0,158.0,200,1,True,True
 133,Guardian,GDN0005,HoldingBreath,6,114.0,154.0,190,1,False,True
 134,Guardian,GDN0005,HoldingBreath,7,120.0,162.0,191,1,True,True
-135,Guardian,GDN0005,HoldingBreath,8,10.0,50.0,181,1,True,False
 136,Guardian,GDN0005,HoldingBreath,9,118.0,158.0,190,1,True,True
 137,Guardian,GDN0005,HoldingBreath,10,82.0,122.0,186,1,True,True
 138,Guardian,GDN0005,HoldingBreath,11,78.0,116.0,174,1,True,False
 139,Guardian,GDN0005,HoldingBreath,12,82.0,120.0,184,1,False,True
 140,Guardian,GDN0005,HoldingBreath,13,104.0,142.0,188,1,True,False
-141,Guardian,GDN0005,HoldingBreath,14,70.0,110.0,181,1,True,False
 142,Guardian,GDN0005,HoldingBreath,15,82.0,120.0,169,1,True,True
 143,Guardian,GDN0005,HoldingBreath,16,102.0,142.0,178,1,False,True
 144,Guardian,GDN0005,HoldingBreath,17,94.0,132.0,174,1,False,True
@@ -201,7 +196,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 199,Guardian,GDN0005,TiltUp,4,88.0,168.0,161,1,False,True
 200,Guardian,GDN0005,TiltUp,5,80.0,156.0,197,1,True,True
 201,Guardian,GDN0005,TiltUp,6,86.0,162.0,174,1,False,True
-202,Guardian,GDN0005,TiltUp,7,74.0,148.0,257,1,False,True
 203,Guardian,GDN0005,TiltUp,8,82.0,160.0,183,1,True,True
 204,Guardian,GDN0005,TiltUp,9,82.0,156.0,187,1,True,True
 205,Guardian,GDN0005,TiltUp,10,84.0,152.0,178,1,False,True
@@ -209,7 +203,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 207,Guardian,GDN0005,TiltUp,12,100.0,160.0,198,1,True,True
 208,Guardian,GDN0005,TiltUp,13,86.0,146.0,189,1,True,True
 209,Guardian,GDN0005,TiltUp,14,92.0,168.0,196,1,True,True
-210,Guardian,GDN0005,TiltUp,15,102.0,164.0,191,1,False,False
 211,Guardian,GDN0005,TiltUp,16,92.0,166.0,194,1,True,True
 212,Guardian,GDN0005,TiltUp,17,84.0,160.0,196,1,True,True
 213,Guardian,GDN0005,TiltUp,18,94.0,150.0,201,1,True,True
@@ -218,7 +211,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 216,Guardian,GDN0005,TiltUp,21,96.0,172.0,209,1,True,True
 217,Guardian,GDN0005,TiltUp,22,98.0,176.0,202,1,True,True
 218,Guardian,GDN0005,TiltUp,23,98.0,162.0,214,1,False,True
-219,Guardian,GDN0005,TiltUp,24,14.0,84.0,177,1,True,True
 220,Guardian,GDN0005,TiltUp,25,96.0,154.0,201,1,False,True
 221,Guardian,GDN0005,TiltUp,26,82.0,156.0,207,1,True,True
 222,Guardian,GDN0005,TiltUp,27,88.0,148.0,199,1,True,True
@@ -227,7 +219,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 225,Guardian,GDN0005,TiltUp,30,92.0,170.0,194,1,True,True
 226,Guardian,GDN0005,TiltUp,31,56.0,116.0,174,1,True,True
 227,Guardian,GDN0005,TiltUp,32,90.0,148.0,234,1,False,True
-228,Guardian,GDN0005,TiltUp,33,98.0,174.0,358,1,False,True
 229,Guardian,GDN0005,TiltUp,34,100.0,162.0,193,1,False,True
 230,Guardian,GDN0005,TiltUp,35,104.0,176.0,198,1,True,True
 231,Guardian,GDN0005,TiltUp,36,100.0,160.0,197,1,True,True
@@ -244,12 +235,10 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 242,Guardian,GDN0005,TiltUp,47,106.0,164.0,206,1,True,True
 243,Guardian,GDN0005,TiltUp,48,104.0,164.0,222,1,False,True
 244,Guardian,GDN0005,TiltUp,49,110.0,190.0,210,1,True,True
-245,Guardian,GDN0005,TiltUp,50,112.0,168.0,195,1,True,True
 246,Guardian,GDN0005,TiltUp,51,106.0,164.0,216,1,False,True
 247,Guardian,GDN0005,TiltUp,52,104.0,166.0,205,1,False,True
 248,Guardian,GDN0005,TiltUp,53,108.0,180.0,211,1,True,False
 249,Guardian,GDN0005,TiltUp,54,110.0,170.0,205,1,False,True
-250,Guardian,GDN0005,TiltUp,55,110.0,168.0,204,1,True,False
 251,Guardian,GDN0005,TiltUp,56,110.0,180.0,213,1,True,True
 252,Guardian,GDN0005,TiltUp,57,114.0,194.0,213,1,True,False
 253,Guardian,GDN0005,TiltUp,58,96.0,172.0,208,1,False,True
@@ -272,7 +261,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 270,Guardian,GDN0005,TiltUp,75,92.0,168.0,203,1,True,True
 271,Guardian,GDN0005,TiltUp,76,92.0,166.0,190,1,True,True
 272,Guardian,GDN0005,TiltUp,77,94.0,170.0,203,1,True,True
-273,Guardian,GDN0005,TiltUp,78,104.0,178.0,204,1,False,True
 274,Guardian,GDN0005,TiltUp,79,84.0,158.0,197,1,True,True
 275,Guardian,GDN0005,TiltUp,80,104.0,178.0,193,1,False,True
 276,Guardian,GDN0005,TiltUp,81,100.0,174.0,190,1,False,True
@@ -280,7 +268,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 278,Guardian,GDN0005,TiltLevel,1,72.0,110.0,185,1,True,True
 279,Guardian,GDN0005,TiltLevel,2,98.0,138.0,178,1,True,True
 280,Guardian,GDN0005,TiltLevel,3,118.0,158.0,174,1,False,True
-281,Guardian,GDN0005,TiltLevel,4,24.0,64.0,178,1,True,False
 282,Guardian,GDN0005,TiltLevel,5,70.0,108.0,195,1,True,True
 283,Guardian,GDN0005,TiltLevel,6,96.0,136.0,179,1,True,False
 284,Guardian,GDN0005,TiltLevel,7,110.0,148.0,184,1,False,True
@@ -325,14 +312,11 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 323,Guardian,GDN0005,TiltLevel,46,102.0,140.0,186,1,True,True
 324,Guardian,GDN0005,TiltLevel,47,102.0,140.0,185,1,True,True
 325,Guardian,GDN0005,TiltLevel,48,88.0,126.0,194,1,True,True
-326,Guardian,GDN0005,TiltLevel,49,40.0,80.0,194,1,True,False
 327,Guardian,GDN0005,TiltLevel,50,86.0,126.0,192,1,True,True
-328,Guardian,GDN0005,TiltLevel,51,78.0,118.0,187,1,True,False
 329,Guardian,GDN0005,TiltLevel,52,68.0,108.0,186,1,True,True
 330,Guardian,GDN0005,TiltLevel,53,108.0,146.0,189,1,True,False
 331,Guardian,GDN0005,TiltLevel,54,66.0,104.0,196,1,True,True
 332,Guardian,GDN0005,TiltLevel,55,80.0,120.0,191,1,True,True
-333,Guardian,GDN0005,TiltLevel,56,56.0,96.0,198,1,True,True
 334,Guardian,GDN0005,TiltLevel,57,74.0,112.0,191,1,True,True
 335,Guardian,GDN0005,TiltLevel,58,78.0,118.0,189,1,True,True
 336,Guardian,GDN0005,TiltLevel,59,102.0,144.0,185,1,True,True
@@ -654,7 +638,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 652,Guardian,GDN0007,Valsalva,26,98.0,130.0,185,1,True,True
 653,Guardian,GDN0007,Valsalva,27,108.0,140.0,195,1,True,True
 654,Guardian,GDN0007,Valsalva,28,108.0,140.0,200,1,True,True
-655,Guardian,GDN0007,Valsalva,29,8.0,40.0,189,1,True,False
 656,Guardian,GDN0007,Valsalva,30,106.0,138.0,189,1,True,False
 657,Guardian,GDN0007,Valsalva,31,112.0,144.0,190,1,False,True
 658,Guardian,GDN0007,Valsalva,32,92.0,122.0,196,1,True,False
@@ -814,7 +797,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 812,Guardian,GDN0007,TiltLevel,3,116.0,148.0,184,1,True,True
 813,Guardian,GDN0007,TiltLevel,4,104.0,136.0,201,1,True,False
 814,Guardian,GDN0007,TiltLevel,5,110.0,142.0,194,1,True,True
-815,Guardian,GDN0007,TiltLevel,6,44.0,76.0,188,1,True,True
 816,Guardian,GDN0007,TiltLevel,7,56.0,88.0,187,1,True,True
 817,Guardian,GDN0007,TiltLevel,8,100.0,130.0,191,1,True,False
 818,Guardian,GDN0007,TiltLevel,9,110.0,142.0,186,1,True,True
@@ -848,7 +830,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 846,Guardian,GDN0007,TiltLevel,37,100.0,132.0,191,1,True,True
 847,Guardian,GDN0007,TiltLevel,38,118.0,148.0,194,1,True,True
 848,Guardian,GDN0007,TiltLevel,39,132.0,162.0,199,1,True,False
-849,Guardian,GDN0007,TiltLevel,40,38.0,70.0,190,1,True,True
 850,Guardian,GDN0007,TiltLevel,41,100.0,130.0,187,1,True,True
 851,Guardian,GDN0007,TiltLevel,42,100.0,132.0,196,1,True,True
 852,Guardian,GDN0007,TiltLevel,43,134.0,166.0,180,1,True,False
@@ -857,7 +838,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 855,Guardian,GDN0007,TiltLevel,46,124.0,156.0,199,1,True,True
 856,Guardian,GDN0007,TiltLevel,47,112.0,142.0,203,1,False,True
 857,Guardian,GDN0007,TiltLevel,48,46.0,78.0,180,1,True,True
-858,Guardian,GDN0007,TiltLevel,49,122.0,154.0,188,1,True,True
 859,Guardian,GDN0007,TiltLevel,50,144.0,174.0,212,1,False,True
 860,Guardian,GDN0007,TiltLevel,51,96.0,128.0,201,1,True,True
 861,Guardian,GDN0007,TiltLevel,52,136.0,168.0,197,1,True,True
@@ -894,7 +874,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 892,Guardian,GDN0008,Pause,25,110.0,146.0,220,1,False,True
 893,Guardian,GDN0008,Pause,26,102.0,138.0,208,1,True,True
 894,Guardian,GDN0008,Pause,27,114.0,150.0,205,1,True,True
-895,Guardian,GDN0008,Pause,28,66.0,102.0,208,1,True,True
 896,Guardian,GDN0008,Pause,29,124.0,160.0,200,1,False,True
 897,Guardian,GDN0008,Pause,30,122.0,156.0,200,1,False,True
 898,Guardian,GDN0008,Pause,31,120.0,156.0,208,1,True,True
@@ -955,7 +934,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 953,Guardian,GDN0008,Valsalva,30,122.0,158.0,218,1,False,True
 954,Guardian,GDN0008,Valsalva,31,128.0,164.0,220,1,False,True
 955,Guardian,GDN0008,Valsalva,32,136.0,172.0,214,1,True,True
-956,Guardian,GDN0008,Valsalva,33,102.0,136.0,217,1,True,False
 957,Guardian,GDN0008,Valsalva,34,100.0,136.0,218,1,False,True
 958,Guardian,GDN0008,Valsalva,35,124.0,160.0,205,1,False,True
 959,Guardian,GDN0008,Valsalva,36,128.0,164.0,215,1,False,True
@@ -1002,7 +980,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 1000,Guardian,GDN0008,HoldingBreath,20,146.0,180.0,220,1,False,True
 1001,Guardian,GDN0008,HoldingBreath,21,144.0,178.0,228,1,False,True
 1002,Guardian,GDN0008,HoldingBreath,22,148.0,184.0,236,1,False,True
-1003,Guardian,GDN0008,HoldingBreath,23,130.0,164.0,253,1,True,True
 1004,Guardian,GDN0008,HoldingBreath,24,166.0,200.0,218,0,False,True
 1005,Guardian,GDN0008,HoldingBreath,25,150.0,184.0,230,1,False,True
 1006,Guardian,GDN0008,HoldingBreath,26,118.0,152.0,232,1,True,True
@@ -1085,7 +1062,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 1083,Guardian,GDN0008,TiltUp,35,126.0,160.0,273,1,True,True
 1084,Guardian,GDN0008,TiltUp,36,180.0,216.0,243,0,False,True
 1085,Guardian,GDN0008,TiltUp,37,142.0,176.0,253,1,False,True
-1086,Guardian,GDN0008,TiltUp,38,138.0,172.0,242,1,False,True
 1087,Guardian,GDN0008,TiltUp,39,152.0,186.0,218,0,False,True
 1088,Guardian,GDN0008,TiltUp,40,166.0,202.0,240,0,False,True
 1089,Guardian,GDN0008,TiltUp,41,162.0,198.0,227,0,True,True
@@ -1168,13 +1144,9 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 1166,Guardian,GDN0008,TiltLevel,50,146.0,184.0,232,1,True,True
 1167,Guardian,GDN0008,TiltLevel,51,88.0,124.0,236,1,True,True
 1168,Guardian,GDN0009,Pause,0,138.0,158.0,187,1,False,True
-1169,Guardian,GDN0009,Pause,1,170.0,190.0,215,0,False,False
-1170,Guardian,GDN0009,Pause,2,112.0,132.0,222,1,True,True
 1171,Guardian,GDN0009,Pause,3,102.0,122.0,215,1,False,True
 1172,Guardian,GDN0009,Pause,4,110.0,128.0,206,1,True,True
 1173,Guardian,GDN0009,Pause,5,142.0,162.0,222,1,False,True
-1174,Guardian,GDN0009,Pause,6,128.0,148.0,236,1,False,True
-1175,Guardian,GDN0009,Pause,7,126.0,146.0,183,1,False,True
 1176,Guardian,GDN0009,Pause,8,108.0,126.0,211,1,True,True
 1177,Guardian,GDN0009,Pause,9,124.0,144.0,212,1,False,True
 1178,Guardian,GDN0009,Pause,10,144.0,164.0,185,1,False,True
@@ -1205,7 +1177,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 1203,Guardian,GDN0009,Pause,35,112.0,132.0,201,1,False,True
 1204,Guardian,GDN0009,Pause,36,138.0,158.0,219,1,True,True
 1205,Guardian,GDN0009,Pause,37,120.0,140.0,215,1,False,True
-1206,Guardian,GDN0009,Pause,38,146.0,166.0,187,1,False,True
 1207,Guardian,GDN0009,Pause,39,126.0,146.0,201,1,True,True
 1208,Guardian,GDN0009,Pause,40,148.0,168.0,219,1,False,True
 1209,Guardian,GDN0009,Pause,41,132.0,154.0,204,1,True,True
@@ -1214,7 +1185,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 1212,Guardian,GDN0009,Pause,44,146.0,166.0,219,1,False,True
 1213,Guardian,GDN0009,Pause,45,136.0,158.0,205,1,False,True
 1214,Guardian,GDN0009,Pause,46,114.0,134.0,209,1,True,True
-1215,Guardian,GDN0009,Pause,47,144.0,164.0,191,1,False,True
 1216,Guardian,GDN0009,Pause,48,146.0,166.0,225,1,False,True
 1217,Guardian,GDN0009,Pause,49,106.0,126.0,189,1,False,True
 1218,Guardian,GDN0009,Pause,50,120.0,140.0,192,1,False,True
@@ -1249,7 +1219,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 1247,Guardian,GDN0009,Valsalva,21,138.0,158.0,209,1,False,True
 1248,Guardian,GDN0009,Valsalva,22,132.0,154.0,199,1,False,True
 1249,Guardian,GDN0009,Valsalva,23,74.0,94.0,196,1,True,True
-1250,Guardian,GDN0009,Valsalva,25,36.0,54.0,53,1,False,False
 1251,Guardian,GDN0009,Valsalva,26,140.0,162.0,218,1,False,True
 1252,Guardian,GDN0009,Valsalva,27,130.0,152.0,209,1,False,True
 1253,Guardian,GDN0009,Valsalva,28,116.0,138.0,220,1,False,True
@@ -1265,13 +1234,11 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 1263,Guardian,GDN0009,Valsalva,38,116.0,136.0,193,1,True,False
 1264,Guardian,GDN0009,Valsalva,39,138.0,158.0,209,1,True,True
 1265,Guardian,GDN0009,Valsalva,40,106.0,126.0,230,1,True,True
-1266,Guardian,GDN0009,Valsalva,41,142.0,162.0,188,1,True,True
 1267,Guardian,GDN0009,Valsalva,42,134.0,154.0,203,1,True,True
 1268,Guardian,GDN0009,Valsalva,43,130.0,150.0,212,1,False,True
 1269,Guardian,GDN0009,Valsalva,44,122.0,142.0,209,1,False,True
 1270,Guardian,GDN0009,Valsalva,45,116.0,134.0,208,1,True,True
 1271,Guardian,GDN0009,Valsalva,46,122.0,142.0,189,1,False,True
-1272,Guardian,GDN0009,Valsalva,47,160.0,182.0,212,0,True,True
 1273,Guardian,GDN0009,Valsalva,48,120.0,142.0,218,1,False,True
 1274,Guardian,GDN0009,Valsalva,49,114.0,136.0,210,1,False,True
 1275,Guardian,GDN0009,Valsalva,50,136.0,156.0,211,1,True,True
@@ -1332,7 +1299,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 1330,Guardian,GDN0009,TiltUp,49,102.0,136.0,230,1,True,True
 1331,Guardian,GDN0009,TiltUp,50,140.0,174.0,232,1,False,True
 1332,Guardian,GDN0009,TiltUp,51,118.0,136.0,214,1,False,True
-1333,Guardian,GDN0009,TiltUp,52,108.0,128.0,219,1,True,True
 1334,Guardian,GDN0009,TiltUp,53,114.0,134.0,202,1,True,True
 1335,Guardian,GDN0009,TiltUp,54,150.0,172.0,223,1,False,True
 1336,Guardian,GDN0009,TiltUp,55,126.0,146.0,197,1,False,True
@@ -1370,7 +1336,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 1368,Guardian,GDN0009,TiltLevel,6,150.0,188.0,213,1,True,True
 1369,Guardian,GDN0009,TiltLevel,7,108.0,146.0,189,1,True,True
 1370,Guardian,GDN0009,TiltLevel,8,128.0,166.0,198,1,True,True
-1371,Guardian,GDN0009,TiltLevel,9,138.0,176.0,242,1,True,False
 1372,Guardian,GDN0009,TiltLevel,10,116.0,156.0,216,1,False,True
 1373,Guardian,GDN0009,TiltLevel,11,138.0,160.0,219,1,True,True
 1374,Guardian,GDN0009,TiltLevel,12,142.0,164.0,222,1,False,True
@@ -1382,8 +1347,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 1380,Guardian,GDN0009,TiltLevel,18,126.0,162.0,202,1,False,True
 1381,Guardian,GDN0009,TiltLevel,19,118.0,156.0,191,1,True,True
 1382,Guardian,GDN0009,TiltLevel,20,114.0,134.0,206,1,True,True
-1383,Guardian,GDN0009,TiltLevel,21,104.0,144.0,236,1,True,True
-1384,Guardian,GDN0009,TiltLevel,22,142.0,164.0,196,1,True,True
 1385,Guardian,GDN0009,TiltLevel,23,112.0,132.0,221,1,True,True
 1386,Guardian,GDN0009,TiltLevel,24,124.0,144.0,202,1,False,True
 1387,Guardian,GDN0009,TiltLevel,25,122.0,142.0,214,1,True,True
@@ -1408,8 +1371,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 1406,Guardian,GDN0009,TiltLevel,44,138.0,160.0,215,1,False,True
 1407,Guardian,GDN0009,TiltLevel,45,120.0,158.0,202,1,False,True
 1408,Guardian,GDN0009,TiltLevel,46,118.0,138.0,201,1,True,True
-1409,Guardian,GDN0009,TiltLevel,47,180.0,218.0,214,0,True,True
-1410,Guardian,GDN0009,TiltLevel,48,212.0,250.0,247,0,True,True
 1411,Guardian,GDN0009,TiltLevel,49,132.0,154.0,211,1,False,True
 1412,Guardian,GDN0009,TiltLevel,50,122.0,142.0,213,1,False,True
 1413,Guardian,GDN0009,TiltLevel,51,124.0,146.0,212,1,False,True
@@ -1486,7 +1447,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 1484,Guardian,GDN0010,HoldingBreath,25,104.0,132.0,199,1,True,True
 1485,Guardian,GDN0010,HoldingBreath,26,94.0,122.0,194,1,True,True
 1486,Guardian,GDN0010,HoldingBreath,27,102.0,130.0,196,1,True,True
-1487,Guardian,GDN0010,HoldingBreath,28,126.0,156.0,213,1,False,True
 1488,Guardian,GDN0010,HoldingBreath,29,116.0,144.0,196,1,True,True
 1489,Guardian,GDN0010,HoldingBreath,30,88.0,116.0,195,1,True,True
 1490,Guardian,GDN0010,HoldingBreath,31,44.0,70.0,183,1,True,True
@@ -1504,8 +1464,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 1502,Guardian,GDN0010,HoldingBreath,43,110.0,138.0,194,1,True,True
 1503,Guardian,GDN0010,HoldingBreath,44,104.0,132.0,204,1,True,True
 1504,Guardian,GDN0010,HoldingBreath,45,80.0,108.0,194,1,True,True
-1505,Guardian,GDN0010,HoldingBreath,46,32.0,58.0,197,1,True,True
-1506,Guardian,GDN0010,HoldingBreath,47,8.0,38.0,180,1,True,False
 1507,Guardian,GDN0010,HoldingBreath,49,116.0,146.0,172,1,True,True
 1508,Guardian,GDN0010,HoldingBreath,50,44.0,72.0,196,1,True,True
 1509,Guardian,GDN0010,HoldingBreath,51,78.0,108.0,185,1,True,True
@@ -1518,7 +1476,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 1517,Guardian,GDN0010,TiltUp,8,102.0,130.0,190,1,False,True
 1518,Guardian,GDN0010,TiltUp,9,124.0,152.0,204,1,False,True
 1519,Guardian,GDN0010,TiltUp,10,112.0,134.0,169,1,False,True
-1520,Guardian,GDN0010,TiltUp,11,114.0,142.0,173,1,True,True
 1521,Guardian,GDN0010,TiltUp,12,94.0,122.0,142,1,True,False
 1522,Guardian,GDN0010,TiltUp,13,90.0,118.0,193,1,True,True
 1523,Guardian,GDN0010,TiltUp,14,108.0,136.0,197,1,False,True
@@ -1544,7 +1501,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 1543,Guardian,GDN0010,TiltUp,34,126.0,156.0,205,1,False,True
 1544,Guardian,GDN0010,TiltUp,35,114.0,142.0,200,1,True,True
 1545,Guardian,GDN0010,TiltUp,36,78.0,108.0,199,1,True,True
-1546,Guardian,GDN0010,TiltUp,37,124.0,154.0,73,1,False,False
 1547,Guardian,GDN0010,TiltUp,38,56.0,84.0,192,1,True,True
 1548,Guardian,GDN0010,TiltUp,39,94.0,122.0,191,1,True,True
 1549,Guardian,GDN0010,TiltUp,40,112.0,140.0,193,1,True,True
@@ -1552,7 +1508,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 1551,Guardian,GDN0010,TiltUp,42,128.0,156.0,212,1,True,True
 1552,Guardian,GDN0010,TiltUp,43,120.0,150.0,229,1,False,True
 1553,Guardian,GDN0010,TiltUp,44,130.0,160.0,216,1,True,True
-1554,Guardian,GDN0010,TiltUp,46,160.0,190.0,198,0,False,True
 1555,Guardian,GDN0010,TiltUp,47,154.0,182.0,195,0,False,True
 1556,Guardian,GDN0010,TiltUp,48,142.0,172.0,218,1,False,True
 1557,Guardian,GDN0010,TiltUp,49,114.0,142.0,178,1,False,True
@@ -1566,7 +1521,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 1565,Guardian,GDN0010,TiltLevel,7,126.0,158.0,184,1,True,True
 1566,Guardian,GDN0010,TiltLevel,8,60.0,88.0,192,1,True,True
 1567,Guardian,GDN0010,TiltLevel,9,106.0,132.0,202,1,True,True
-1568,Guardian,GDN0010,TiltLevel,10,136.0,168.0,202,1,True,False
 1569,Guardian,GDN0010,TiltLevel,11,118.0,144.0,184,1,True,True
 1570,Guardian,GDN0010,TiltLevel,12,94.0,126.0,194,1,True,True
 1571,Guardian,GDN0010,TiltLevel,13,70.0,100.0,193,1,True,True
@@ -1657,7 +1611,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 1656,Guardian,GDN0011,Pause,56,120.0,152.0,199,1,True,True
 1657,Guardian,GDN0011,Valsalva,0,94.0,126.0,183,1,False,True
 1658,Guardian,GDN0011,Valsalva,1,84.0,116.0,186,1,False,True
-1659,Guardian,GDN0011,Valsalva,2,128.0,166.0,233,1,False,True
 1660,Guardian,GDN0011,Valsalva,3,94.0,124.0,180,1,True,True
 1661,Guardian,GDN0011,Valsalva,4,68.0,100.0,188,1,True,False
 1662,Guardian,GDN0011,Valsalva,5,116.0,146.0,190,1,True,False
@@ -1669,9 +1622,7 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 1668,Guardian,GDN0011,Valsalva,11,76.0,106.0,193,1,True,True
 1669,Guardian,GDN0011,Valsalva,12,94.0,126.0,188,1,True,True
 1670,Guardian,GDN0011,Valsalva,13,70.0,102.0,195,1,True,False
-1671,Guardian,GDN0011,Valsalva,14,90.0,120.0,191,1,True,False
 1672,Guardian,GDN0011,Valsalva,15,116.0,146.0,184,1,True,True
-1673,Guardian,GDN0011,Valsalva,16,98.0,130.0,190,1,True,False
 1674,Guardian,GDN0011,Valsalva,17,80.0,112.0,198,1,True,True
 1675,Guardian,GDN0011,Valsalva,18,86.0,118.0,188,1,True,True
 1676,Guardian,GDN0011,Valsalva,19,74.0,106.0,189,1,False,True
@@ -1727,7 +1678,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 1726,Guardian,GDN0011,HoldingBreath,5,96.0,128.0,196,1,True,False
 1727,Guardian,GDN0011,HoldingBreath,6,58.0,90.0,180,1,True,True
 1728,Guardian,GDN0011,HoldingBreath,7,122.0,152.0,220,1,False,True
-1729,Guardian,GDN0011,HoldingBreath,8,76.0,108.0,189,1,True,True
 1730,Guardian,GDN0011,HoldingBreath,9,120.0,150.0,199,1,True,True
 1731,Guardian,GDN0011,HoldingBreath,10,90.0,120.0,191,1,False,True
 1732,Guardian,GDN0011,HoldingBreath,11,66.0,98.0,195,1,True,True
@@ -1740,10 +1690,8 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 1739,Guardian,GDN0011,HoldingBreath,18,102.0,132.0,193,1,True,True
 1740,Guardian,GDN0011,HoldingBreath,19,84.0,116.0,191,1,False,True
 1741,Guardian,GDN0011,HoldingBreath,20,86.0,116.0,199,1,True,False
-1742,Guardian,GDN0011,HoldingBreath,21,126.0,160.0,316,1,False,True
 1743,Guardian,GDN0011,HoldingBreath,22,88.0,120.0,177,1,False,True
 1744,Guardian,GDN0011,HoldingBreath,23,110.0,140.0,200,1,True,False
-1745,Guardian,GDN0011,HoldingBreath,24,74.0,104.0,200,1,True,False
 1746,Guardian,GDN0011,HoldingBreath,25,114.0,146.0,196,1,False,True
 1747,Guardian,GDN0011,HoldingBreath,26,114.0,144.0,191,1,True,True
 1748,Guardian,GDN0011,HoldingBreath,27,84.0,114.0,201,1,True,True
@@ -1784,7 +1732,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 1783,Guardian,GDN0011,HoldingBreath,62,108.0,140.0,199,1,True,True
 1784,Guardian,GDN0011,HoldingBreath,63,116.0,148.0,193,1,False,True
 1785,Guardian,GDN0011,HoldingBreath,64,110.0,142.0,207,1,True,True
-1786,Guardian,GDN0011,HoldingBreath,65,142.0,178.0,226,1,False,True
 1787,Guardian,GDN0011,HoldingBreath,66,96.0,128.0,179,1,True,True
 1788,Guardian,GDN0011,HoldingBreath,67,118.0,150.0,204,1,False,True
 1789,Guardian,GDN0011,HoldingBreath,68,112.0,144.0,201,1,True,True
@@ -1879,7 +1826,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 1878,Guardian,GDN0011,TiltLevel,1,106.0,138.0,180,1,True,True
 1879,Guardian,GDN0011,TiltLevel,2,100.0,132.0,184,1,True,True
 1880,Guardian,GDN0011,TiltLevel,3,88.0,120.0,180,1,False,True
-1881,Guardian,GDN0011,TiltLevel,4,86.0,118.0,185,1,True,False
 1882,Guardian,GDN0011,TiltLevel,5,102.0,132.0,185,1,False,True
 1883,Guardian,GDN0011,TiltLevel,6,84.0,116.0,177,1,True,True
 1884,Guardian,GDN0011,TiltLevel,7,114.0,146.0,185,1,True,True
@@ -2057,9 +2003,7 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 2056,Guardian,GDN0012,Valsalva,58,80.0,106.0,193,1,False,True
 2057,Guardian,GDN0012,Valsalva,59,94.0,120.0,189,1,False,True
 2058,Guardian,GDN0012,Valsalva,60,88.0,116.0,196,1,True,True
-2059,Guardian,GDN0012,Valsalva,61,92.0,118.0,192,1,False,True
 2060,Guardian,GDN0012,Valsalva,62,72.0,100.0,187,1,True,True
-2061,Guardian,GDN0012,Valsalva,63,42.0,68.0,204,1,True,True
 2062,Guardian,GDN0012,Valsalva,64,104.0,132.0,181,1,True,True
 2063,Guardian,GDN0012,Valsalva,65,96.0,124.0,201,1,True,True
 2064,Guardian,GDN0012,Valsalva,66,134.0,160.0,193,1,True,True
@@ -2167,7 +2111,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 2166,Guardian,GDN0012,TiltUp,35,148.0,176.0,200,1,False,True
 2167,Guardian,GDN0012,TiltUp,36,164.0,190.0,207,0,False,True
 2168,Guardian,GDN0012,TiltUp,37,136.0,164.0,230,1,False,True
-2169,Guardian,GDN0012,TiltUp,38,132.0,158.0,208,1,False,True
 2170,Guardian,GDN0012,TiltUp,39,126.0,154.0,207,1,False,True
 2171,Guardian,GDN0012,TiltUp,40,130.0,158.0,216,1,True,True
 2172,Guardian,GDN0012,TiltUp,41,124.0,152.0,186,1,True,True
@@ -2212,7 +2155,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 2211,Guardian,GDN0012,TiltUp,80,154.0,182.0,194,0,True,True
 2212,Guardian,GDN0012,TiltUp,81,118.0,144.0,211,1,False,True
 2213,Guardian,GDN0012,TiltUp,82,112.0,140.0,194,1,False,True
-2214,Guardian,GDN0012,TiltUp,83,120.0,148.0,215,1,False,True
 2215,Guardian,GDN0012,TiltLevel,0,84.0,112.0,175,1,True,True
 2216,Guardian,GDN0012,TiltLevel,1,96.0,124.0,178,1,True,True
 2217,Guardian,GDN0012,TiltLevel,2,96.0,124.0,180,1,False,True
@@ -2434,14 +2376,11 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 2433,Guardian,GDN0013,HoldingBreath,14,116.0,148.0,196,1,True,True
 2434,Guardian,GDN0013,HoldingBreath,15,118.0,150.0,193,1,False,True
 2435,Guardian,GDN0013,HoldingBreath,16,148.0,180.0,192,1,True,True
-2436,Guardian,GDN0013,HoldingBreath,17,132.0,164.0,50,1,False,False
 2437,Guardian,GDN0013,HoldingBreath,18,114.0,144.0,186,1,True,True
 2438,Guardian,GDN0013,HoldingBreath,19,4.0,36.0,181,1,True,False
 2439,Guardian,GDN0013,HoldingBreath,20,112.0,144.0,189,1,True,False
 2440,Guardian,GDN0013,HoldingBreath,21,86.0,118.0,190,1,True,False
-2441,Guardian,GDN0013,HoldingBreath,22,68.0,98.0,212,1,False,True
 2442,Guardian,GDN0013,HoldingBreath,23,110.0,138.0,187,1,False,True
-2443,Guardian,GDN0013,HoldingBreath,24,112.0,144.0,323,1,True,True
 2445,Guardian,GDN0013,HoldingBreath,26,70.0,100.0,134,1,True,False
 2446,Guardian,GDN0013,HoldingBreath,27,92.0,122.0,201,1,True,True
 2447,Guardian,GDN0013,HoldingBreath,28,110.0,142.0,192,1,True,True
@@ -2458,13 +2397,9 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 2458,Guardian,GDN0013,HoldingBreath,39,104.0,134.0,279,1,True,False
 2459,Guardian,GDN0013,HoldingBreath,40,134.0,166.0,200,1,True,True
 2460,Guardian,GDN0013,HoldingBreath,41,132.0,162.0,190,1,True,True
-2461,Guardian,GDN0013,HoldingBreath,42,120.0,152.0,216,1,False,False
 2462,Guardian,GDN0013,HoldingBreath,43,112.0,142.0,200,1,True,False
 2463,Guardian,GDN0013,HoldingBreath,44,144.0,174.0,204,1,False,True
 2464,Guardian,GDN0013,HoldingBreath,45,114.0,144.0,194,1,True,True
-2465,Guardian,GDN0013,HoldingBreath,46,102.0,132.0,167,1,False,False
-2466,Guardian,GDN0013,HoldingBreath,47,58.0,88.0,272,1,False,False
-2467,Guardian,GDN0013,HoldingBreath,48,118.0,150.0,53,1,False,False
 2468,Guardian,GDN0013,HoldingBreath,49,106.0,138.0,186,1,True,True
 2469,Guardian,GDN0013,HoldingBreath,50,126.0,158.0,200,1,False,True
 2470,Guardian,GDN0013,HoldingBreath,51,112.0,142.0,213,1,True,True
@@ -2652,7 +2587,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 2652,Guardian,GDN0014,Pause,21,88.0,120.0,161,1,True,False
 2653,Guardian,GDN0014,Pause,22,50.0,82.0,158,1,True,False
 2654,Guardian,GDN0014,Pause,23,92.0,122.0,170,1,True,True
-2655,Guardian,GDN0014,Pause,24,110.0,142.0,151,1,True,False
 2656,Guardian,GDN0014,Pause,25,82.0,112.0,168,1,True,True
 2657,Guardian,GDN0014,Pause,26,76.0,106.0,159,1,True,False
 2658,Guardian,GDN0014,Pause,27,112.0,142.0,162,1,True,True
@@ -2677,21 +2611,16 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 2678,Guardian,GDN0014,Pause,47,106.0,136.0,165,1,False,True
 2679,Guardian,GDN0014,Pause,48,94.0,126.0,170,1,True,False
 2680,Guardian,GDN0014,Pause,49,64.0,94.0,162,1,True,True
-2681,Guardian,GDN0014,Pause,50,64.0,96.0,173,1,True,False
 2682,Guardian,GDN0014,Pause,51,112.0,144.0,171,1,True,False
 2683,Guardian,GDN0014,Pause,52,102.0,132.0,171,1,True,False
-2684,Guardian,GDN0014,Pause,53,112.0,142.0,161,1,True,False
 2685,Guardian,GDN0014,Pause,54,64.0,96.0,175,1,True,False
 2686,Guardian,GDN0014,Pause,55,98.0,128.0,167,1,True,False
 2687,Guardian,GDN0014,Pause,56,42.0,72.0,168,1,True,False
-2688,Guardian,GDN0014,Pause,57,58.0,90.0,163,1,True,False
 2689,Guardian,GDN0014,Pause,58,70.0,102.0,161,1,True,False
-2690,Guardian,GDN0014,Pause,59,110.0,140.0,172,1,True,False
 2691,Guardian,GDN0014,Pause,60,114.0,146.0,167,1,True,True
 2692,Guardian,GDN0014,Pause,61,90.0,122.0,161,1,True,True
 2693,Guardian,GDN0014,Pause,62,56.0,86.0,164,1,True,True
 2694,Guardian,GDN0014,Pause,63,46.0,78.0,161,1,True,True
-2695,Guardian,GDN0014,Pause,64,70.0,102.0,171,1,True,False
 2696,Guardian,GDN0014,Pause,65,50.0,80.0,166,1,True,True
 2697,Guardian,GDN0014,Pause,66,102.0,134.0,166,1,True,False
 2698,Guardian,GDN0014,Pause,67,42.0,74.0,159,1,True,False
@@ -2707,7 +2636,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 2708,Guardian,GDN0014,Pause,77,90.0,122.0,157,1,True,False
 2709,Guardian,GDN0014,Valsalva,0,106.0,136.0,167,1,True,False
 2710,Guardian,GDN0014,Valsalva,1,100.0,130.0,164,1,True,False
-2711,Guardian,GDN0014,Valsalva,2,62.0,92.0,175,1,True,False
 2712,Guardian,GDN0014,Valsalva,3,38.0,70.0,167,1,True,True
 2713,Guardian,GDN0014,Valsalva,4,106.0,136.0,174,1,True,False
 2714,Guardian,GDN0014,Valsalva,5,84.0,114.0,169,1,True,True
@@ -2720,12 +2648,9 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 2721,Guardian,GDN0014,Valsalva,12,70.0,102.0,165,1,True,False
 2722,Guardian,GDN0014,Valsalva,13,50.0,82.0,160,1,True,True
 2723,Guardian,GDN0014,Valsalva,14,102.0,134.0,161,1,True,False
-2724,Guardian,GDN0014,Valsalva,15,90.0,120.0,164,1,True,False
 2725,Guardian,GDN0014,Valsalva,16,50.0,80.0,165,1,True,True
-2726,Guardian,GDN0014,Valsalva,17,98.0,130.0,163,1,True,False
 2727,Guardian,GDN0014,Valsalva,18,80.0,112.0,166,1,True,False
 2728,Guardian,GDN0014,Valsalva,19,60.0,92.0,167,1,True,False
-2729,Guardian,GDN0014,Valsalva,20,84.0,114.0,169,1,True,False
 2730,Guardian,GDN0014,Valsalva,21,98.0,128.0,166,1,True,False
 2731,Guardian,GDN0014,Valsalva,22,78.0,110.0,165,1,True,False
 2732,Guardian,GDN0014,Valsalva,23,64.0,94.0,162,1,True,False
@@ -2736,7 +2661,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 2737,Guardian,GDN0014,Valsalva,28,64.0,94.0,174,1,True,False
 2738,Guardian,GDN0014,Valsalva,29,80.0,110.0,173,1,True,False
 2739,Guardian,GDN0014,Valsalva,30,104.0,136.0,170,1,True,False
-2740,Guardian,GDN0014,Valsalva,31,82.0,114.0,170,1,True,False
 2741,Guardian,GDN0014,Valsalva,32,72.0,104.0,164,1,True,True
 2742,Guardian,GDN0014,Valsalva,33,102.0,132.0,165,1,True,False
 2743,Guardian,GDN0014,Valsalva,34,102.0,134.0,169,1,True,False
@@ -2751,7 +2675,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 2752,Guardian,GDN0014,Valsalva,43,44.0,74.0,175,1,True,False
 2753,Guardian,GDN0014,Valsalva,44,68.0,98.0,170,1,True,False
 2754,Guardian,GDN0014,Valsalva,45,74.0,106.0,171,1,True,False
-2755,Guardian,GDN0014,Valsalva,46,66.0,96.0,171,1,True,False
 2756,Guardian,GDN0014,Valsalva,47,106.0,138.0,172,1,True,False
 2757,Guardian,GDN0014,Valsalva,48,58.0,88.0,166,1,True,False
 2758,Guardian,GDN0014,Valsalva,49,122.0,152.0,180,1,True,True
@@ -2771,7 +2694,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 2772,Guardian,GDN0014,Valsalva,63,42.0,72.0,155,1,True,True
 2773,Guardian,GDN0014,Valsalva,64,34.0,64.0,164,1,True,False
 2774,Guardian,GDN0014,Valsalva,65,40.0,72.0,155,1,True,True
-2775,Guardian,GDN0014,Valsalva,66,44.0,74.0,167,1,True,False
 2776,Guardian,GDN0014,Valsalva,67,58.0,90.0,159,1,True,False
 2777,Guardian,GDN0014,Valsalva,68,38.0,70.0,165,1,True,False
 2778,Guardian,GDN0014,Valsalva,69,34.0,64.0,161,1,True,False
@@ -2789,18 +2711,14 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 2790,Guardian,GDN0014,HoldingBreath,2,42.0,122.0,50,1,False,False
 2791,Guardian,GDN0014,HoldingBreath,3,82.0,74.0,156,1,True,True
 2792,Guardian,GDN0014,HoldingBreath,4,74.0,94.0,154,1,True,False
-2793,Guardian,GDN0014,HoldingBreath,5,22.0,70.0,155,1,True,False
 2794,Guardian,GDN0014,HoldingBreath,6,116.0,106.0,283,1,False,True
 2795,Guardian,GDN0014,HoldingBreath,7,114.0,110.0,310,1,False,True
-2796,Guardian,GDN0014,HoldingBreath,8,90.0,80.0,285,1,False,True
-2797,Guardian,GDN0014,HoldingBreath,9,40.0,30.0,320,1,True,True
 2798,Guardian,GDN0014,HoldingBreath,11,92.0,82.0,364,1,False,True
 2799,Guardian,GDN0014,HoldingBreath,13,112.0,158.0,319,1,False,True
 2800,Guardian,GDN0014,HoldingBreath,14,104.0,164.0,301,1,False,True
 2801,Guardian,GDN0014,HoldingBreath,15,34.0,114.0,334,1,False,True
 2802,Guardian,GDN0014,HoldingBreath,16,38.0,92.0,334,1,False,True
 2803,Guardian,GDN0014,HoldingBreath,17,110.0,142.0,346,1,False,True
-2804,Guardian,GDN0014,HoldingBreath,18,14.0,76.0,359,1,False,True
 2805,Guardian,GDN0014,HoldingBreath,19,26.0,106.0,376,1,False,True
 2806,Guardian,GDN0014,HoldingBreath,20,26.0,106.0,319,1,False,True
 2807,Guardian,GDN0014,HoldingBreath,21,46.0,96.0,298,1,False,True
@@ -2828,18 +2746,14 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 2829,Guardian,GDN0014,HoldingBreath,43,142.0,132.0,153,1,True,True
 2830,Guardian,GDN0014,HoldingBreath,44,136.0,142.0,398,1,False,True
 2831,Guardian,GDN0014,HoldingBreath,45,120.0,130.0,400,1,False,True
-2832,Guardian,GDN0014,HoldingBreath,46,120.0,152.0,380,1,True,True
 2833,Guardian,GDN0014,HoldingBreath,47,138.0,156.0,165,1,True,True
-2834,Guardian,GDN0014,HoldingBreath,48,104.0,126.0,214,1,True,True
 2835,Guardian,GDN0014,HoldingBreath,49,114.0,110.0,367,1,False,True
 2836,Guardian,GDN0014,HoldingBreath,50,54.0,134.0,321,1,False,False
 2837,Guardian,GDN0014,HoldingBreath,51,20.0,100.0,338,1,False,True
 2838,Guardian,GDN0014,HoldingBreath,52,144.0,134.0,368,1,True,True
 2839,Guardian,GDN0014,HoldingBreath,53,128.0,118.0,400,1,True,True
 2840,Guardian,GDN0014,HoldingBreath,54,82.0,72.0,134,1,False,False
-2841,Guardian,GDN0014,HoldingBreath,55,60.0,62.0,80,1,True,True
 2842,Guardian,GDN0014,HoldingBreath,56,78.0,102.0,135,1,True,True
-2843,Guardian,GDN0014,HoldingBreath,57,122.0,198.0,369,1,True,True
 2844,Guardian,GDN0014,HoldingBreath,58,70.0,60.0,253,1,False,True
 2845,Guardian,GDN0014,HoldingBreath,59,134.0,124.0,306,1,True,True
 2846,Guardian,GDN0014,HoldingBreath,60,138.0,142.0,194,1,False,False
@@ -2852,7 +2766,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 2853,Guardian,GDN0014,HoldingBreath,67,108.0,98.0,234,1,False,True
 2854,Guardian,GDN0014,HoldingBreath,68,38.0,98.0,53,1,False,True
 2855,Guardian,GDN0014,HoldingBreath,69,62.0,112.0,400,1,True,True
-2856,Guardian,GDN0014,HoldingBreath,70,90.0,148.0,400,1,False,True
 2857,Guardian,GDN0014,HoldingBreath,71,28.0,108.0,78,1,False,True
 2858,Guardian,GDN0014,HoldingBreath,72,120.0,110.0,254,1,False,True
 2859,Guardian,GDN0014,HoldingBreath,73,122.0,112.0,174,1,True,True
@@ -2958,7 +2871,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 2959,Guardian,GDN0014,TiltLevel,1,110.0,140.0,172,1,True,False
 2960,Guardian,GDN0014,TiltLevel,2,110.0,140.0,166,1,True,False
 2961,Guardian,GDN0014,TiltLevel,3,102.0,132.0,168,1,True,False
-2962,Guardian,GDN0014,TiltLevel,4,84.0,116.0,163,1,True,False
 2963,Guardian,GDN0014,TiltLevel,5,86.0,118.0,168,1,True,False
 2964,Guardian,GDN0014,TiltLevel,6,68.0,98.0,167,1,True,True
 2965,Guardian,GDN0014,TiltLevel,7,46.0,76.0,167,1,True,False
@@ -2969,7 +2881,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 2970,Guardian,GDN0014,TiltLevel,12,84.0,116.0,166,1,True,False
 2971,Guardian,GDN0014,TiltLevel,13,46.0,78.0,172,1,True,False
 2972,Guardian,GDN0014,TiltLevel,14,114.0,146.0,167,1,True,False
-2973,Guardian,GDN0014,TiltLevel,15,102.0,134.0,170,1,True,False
 2974,Guardian,GDN0014,TiltLevel,16,110.0,140.0,171,1,True,True
 2975,Guardian,GDN0014,TiltLevel,17,68.0,98.0,165,1,True,False
 2976,Guardian,GDN0014,TiltLevel,18,60.0,90.0,165,1,True,False
@@ -2981,26 +2892,19 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 2982,Guardian,GDN0014,TiltLevel,24,66.0,98.0,166,1,True,False
 2983,Guardian,GDN0014,TiltLevel,25,52.0,82.0,166,1,True,False
 2984,Guardian,GDN0014,TiltLevel,26,112.0,142.0,165,1,True,False
-2985,Guardian,GDN0014,TiltLevel,27,50.0,82.0,168,1,True,False
 2986,Guardian,GDN0014,TiltLevel,28,54.0,84.0,163,1,True,False
 2987,Guardian,GDN0014,TiltLevel,29,70.0,100.0,166,1,True,False
-2988,Guardian,GDN0014,TiltLevel,30,64.0,96.0,168,1,True,False
 2989,Guardian,GDN0014,TiltLevel,31,44.0,74.0,168,1,True,True
 2990,Guardian,GDN0014,TiltLevel,32,42.0,72.0,168,1,True,False
 2991,Guardian,GDN0014,TiltLevel,33,96.0,126.0,171,1,True,False
 2992,Guardian,GDN0014,TiltLevel,34,118.0,148.0,163,1,True,False
-2993,Guardian,GDN0014,TiltLevel,35,54.0,84.0,169,1,True,False
 2994,Guardian,GDN0014,TiltLevel,36,60.0,90.0,170,1,True,False
 2995,Guardian,GDN0014,TiltLevel,37,46.0,76.0,171,1,True,False
-2996,Guardian,GDN0014,TiltLevel,38,74.0,106.0,164,1,True,False
 2997,Guardian,GDN0014,TiltLevel,39,96.0,126.0,167,1,True,True
 2998,Guardian,GDN0014,TiltLevel,40,108.0,138.0,163,1,True,False
-2999,Guardian,GDN0014,TiltLevel,41,34.0,64.0,163,1,True,False
 3000,Guardian,GDN0014,TiltLevel,42,100.0,130.0,162,1,True,False
-3001,Guardian,GDN0014,TiltLevel,43,98.0,130.0,172,1,True,False
 3002,Guardian,GDN0014,TiltLevel,44,64.0,94.0,168,1,True,False
 3003,Guardian,GDN0014,TiltLevel,45,98.0,128.0,168,1,True,False
-3004,Guardian,GDN0014,TiltLevel,46,106.0,136.0,167,1,True,False
 3005,Guardian,GDN0014,TiltLevel,47,102.0,132.0,163,1,True,False
 3006,Guardian,GDN0014,TiltLevel,48,116.0,146.0,160,1,True,False
 3007,Guardian,GDN0014,TiltLevel,49,90.0,120.0,170,1,True,False
@@ -3009,28 +2913,18 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 3010,Guardian,GDN0014,TiltLevel,52,96.0,128.0,167,1,True,False
 3011,Guardian,GDN0014,TiltLevel,53,98.0,130.0,171,1,True,False
 3012,Guardian,GDN0014,TiltLevel,54,96.0,126.0,167,1,True,False
-3013,Guardian,GDN0014,TiltLevel,55,96.0,128.0,174,1,True,False
-3014,Guardian,GDN0014,TiltLevel,56,106.0,138.0,167,1,True,False
 3015,Guardian,GDN0014,TiltLevel,57,86.0,118.0,170,1,True,True
 3016,Guardian,GDN0014,TiltLevel,58,90.0,122.0,170,1,True,False
 3017,Guardian,GDN0014,TiltLevel,59,102.0,132.0,169,1,True,False
-3018,Guardian,GDN0014,TiltLevel,60,70.0,102.0,165,1,True,False
 3019,Guardian,GDN0014,TiltLevel,61,102.0,134.0,159,1,True,False
 3020,Guardian,GDN0014,TiltLevel,62,102.0,134.0,167,1,True,False
 3021,Guardian,GDN0014,TiltLevel,63,96.0,126.0,165,1,True,False
 3022,Guardian,GDN0014,TiltLevel,64,102.0,132.0,166,1,True,False
-3023,Guardian,GDN0014,TiltLevel,65,62.0,92.0,163,1,True,False
-3024,Guardian,GDN0014,TiltLevel,66,48.0,78.0,174,1,True,False
 3025,Guardian,GDN0014,TiltLevel,67,92.0,124.0,164,1,True,False
 3026,Guardian,GDN0014,TiltLevel,68,80.0,112.0,164,1,True,False
-3027,Guardian,GDN0014,TiltLevel,69,78.0,110.0,164,1,True,False
-3028,Guardian,GDN0014,TiltLevel,70,60.0,92.0,161,1,True,False
-3029,Guardian,GDN0014,TiltLevel,71,74.0,104.0,163,1,True,False
 3030,Guardian,GDN0014,TiltLevel,72,102.0,132.0,171,1,True,False
 3031,Guardian,GDN0014,TiltLevel,73,100.0,134.0,168,1,True,False
 3032,Guardian,GDN0014,TiltLevel,74,94.0,124.0,163,1,True,False
-3033,Guardian,GDN0014,TiltLevel,75,64.0,96.0,164,1,True,False
-3034,Guardian,GDN0014,TiltLevel,76,92.0,122.0,162,1,True,False
 3035,Guardian,GDN0014,TiltLevel,77,62.0,94.0,162,1,True,False
 3036,Guardian,GDN0014,TiltLevel,78,82.0,114.0,165,1,True,False
 3037,Guardian,GDN0014,TiltLevel,79,102.0,132.0,166,1,True,False
@@ -3162,7 +3056,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 3163,Guardian,GDN0016,HoldingBreath,26,128.0,162.0,205,1,True,True
 3164,Guardian,GDN0016,HoldingBreath,27,136.0,170.0,202,1,True,True
 3165,Guardian,GDN0016,HoldingBreath,28,148.0,182.0,228,1,True,True
-3166,Guardian,GDN0016,HoldingBreath,29,138.0,172.0,197,1,True,True
 3167,Guardian,GDN0016,HoldingBreath,30,78.0,112.0,200,1,True,True
 3168,Guardian,GDN0016,HoldingBreath,31,74.0,108.0,192,1,True,True
 3169,Guardian,GDN0016,HoldingBreath,32,108.0,142.0,191,1,False,True
@@ -3178,8 +3071,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 3179,Guardian,GDN0016,HoldingBreath,42,112.0,146.0,198,1,True,True
 3180,Guardian,GDN0016,HoldingBreath,43,86.0,120.0,174,1,True,True
 3181,Guardian,GDN0016,HoldingBreath,44,92.0,126.0,187,1,False,True
-3182,Guardian,GDN0016,HoldingBreath,45,24.0,58.0,188,1,True,False
-3183,Guardian,GDN0016,HoldingBreath,46,20.0,54.0,203,1,False,False
 3184,Guardian,GDN0016,HoldingBreath,47,66.0,100.0,194,1,True,True
 3185,Guardian,GDN0016,HoldingBreath,48,86.0,122.0,180,1,True,True
 3186,Guardian,GDN0016,HoldingBreath,49,60.0,94.0,182,1,False,True
@@ -3283,13 +3174,11 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 3284,Guardian,GDN0016,TiltLevel,18,100.0,134.0,196,1,True,True
 3285,Guardian,GDN0016,TiltLevel,19,60.0,94.0,197,1,True,True
 3286,Guardian,GDN0016,TiltLevel,20,116.0,150.0,186,1,True,True
-3287,Guardian,GDN0016,TiltLevel,21,36.0,70.0,193,1,True,True
 3288,Guardian,GDN0016,TiltLevel,22,62.0,96.0,190,1,False,True
 3289,Guardian,GDN0016,TiltLevel,23,62.0,96.0,194,1,True,True
 3290,Guardian,GDN0016,TiltLevel,24,96.0,130.0,210,1,True,True
 3291,Guardian,GDN0016,TiltLevel,25,54.0,90.0,182,1,True,True
 3292,Guardian,GDN0016,TiltLevel,26,62.0,98.0,190,1,True,True
-3293,Guardian,GDN0016,TiltLevel,27,42.0,76.0,199,1,True,True
 3294,Guardian,GDN0016,TiltLevel,28,112.0,148.0,202,1,True,True
 3295,Guardian,GDN0016,TiltLevel,29,102.0,136.0,192,1,True,True
 3296,Guardian,GDN0016,TiltLevel,30,134.0,168.0,186,1,True,True
@@ -3454,8 +3343,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 3455,Guardian,GDN0017,TiltUp,16,168.0,196.0,202,0,True,True
 3456,Guardian,GDN0017,TiltUp,17,122.0,150.0,218,1,False,True
 3457,Guardian,GDN0017,TiltUp,18,138.0,166.0,204,1,True,True
-3458,Guardian,GDN0017,TiltUp,19,192.0,218.0,225,0,True,True
-3459,Guardian,GDN0017,TiltUp,20,156.0,182.0,230,0,False,True
 3460,Guardian,GDN0017,TiltUp,21,138.0,166.0,201,1,False,True
 3461,Guardian,GDN0017,TiltUp,22,134.0,160.0,203,1,True,True
 3462,Guardian,GDN0017,TiltUp,23,142.0,170.0,206,1,False,True
@@ -3481,7 +3368,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 3482,Guardian,GDN0017,TiltUp,43,158.0,186.0,200,0,False,True
 3483,Guardian,GDN0017,TiltUp,44,158.0,186.0,199,0,False,True
 3484,Guardian,GDN0017,TiltUp,45,140.0,168.0,212,1,True,True
-3485,Guardian,GDN0017,TiltUp,46,144.0,172.0,250,1,True,True
 3486,Guardian,GDN0017,TiltUp,47,176.0,204.0,211,0,True,True
 3487,Guardian,GDN0017,TiltUp,48,140.0,166.0,207,1,False,False
 3488,Guardian,GDN0017,TiltUp,49,146.0,174.0,205,1,True,True
@@ -3504,7 +3390,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 3505,Guardian,GDN0017,TiltUp,66,168.0,196.0,204,0,True,True
 3506,Guardian,GDN0017,TiltUp,67,164.0,192.0,230,0,False,True
 3507,Guardian,GDN0017,TiltUp,68,170.0,196.0,206,0,True,True
-3508,Guardian,GDN0017,TiltUp,69,74.0,102.0,216,1,True,True
 3509,Guardian,GDN0017,TiltUp,70,148.0,176.0,223,1,False,True
 3510,Guardian,GDN0017,TiltUp,71,140.0,168.0,234,1,True,True
 3511,Guardian,GDN0017,TiltUp,72,174.0,202.0,209,0,True,True
@@ -3665,11 +3550,9 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 3666,Guardian,GDN0018,Valsalva,26,84.0,102.0,177,1,True,True
 3667,Guardian,GDN0018,Valsalva,27,62.0,82.0,177,1,True,True
 3668,Guardian,GDN0018,Valsalva,28,74.0,92.0,185,1,True,False
-3669,Guardian,GDN0018,Valsalva,29,72.0,92.0,172,1,True,False
 3670,Guardian,GDN0018,Valsalva,30,68.0,86.0,191,1,True,False
 3671,Guardian,GDN0018,Valsalva,31,88.0,106.0,182,1,True,False
 3672,Guardian,GDN0018,Valsalva,32,100.0,118.0,186,1,True,False
-3673,Guardian,GDN0018,Valsalva,33,54.0,74.0,190,1,True,False
 3674,Guardian,GDN0018,Valsalva,34,100.0,120.0,184,1,True,False
 3675,Guardian,GDN0018,Valsalva,35,108.0,126.0,181,1,True,True
 3676,Guardian,GDN0018,Valsalva,36,84.0,104.0,205,1,True,False
@@ -3687,7 +3570,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 3688,Guardian,GDN0018,Valsalva,48,72.0,90.0,187,1,True,False
 3689,Guardian,GDN0018,Valsalva,49,66.0,84.0,177,1,True,True
 3690,Guardian,GDN0018,Valsalva,50,110.0,130.0,176,1,True,True
-3691,Guardian,GDN0018,Valsalva,51,66.0,86.0,183,1,True,False
 3692,Guardian,GDN0018,Valsalva,52,74.0,94.0,186,1,True,True
 3693,Guardian,GDN0018,Valsalva,53,100.0,120.0,199,1,True,True
 3694,Guardian,GDN0018,Valsalva,54,106.0,126.0,175,1,False,True
@@ -3746,7 +3628,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 3747,Guardian,GDN0018,HoldingBreath,35,82.0,100.0,191,1,False,True
 3748,Guardian,GDN0018,HoldingBreath,36,70.0,90.0,187,1,True,True
 3749,Guardian,GDN0018,HoldingBreath,37,66.0,86.0,185,1,True,True
-3750,Guardian,GDN0018,HoldingBreath,38,56.0,76.0,185,1,True,False
 3751,Guardian,GDN0018,HoldingBreath,39,64.0,82.0,184,1,True,True
 3752,Guardian,GDN0018,HoldingBreath,40,102.0,120.0,189,1,True,True
 3753,Guardian,GDN0018,HoldingBreath,41,88.0,108.0,184,1,False,True
@@ -3758,21 +3639,17 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 3759,Guardian,GDN0018,HoldingBreath,47,60.0,80.0,196,1,True,True
 3760,Guardian,GDN0018,HoldingBreath,48,94.0,114.0,193,1,True,False
 3761,Guardian,GDN0018,HoldingBreath,49,106.0,124.0,189,1,True,False
-3762,Guardian,GDN0018,HoldingBreath,50,106.0,126.0,200,1,True,False
 3763,Guardian,GDN0018,HoldingBreath,51,78.0,96.0,205,1,True,False
 3764,Guardian,GDN0018,HoldingBreath,52,38.0,58.0,183,1,True,True
 3765,Guardian,GDN0018,HoldingBreath,53,82.0,100.0,197,1,True,True
-3766,Guardian,GDN0018,HoldingBreath,54,78.0,96.0,191,1,True,False
 3767,Guardian,GDN0018,HoldingBreath,55,46.0,66.0,191,1,True,False
 3768,Guardian,GDN0018,HoldingBreath,56,70.0,88.0,195,1,True,True
 3769,Guardian,GDN0018,HoldingBreath,57,52.0,72.0,185,1,True,True
 3770,Guardian,GDN0018,HoldingBreath,58,100.0,120.0,182,1,True,False
 3771,Guardian,GDN0018,HoldingBreath,59,104.0,124.0,172,1,True,False
-3772,Guardian,GDN0018,HoldingBreath,60,62.0,82.0,190,1,True,False
 3773,Guardian,GDN0018,HoldingBreath,61,108.0,128.0,203,1,False,True
 3774,Guardian,GDN0018,HoldingBreath,62,96.0,114.0,190,1,True,True
 3775,Guardian,GDN0018,HoldingBreath,63,18.0,36.0,192,1,True,False
-3776,Guardian,GDN0018,HoldingBreath,64,52.0,70.0,190,1,True,False
 3777,Guardian,GDN0018,HoldingBreath,65,28.0,46.0,197,1,True,True
 3778,Guardian,GDN0018,HoldingBreath,66,42.0,62.0,175,1,True,True
 3779,Guardian,GDN0018,TiltUp,0,126.0,144.0,195,1,False,True
@@ -3799,7 +3676,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 3800,Guardian,GDN0018,TiltUp,21,114.0,134.0,184,1,True,True
 3801,Guardian,GDN0018,TiltUp,22,118.0,136.0,181,1,False,True
 3802,Guardian,GDN0018,TiltUp,23,104.0,124.0,179,1,True,True
-3803,Guardian,GDN0018,TiltUp,24,110.0,130.0,180,1,True,True
 3804,Guardian,GDN0018,TiltUp,25,118.0,138.0,190,1,False,True
 3805,Guardian,GDN0018,TiltUp,26,122.0,140.0,195,1,False,True
 3806,Guardian,GDN0018,TiltUp,27,118.0,138.0,196,1,True,True
@@ -3950,7 +3826,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 3951,Guardian,GDN0019,Valsalva,25,96.0,126.0,181,1,True,True
 3952,Guardian,GDN0019,Valsalva,26,110.0,138.0,175,1,True,True
 3953,Guardian,GDN0019,Valsalva,27,74.0,102.0,180,1,False,True
-3954,Guardian,GDN0019,Valsalva,28,22.0,50.0,179,1,True,False
 3955,Guardian,GDN0019,Valsalva,29,84.0,112.0,184,1,True,True
 3956,Guardian,GDN0019,Valsalva,30,90.0,120.0,182,1,True,True
 3957,Guardian,GDN0019,Valsalva,31,72.0,102.0,175,1,False,True
@@ -4212,7 +4087,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 4213,Guardian,GDN0020,Valsalva,0,82.0,106.0,193,1,True,True
 4214,Guardian,GDN0020,Valsalva,1,106.0,128.0,194,1,False,True
 4215,Guardian,GDN0020,Valsalva,2,76.0,100.0,190,1,True,True
-4216,Guardian,GDN0020,Valsalva,3,130.0,166.0,190,1,False,True
 4217,Guardian,GDN0020,Valsalva,4,112.0,148.0,187,1,True,True
 4218,Guardian,GDN0020,Valsalva,5,46.0,84.0,191,1,True,False
 4219,Guardian,GDN0020,Valsalva,6,52.0,76.0,204,1,True,True
@@ -4221,7 +4095,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 4222,Guardian,GDN0020,Valsalva,9,56.0,82.0,180,1,True,False
 4223,Guardian,GDN0020,Valsalva,10,118.0,142.0,192,1,True,True
 4224,Guardian,GDN0020,Valsalva,11,104.0,130.0,175,1,True,False
-4225,Guardian,GDN0020,Valsalva,12,78.0,102.0,180,1,True,False
 4226,Guardian,GDN0020,Valsalva,13,80.0,104.0,183,1,True,False
 4227,Guardian,GDN0020,Valsalva,14,82.0,106.0,186,1,True,True
 4228,Guardian,GDN0020,Valsalva,15,110.0,138.0,184,1,True,True
@@ -4431,13 +4304,11 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 4432,Guardian,GDN0021,Pause,23,66.0,82.0,190,1,True,True
 4433,Guardian,GDN0021,Pause,24,70.0,86.0,185,1,True,True
 4434,Guardian,GDN0021,Pause,25,78.0,96.0,187,1,False,True
-4435,Guardian,GDN0021,Pause,26,50.0,68.0,195,1,True,False
 4436,Guardian,GDN0021,Pause,27,82.0,98.0,187,1,True,False
 4437,Guardian,GDN0021,Pause,28,76.0,94.0,184,1,True,True
 4438,Guardian,GDN0021,Pause,29,100.0,116.0,176,1,True,True
 4439,Guardian,GDN0021,Pause,30,98.0,116.0,183,1,True,False
 4440,Guardian,GDN0021,Pause,31,122.0,140.0,179,1,True,True
-4441,Guardian,GDN0021,Pause,32,72.0,90.0,182,1,True,False
 4442,Guardian,GDN0021,Pause,33,116.0,134.0,194,1,False,True
 4443,Guardian,GDN0021,Pause,34,78.0,94.0,182,1,True,False
 4444,Guardian,GDN0021,Pause,35,104.0,122.0,180,1,True,True
@@ -4466,7 +4337,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 4467,Guardian,GDN0021,Pause,58,98.0,116.0,196,1,True,True
 4468,Guardian,GDN0021,Pause,59,98.0,114.0,194,1,True,True
 4469,Guardian,GDN0021,Pause,60,100.0,116.0,187,1,True,False
-4470,Guardian,GDN0021,Pause,61,56.0,72.0,193,1,True,False
 4471,Guardian,GDN0021,Pause,62,74.0,92.0,186,1,True,False
 4472,Guardian,GDN0021,Pause,63,106.0,122.0,186,1,True,True
 4473,Guardian,GDN0021,Valsalva,0,94.0,112.0,202,1,False,True
@@ -4476,7 +4346,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 4477,Guardian,GDN0021,Valsalva,4,98.0,116.0,179,1,True,True
 4478,Guardian,GDN0021,Valsalva,5,104.0,120.0,192,1,True,True
 4479,Guardian,GDN0021,Valsalva,6,96.0,114.0,187,1,True,False
-4480,Guardian,GDN0021,Valsalva,7,76.0,96.0,202,1,True,False
 4481,Guardian,GDN0021,Valsalva,8,104.0,122.0,192,1,True,True
 4482,Guardian,GDN0021,Valsalva,9,82.0,100.0,207,1,True,False
 4483,Guardian,GDN0021,Valsalva,10,92.0,110.0,188,1,True,True
@@ -4797,8 +4666,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 4798,Guardian,GDN0022,Pause,43,130.0,168.0,202,1,True,True
 4799,Guardian,GDN0022,Pause,44,122.0,158.0,192,1,False,True
 4800,Guardian,GDN0022,Pause,45,124.0,162.0,189,1,True,True
-4801,Guardian,GDN0022,Pause,47,132.0,166.0,200,1,False,True
-4802,Guardian,GDN0022,Pause,48,104.0,138.0,194,1,False,True
 4803,Guardian,GDN0022,Pause,49,102.0,140.0,201,1,True,True
 4804,Guardian,GDN0022,Pause,50,78.0,114.0,194,1,True,True
 4805,Guardian,GDN0022,Pause,51,114.0,152.0,186,1,True,True
@@ -4916,7 +4783,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 4917,Guardian,GDN0022,HoldingBreath,55,116.0,178.0,89,1,False,True
 4918,Guardian,GDN0022,HoldingBreath,56,138.0,182.0,63,1,False,False
 4919,Guardian,GDN0022,HoldingBreath,57,160.0,196.0,400,0,False,False
-4920,Guardian,GDN0022,HoldingBreath,58,-12.0,50.0,361,0,False,False
 4921,Guardian,GDN0022,HoldingBreath,59,126.0,196.0,321,1,False,True
 4922,Guardian,GDN0022,HoldingBreath,60,166.0,204.0,347,0,False,False
 4923,Guardian,GDN0022,HoldingBreath,61,190.0,224.0,362,0,False,False
@@ -4937,7 +4803,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 4938,Guardian,GDN0022,TiltLevel,8,78.0,116.0,181,1,True,True
 4939,Guardian,GDN0022,TiltLevel,9,114.0,152.0,186,1,True,True
 4940,Guardian,GDN0022,TiltLevel,10,78.0,114.0,186,1,True,True
-4941,Guardian,GDN0022,TiltLevel,11,62.0,98.0,181,1,True,False
 4942,Guardian,GDN0022,TiltLevel,12,100.0,136.0,179,1,True,True
 4943,Guardian,GDN0022,TiltLevel,13,88.0,122.0,184,1,True,True
 4944,Guardian,GDN0022,TiltLevel,14,110.0,148.0,184,1,True,True
@@ -4975,7 +4840,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 4976,Guardian,GDN0022,TiltLevel,48,66.0,104.0,187,1,True,True
 4977,Guardian,GDN0022,TiltLevel,50,80.0,118.0,181,1,False,True
 4978,Guardian,GDN0022,TiltLevel,51,84.0,122.0,181,1,True,True
-4979,Guardian,GDN0022,TiltLevel,52,28.0,60.0,76,1,True,False
 4980,Guardian,GDN0022,TiltLevel,53,60.0,98.0,157,1,False,True
 4981,Guardian,GDN0022,TiltLevel,54,98.0,134.0,169,1,False,True
 4982,Guardian,GDN0022,TiltLevel,55,106.0,142.0,185,1,True,True
@@ -5434,7 +5298,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 5435,Guardian,GDN0024,HoldingBreath,2,92.0,124.0,172,1,True,True
 5436,Guardian,GDN0024,HoldingBreath,3,106.0,140.0,178,1,False,True
 5437,Guardian,GDN0024,HoldingBreath,4,118.0,150.0,189,1,True,True
-5438,Guardian,GDN0024,HoldingBreath,5,128.0,160.0,50,1,False,False
 5439,Guardian,GDN0024,HoldingBreath,6,88.0,120.0,174,1,False,True
 5440,Guardian,GDN0024,HoldingBreath,7,112.0,144.0,180,1,True,True
 5441,Guardian,GDN0024,HoldingBreath,8,108.0,142.0,184,1,False,True
@@ -5445,11 +5308,9 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 5446,Guardian,GDN0024,HoldingBreath,13,108.0,142.0,179,1,False,True
 5447,Guardian,GDN0024,HoldingBreath,14,116.0,148.0,189,1,False,True
 5448,Guardian,GDN0024,HoldingBreath,15,94.0,128.0,181,1,False,True
-5449,Guardian,GDN0024,HoldingBreath,16,24.0,56.0,176,1,True,False
 5450,Guardian,GDN0024,HoldingBreath,17,112.0,148.0,173,1,False,True
 5451,Guardian,GDN0024,HoldingBreath,18,98.0,130.0,178,1,False,True
 5452,Guardian,GDN0024,HoldingBreath,19,106.0,138.0,161,1,True,True
-5453,Guardian,GDN0024,HoldingBreath,20,42.0,74.0,166,1,True,False
 5454,Guardian,GDN0024,HoldingBreath,21,116.0,150.0,173,1,True,False
 5455,Guardian,GDN0024,HoldingBreath,22,108.0,140.0,170,1,False,True
 5456,Guardian,GDN0024,HoldingBreath,23,122.0,154.0,53,1,False,False
@@ -5704,8 +5565,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 5706,Guardian,GDN0025,HoldingBreath,53,36.0,70.0,400,1,True,False
 5707,Guardian,GDN0025,HoldingBreath,54,76.0,90.0,400,1,True,True
 5708,Guardian,GDN0025,HoldingBreath,55,226.0,232.0,400,0,True,True
-5709,Guardian,GDN0025,HoldingBreath,56,104.0,106.0,400,1,False,True
-5710,Guardian,GDN0025,HoldingBreath,57,126.0,116.0,400,1,False,True
 5711,Guardian,GDN0025,HoldingBreath,59,32.0,112.0,181,1,True,True
 5712,Guardian,GDN0025,HoldingBreath,60,74.0,118.0,69,1,True,False
 5713,Guardian,GDN0025,HoldingBreath,61,54.0,88.0,100,1,True,False
@@ -5713,8 +5572,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 5715,Guardian,GDN0025,HoldingBreath,63,102.0,128.0,191,1,False,True
 5716,Guardian,GDN0025,HoldingBreath,64,126.0,116.0,302,1,True,True
 5717,Guardian,GDN0025,HoldingBreath,65,62.0,54.0,219,1,False,False
-5718,Guardian,GDN0025,HoldingBreath,67,56.0,122.0,260,1,False,True
-5719,Guardian,GDN0025,HoldingBreath,68,68.0,144.0,246,1,False,True
 5722,Guardian,GDN0025,HoldingBreath,72,58.0,114.0,129,1,True,True
 5723,Guardian,GDN0025,HoldingBreath,75,34.0,114.0,50,1,False,False
 5724,Guardian,GDN0025,HoldingBreath,76,50.0,130.0,50,1,False,False
@@ -6090,7 +5947,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 6094,Guardian,GDN0027,TiltUp,36,96.0,152.0,226,1,False,True
 6095,Guardian,GDN0027,TiltUp,37,138.0,194.0,228,1,False,True
 6096,Guardian,GDN0027,TiltUp,38,112.0,168.0,231,1,True,True
-6097,Guardian,GDN0027,TiltUp,39,156.0,212.0,352,0,False,True
 6098,Guardian,GDN0027,TiltUp,40,128.0,184.0,254,1,True,True
 6099,Guardian,GDN0027,TiltUp,41,114.0,170.0,265,1,True,True
 6100,Guardian,GDN0027,TiltUp,42,152.0,208.0,345,0,False,True
@@ -6099,14 +5955,11 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 6103,Guardian,GDN0027,TiltUp,45,134.0,190.0,248,1,False,True
 6104,Guardian,GDN0027,TiltUp,46,112.0,166.0,212,1,False,True
 6105,Guardian,GDN0027,TiltUp,47,104.0,160.0,241,1,False,True
-6106,Guardian,GDN0027,TiltUp,48,116.0,172.0,214,1,False,False
 6107,Guardian,GDN0027,TiltUp,49,90.0,146.0,152,1,True,True
 6108,Guardian,GDN0027,TiltUp,50,74.0,130.0,128,1,False,True
 6109,Guardian,GDN0027,TiltUp,51,130.0,186.0,225,1,False,True
-6110,Guardian,GDN0027,TiltUp,52,124.0,180.0,280,1,True,True
 6111,Guardian,GDN0027,TiltUp,53,120.0,176.0,350,1,False,True
 6112,Guardian,GDN0027,TiltUp,54,126.0,180.0,229,1,False,True
-6113,Guardian,GDN0027,TiltUp,55,46.0,102.0,205,1,False,False
 6114,Guardian,GDN0027,TiltUp,56,162.0,218.0,221,0,False,True
 6115,Guardian,GDN0027,TiltUp,57,170.0,226.0,236,0,False,False
 6116,Guardian,GDN0027,TiltUp,58,132.0,186.0,217,1,False,True
@@ -6115,12 +5968,10 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 6119,Guardian,GDN0027,TiltUp,61,134.0,190.0,231,1,False,True
 6120,Guardian,GDN0027,TiltUp,62,142.0,198.0,353,1,False,False
 6121,Guardian,GDN0027,TiltUp,63,156.0,212.0,210,0,False,True
-6122,Guardian,GDN0027,TiltUp,64,116.0,172.0,216,1,False,True
 6123,Guardian,GDN0027,TiltUp,65,126.0,182.0,268,1,False,True
 6124,Guardian,GDN0027,TiltUp,66,146.0,204.0,237,1,True,True
 6125,Guardian,GDN0027,TiltUp,67,76.0,132.0,130,1,True,True
 6126,Guardian,GDN0027,TiltUp,68,132.0,188.0,203,1,False,True
-6127,Guardian,GDN0027,TiltUp,69,188.0,244.0,323,0,False,True
 6128,Guardian,GDN0027,TiltUp,70,116.0,174.0,235,1,False,True
 6129,Guardian,GDN0027,TiltUp,71,118.0,174.0,212,1,True,True
 6130,Guardian,GDN0027,TiltUp,72,126.0,182.0,232,1,False,True
@@ -6167,7 +6018,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 6171,Guardian,GDN0027,TiltLevel,34,54.0,134.0,239,1,True,True
 6172,Guardian,GDN0027,TiltLevel,35,56.0,136.0,228,1,False,True
 6173,Guardian,GDN0027,TiltLevel,36,56.0,136.0,227,1,False,True
-6174,Guardian,GDN0027,TiltLevel,38,140.0,220.0,50,1,False,False
 6175,Guardian,GDN0027,TiltLevel,39,68.0,148.0,224,1,True,True
 6176,Guardian,GDN0027,TiltLevel,40,44.0,124.0,236,1,False,True
 6177,Guardian,GDN0027,TiltLevel,41,110.0,190.0,220,1,False,True
@@ -6817,13 +6667,11 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 6821,Guardian,GDN0030,HoldingBreath,19,120.0,160.0,193,1,True,True
 6822,Guardian,GDN0030,HoldingBreath,20,106.0,144.0,184,1,True,True
 6823,Guardian,GDN0030,HoldingBreath,21,110.0,148.0,202,1,False,True
-6824,Guardian,GDN0030,HoldingBreath,22,48.0,86.0,102,1,False,True
 6825,Guardian,GDN0030,HoldingBreath,23,120.0,156.0,194,1,False,True
 6826,Guardian,GDN0030,HoldingBreath,24,110.0,146.0,183,1,False,True
 6827,Guardian,GDN0030,HoldingBreath,26,104.0,140.0,184,1,True,True
 6828,Guardian,GDN0030,HoldingBreath,27,74.0,112.0,186,1,True,True
 6829,Guardian,GDN0030,HoldingBreath,28,66.0,102.0,179,1,True,True
-6830,Guardian,GDN0030,HoldingBreath,29,144.0,178.0,206,1,False,True
 6831,Guardian,GDN0030,HoldingBreath,30,102.0,138.0,180,1,True,True
 6832,Guardian,GDN0030,HoldingBreath,31,110.0,146.0,186,1,True,True
 6833,Guardian,GDN0030,HoldingBreath,32,110.0,146.0,183,1,False,True
@@ -6838,11 +6686,8 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 6842,Guardian,GDN0030,HoldingBreath,41,56.0,96.0,181,1,True,True
 6843,Guardian,GDN0030,HoldingBreath,42,104.0,142.0,179,1,True,True
 6844,Guardian,GDN0030,HoldingBreath,43,80.0,118.0,168,1,True,True
-6845,Guardian,GDN0030,HoldingBreath,44,70.0,108.0,334,1,True,False
-6846,Guardian,GDN0030,HoldingBreath,45,98.0,138.0,184,1,True,False
 6847,Guardian,GDN0030,HoldingBreath,46,102.0,142.0,180,1,False,True
 6848,Guardian,GDN0030,HoldingBreath,47,90.0,126.0,308,1,False,True
-6849,Guardian,GDN0030,HoldingBreath,48,104.0,142.0,173,1,False,False
 6850,Guardian,GDN0030,HoldingBreath,49,122.0,160.0,178,1,True,True
 6851,Guardian,GDN0030,HoldingBreath,50,66.0,104.0,177,1,True,True
 6852,Guardian,GDN0030,HoldingBreath,51,58.0,96.0,181,1,True,True
@@ -6967,8 +6812,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 6971,EmpkinS,VP_001,pause_1,0,40.0,74.0,114,1,False,False
 6972,EmpkinS,VP_001,pause_1,1,37.0,72.0,117,1,False,False
 6973,EmpkinS,VP_001,pause_1,2,19.0,53.0,141,1,False,False
-6974,EmpkinS,VP_001,pause_1,3,-5.0,31.0,104,0,False,False
-6975,EmpkinS,VP_001,pause_1,4,35.0,71.0,143,1,False,False
 6976,EmpkinS,VP_001,pause_1,5,41.0,76.0,118,1,False,True
 6977,EmpkinS,VP_001,pause_1,6,40.0,76.0,118,1,False,True
 6979,EmpkinS,VP_001,pause_1,8,4.0,38.0,106,1,False,False
@@ -7083,7 +6926,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 7088,EmpkinS,VP_001,pause_5,0,57.0,93.0,112,1,True,False
 7089,EmpkinS,VP_001,pause_5,1,59.0,92.0,112,1,True,False
 7090,EmpkinS,VP_001,pause_5,2,29.0,60.0,112,1,True,False
-7091,EmpkinS,VP_001,pause_5,3,-1.0,32.0,105,0,True,False
 7092,EmpkinS,VP_001,pause_5,4,21.0,54.0,110,1,False,False
 7093,EmpkinS,VP_001,pause_5,5,32.0,66.0,106,1,False,False
 7094,EmpkinS,VP_001,pause_5,6,28.0,61.0,106,1,False,False
@@ -7173,7 +7015,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 7180,EmpkinS,VP_001,talk,11,80.0,115.0,128,1,True,True
 7181,EmpkinS,VP_001,talk,12,39.0,73.0,121,1,True,False
 7182,EmpkinS,VP_001,talk,13,74.0,110.0,136,1,True,False
-7183,EmpkinS,VP_001,talk,14,-9.0,28.0,105,0,False,False
 7184,EmpkinS,VP_001,talk,15,47.0,81.0,129,1,False,True
 7185,EmpkinS,VP_001,talk,16,55.0,87.0,122,1,False,True
 7186,EmpkinS,VP_001,talk,17,19.0,56.0,150,1,True,False
@@ -7204,7 +7045,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 7211,EmpkinS,VP_001,talk,42,48.0,73.0,134,1,False,True
 7212,EmpkinS,VP_001,talk,43,71.0,108.0,133,1,True,False
 7213,EmpkinS,VP_001,talk,44,69.0,105.0,139,1,True,True
-7214,EmpkinS,VP_001,math,0,-3.0,34.0,106,0,False,False
 7215,EmpkinS,VP_001,math,1,25.0,49.0,132,1,False,False
 7216,EmpkinS,VP_001,math,2,74.0,101.0,146,1,True,False
 7217,EmpkinS,VP_001,math,3,22.0,49.0,118,1,False,False
@@ -7550,16 +7390,9 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 7627,EmpkinS,VP_002,math,16,16.0,44.0,133,1,True,False
 7628,EmpkinS,VP_002,math,17,36.0,64.0,111,1,True,True
 7629,EmpkinS,VP_002,math,18,22.0,50.0,122,1,True,False
-7630,EmpkinS,VP_002,math,19,43.0,71.0,117,1,False,False
 7631,EmpkinS,VP_002,math,20,52.0,80.0,125,1,False,True
 7632,EmpkinS,VP_002,math,21,36.0,65.0,158,1,False,False
 7633,EmpkinS,VP_002,math,22,37.0,65.0,115,1,True,False
-7634,EmpkinS,VP_002,math,23,-29.0,51.0,55,0,False,False
-7635,EmpkinS,VP_002,math,24,117.0,108.0,194,1,True,False
-7636,EmpkinS,VP_002,math,25,93.0,83.0,165,1,True,False
-7637,EmpkinS,VP_002,math,26,84.0,74.0,164,1,True,False
-7638,EmpkinS,VP_002,math,27,3.0,83.0,123,1,False,False
-7639,EmpkinS,VP_002,math,28,2.0,82.0,77,1,False,False
 7640,EmpkinS,VP_002,math,29,40.0,73.0,111,1,False,False
 7641,EmpkinS,VP_002,math,30,40.0,75.0,117,1,False,True
 7642,EmpkinS,VP_002,math,31,29.0,62.0,115,1,False,False
@@ -7568,7 +7401,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 7645,EmpkinS,VP_002,math,34,44.0,74.0,112,1,False,True
 7646,EmpkinS,VP_002,math,35,42.0,70.0,117,1,False,True
 7647,EmpkinS,VP_002,math,36,41.0,70.0,117,1,True,False
-7648,EmpkinS,VP_002,math,37,43.0,33.0,123,1,False,True
 7649,EmpkinS,VP_002,math,38,40.0,70.0,128,1,False,True
 7650,EmpkinS,VP_002,math,39,41.0,69.0,122,1,False,False
 7651,EmpkinS,VP_002,math,40,28.0,56.0,119,1,True,False
@@ -7992,7 +7824,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 8069,EmpkinS,VP_004,math,12,60.0,102.0,150,1,True,True
 8070,EmpkinS,VP_004,math,13,93.0,136.0,151,1,True,True
 8071,EmpkinS,VP_004,math,14,91.0,131.0,151,1,True,True
-8072,EmpkinS,VP_004,math,15,93.0,136.0,324,1,False,True
 8073,EmpkinS,VP_004,math,16,94.0,136.0,143,1,True,True
 8074,EmpkinS,VP_004,math,17,92.0,144.0,139,1,True,False
 8075,EmpkinS,VP_004,math,18,82.0,126.0,148,1,True,True
@@ -8239,7 +8070,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 8320,EmpkinS,VP_005,talk,17,22.0,43.0,151,1,True,False
 8321,EmpkinS,VP_005,talk,18,68.0,90.0,355,1,True,False
 8322,EmpkinS,VP_005,talk,19,63.0,86.0,111,1,True,False
-8323,EmpkinS,VP_005,talk,20,-8.0,21.0,127,0,True,False
 8324,EmpkinS,VP_005,talk,21,64.0,96.0,129,1,True,False
 8325,EmpkinS,VP_005,talk,22,41.0,71.0,118,1,False,False
 8326,EmpkinS,VP_005,talk,23,45.0,78.0,108,1,False,True
@@ -8473,7 +8303,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 8555,EmpkinS,VP_005,math,12,73.0,94.0,139,1,True,False
 8556,EmpkinS,VP_005,math,13,76.0,101.0,145,1,True,False
 8557,EmpkinS,VP_005,math,14,88.0,140.0,146,1,False,True
-8558,EmpkinS,VP_005,math,15,96.0,118.0,67,1,False,False
 8559,EmpkinS,VP_005,math,16,53.0,84.0,170,1,False,True
 8560,EmpkinS,VP_005,math,17,46.0,79.0,143,1,True,True
 8561,EmpkinS,VP_005,math,18,94.0,115.0,147,1,False,True
@@ -8582,7 +8411,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 8664,EmpkinS,VP_020,pause_1,8,37.0,74.0,136,1,False,False
 8665,EmpkinS,VP_020,pause_1,9,39.0,79.0,142,1,False,False
 8666,EmpkinS,VP_020,pause_1,10,32.0,68.0,142,1,False,False
-8667,EmpkinS,VP_020,pause_1,11,4.0,39.0,139,1,False,False
 8668,EmpkinS,VP_020,pause_1,12,42.0,78.0,122,1,False,False
 8669,EmpkinS,VP_020,pause_1,13,58.0,97.0,122,1,True,False
 8670,EmpkinS,VP_020,pause_1,14,38.0,74.0,140,1,False,False
@@ -8598,7 +8426,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 8680,EmpkinS,VP_020,talk,9,114.0,146.0,154,1,True,False
 8681,EmpkinS,VP_020,talk,10,38.0,62.0,148,1,False,False
 8682,EmpkinS,VP_020,talk,11,35.0,65.0,129,1,False,False
-8683,EmpkinS,VP_020,talk,12,3.0,31.0,124,1,True,False
 8684,EmpkinS,VP_020,talk,13,30.0,56.0,146,1,True,False
 8685,EmpkinS,VP_020,talk,14,36.0,70.0,151,1,False,False
 8686,EmpkinS,VP_020,talk,15,9.0,48.0,153,1,False,False
@@ -8630,7 +8457,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 8712,EmpkinS,VP_020,talk,41,194.0,232.0,325,0,True,False
 8713,EmpkinS,VP_020,talk,42,9.0,47.0,148,1,False,False
 8714,EmpkinS,VP_020,talk,43,31.0,68.0,118,1,False,False
-8715,EmpkinS,VP_020,talk,44,-8.0,28.0,129,0,True,False
 8716,EmpkinS,VP_020,talk,45,5.0,33.0,115,1,False,False
 8717,EmpkinS,VP_020,talk,46,33.0,69.0,118,1,False,False
 8718,EmpkinS,VP_020,talk,47,10.0,48.0,143,1,False,False
@@ -8702,7 +8528,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 8785,EmpkinS,VP_020,prep,3,46.0,78.0,151,1,True,False
 8786,EmpkinS,VP_020,prep,4,44.0,80.0,136,1,True,False
 8787,EmpkinS,VP_020,prep,5,9.0,35.0,126,1,True,False
-8788,EmpkinS,VP_020,prep,6,0.0,35.0,128,1,True,False
 8789,EmpkinS,VP_020,prep,7,15.0,43.0,146,1,True,False
 8790,EmpkinS,VP_020,prep,8,40.0,78.0,144,1,True,False
 8791,EmpkinS,VP_020,prep,9,13.0,43.0,124,1,True,False
@@ -8723,7 +8548,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 8806,EmpkinS,VP_020,prep,24,12.0,51.0,137,1,True,False
 8807,EmpkinS,VP_020,prep,25,9.0,40.0,131,1,True,False
 8808,EmpkinS,VP_020,prep,26,41.0,80.0,127,1,True,False
-8809,EmpkinS,VP_020,prep,27,4.0,45.0,133,1,True,False
 8810,EmpkinS,VP_020,prep,28,15.0,51.0,131,1,True,False
 8811,EmpkinS,VP_020,prep,29,72.0,105.0,137,1,True,False
 8812,EmpkinS,VP_020,prep,30,10.0,42.0,134,1,True,False
@@ -8740,7 +8564,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 8823,EmpkinS,VP_020,prep,41,18.0,41.0,144,1,True,False
 8824,EmpkinS,VP_020,prep,42,76.0,97.0,140,1,True,False
 8825,EmpkinS,VP_020,prep,43,20.0,56.0,146,1,True,False
-8826,EmpkinS,VP_020,prep,44,1.0,31.0,132,1,True,False
 8827,EmpkinS,VP_020,prep,45,44.0,69.0,154,1,False,True
 8828,EmpkinS,VP_020,pause_1,0,36.0,73.0,130,1,False,False
 8829,EmpkinS,VP_020,pause_1,1,50.0,86.0,124,1,True,False
@@ -8749,7 +8572,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 8832,EmpkinS,VP_020,pause_1,4,14.0,50.0,135,1,False,False
 8833,EmpkinS,VP_020,pause_1,5,19.0,56.0,127,1,False,False
 8834,EmpkinS,VP_020,pause_1,6,35.0,66.0,123,1,False,False
-8835,EmpkinS,VP_020,pause_1,7,4.0,44.0,126,1,True,False
 8836,EmpkinS,VP_020,pause_1,8,43.0,79.0,133,1,False,True
 8837,EmpkinS,VP_020,pause_1,9,14.0,50.0,135,1,False,False
 8838,EmpkinS,VP_020,pause_1,10,32.0,69.0,135,1,False,False
@@ -8765,7 +8587,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 8848,EmpkinS,VP_020,talk,3,12.0,49.0,139,1,True,False
 8849,EmpkinS,VP_020,talk,4,34.0,70.0,148,1,True,False
 8850,EmpkinS,VP_020,talk,5,40.0,77.0,139,1,False,True
-8851,EmpkinS,VP_020,talk,6,5.0,41.0,149,1,True,False
 8852,EmpkinS,VP_020,talk,7,42.0,79.0,143,1,True,False
 8853,EmpkinS,VP_020,talk,8,41.0,74.0,136,1,True,False
 8854,EmpkinS,VP_020,talk,9,45.0,83.0,136,1,True,False
@@ -8776,12 +8597,10 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 8859,EmpkinS,VP_020,talk,14,30.0,59.0,145,1,True,False
 8860,EmpkinS,VP_020,talk,15,71.0,105.0,137,1,True,False
 8861,EmpkinS,VP_020,talk,16,51.0,88.0,130,1,True,False
-8862,EmpkinS,VP_020,talk,17,2.0,37.0,140,1,True,False
 8863,EmpkinS,VP_020,talk,18,72.0,106.0,159,1,True,False
 8864,EmpkinS,VP_020,talk,19,15.0,50.0,155,1,True,False
 8865,EmpkinS,VP_020,talk,20,49.0,84.0,148,1,True,False
 8866,EmpkinS,VP_020,talk,21,72.0,109.0,146,1,True,False
-8867,EmpkinS,VP_020,talk,22,-5.0,33.0,150,0,True,False
 8868,EmpkinS,VP_020,talk,23,71.0,106.0,140,1,True,False
 8869,EmpkinS,VP_020,talk,24,39.0,75.0,149,1,False,False
 8870,EmpkinS,VP_020,talk,25,9.0,48.0,143,1,True,False
@@ -8799,7 +8618,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 8882,EmpkinS,VP_020,talk,37,71.0,103.0,142,1,True,False
 8883,EmpkinS,VP_020,talk,38,66.0,103.0,152,1,True,False
 8884,EmpkinS,VP_020,talk,39,69.0,105.0,147,1,True,False
-8885,EmpkinS,VP_020,talk,40,4.0,39.0,142,1,True,False
 8886,EmpkinS,VP_020,talk,41,10.0,43.0,147,1,True,False
 8887,EmpkinS,VP_020,talk,42,44.0,77.0,134,1,True,False
 8888,EmpkinS,VP_020,talk,43,69.0,105.0,137,1,True,False
@@ -8822,7 +8640,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 8905,EmpkinS,VP_020,math,15,33.0,67.0,149,1,True,False
 8906,EmpkinS,VP_020,math,16,71.0,105.0,140,1,True,False
 8907,EmpkinS,VP_020,math,17,68.0,105.0,138,1,True,False
-8908,EmpkinS,VP_020,math,18,2.0,39.0,129,1,True,False
 8909,EmpkinS,VP_020,math,19,4.0,36.0,118,1,False,False
 8910,EmpkinS,VP_020,math,20,16.0,46.0,119,1,True,False
 8911,EmpkinS,VP_020,math,21,41.0,69.0,123,1,False,False
@@ -8839,18 +8656,15 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 8922,EmpkinS,VP_020,math,32,12.0,47.0,138,1,False,False
 8923,EmpkinS,VP_020,math,33,39.0,75.0,134,1,True,False
 8924,EmpkinS,VP_020,math,34,22.0,62.0,136,1,True,False
-8925,EmpkinS,VP_020,math,35,3.0,37.0,134,1,True,False
 8926,EmpkinS,VP_020,math,36,44.0,74.0,135,1,False,True
 8927,EmpkinS,VP_020,math,37,4.0,28.0,128,1,True,False
 8928,EmpkinS,VP_020,math,38,50.0,87.0,133,1,True,False
 8929,EmpkinS,VP_020,math,39,43.0,69.0,139,1,True,False
 8930,EmpkinS,VP_020,math,40,50.0,77.0,170,1,True,True
 8931,EmpkinS,VP_020,math,41,71.0,96.0,110,1,False,False
-8932,EmpkinS,VP_020,math,42,119.0,147.0,50,1,False,False
 8933,EmpkinS,VP_020,math,43,121.0,151.0,163,1,False,True
 8934,EmpkinS,VP_020,math,44,54.0,78.0,217,1,True,True
 8935,EmpkinS,VP_020,math,45,45.0,72.0,138,1,True,True
-8936,EmpkinS,VP_020,math,46,-4.0,23.0,132,0,True,False
 8937,EmpkinS,VP_020,pause_5,0,81.0,116.0,158,1,True,False
 8938,EmpkinS,VP_020,pause_5,1,83.0,117.0,157,1,True,False
 8939,EmpkinS,VP_020,pause_5,2,86.0,123.0,162,1,True,False
@@ -8941,7 +8755,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 9024,EmpkinS,VP_022,talk,29,97.0,123.0,202,1,False,True
 9025,EmpkinS,VP_022,talk,30,101.0,131.0,150,1,True,True
 9026,EmpkinS,VP_022,talk,31,102.0,134.0,196,1,False,True
-9027,EmpkinS,VP_022,talk,32,-3.0,32.0,164,0,True,False
 9028,EmpkinS,VP_022,talk,33,60.0,91.0,167,1,True,True
 9029,EmpkinS,VP_022,talk,34,101.0,134.0,166,1,True,True
 9030,EmpkinS,VP_022,talk,35,94.0,122.0,163,1,True,True
@@ -9193,7 +9006,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 9277,EmpkinS,VP_023,talk,28,48.0,71.0,122,1,False,True
 9278,EmpkinS,VP_023,talk,29,42.0,81.0,124,1,False,True
 9279,EmpkinS,VP_023,talk,30,70.0,110.0,129,1,False,True
-9280,EmpkinS,VP_023,talk,31,161.0,184.0,379,0,False,True
 9281,EmpkinS,VP_023,talk,32,50.0,86.0,115,1,False,True
 9282,EmpkinS,VP_023,talk,33,51.0,74.0,112,1,False,True
 9283,EmpkinS,VP_023,talk,34,46.0,70.0,153,1,False,True
@@ -9278,7 +9090,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 9362,EmpkinS,VP_023,prep,12,50.0,88.0,130,1,False,True
 9363,EmpkinS,VP_023,prep,13,37.0,75.0,125,1,False,False
 9364,EmpkinS,VP_023,prep,14,40.0,79.0,124,1,True,False
-9365,EmpkinS,VP_023,prep,15,64.0,103.0,131,1,True,False
 9366,EmpkinS,VP_023,prep,16,30.0,68.0,130,1,False,False
 9367,EmpkinS,VP_023,prep,17,43.0,81.0,127,1,False,False
 9368,EmpkinS,VP_023,prep,18,42.0,80.0,115,1,False,True
@@ -9328,7 +9139,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 9412,EmpkinS,VP_023,talk,14,67.0,89.0,137,1,False,True
 9413,EmpkinS,VP_023,talk,15,105.0,143.0,150,1,True,False
 9414,EmpkinS,VP_023,talk,16,66.0,105.0,129,1,False,True
-9415,EmpkinS,VP_023,talk,17,81.0,119.0,138,1,False,True
 9416,EmpkinS,VP_023,talk,18,68.0,106.0,144,1,False,True
 9417,EmpkinS,VP_023,talk,19,45.0,84.0,124,1,True,True
 9418,EmpkinS,VP_023,talk,20,90.0,111.0,177,1,False,True
@@ -9764,7 +9574,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 9848,EmpkinS,VP_026,talk,65,52.0,71.0,119,1,False,True
 9849,EmpkinS,VP_026,talk,66,53.0,72.0,113,1,False,True
 9850,EmpkinS,VP_026,talk,67,6.0,26.0,106,1,True,False
-9851,EmpkinS,VP_026,talk,68,159.0,178.0,294,0,True,True
 9852,EmpkinS,VP_026,math,0,61.0,80.0,133,1,False,True
 9853,EmpkinS,VP_026,math,1,61.0,81.0,138,1,False,True
 9854,EmpkinS,VP_026,math,2,52.0,72.0,136,1,True,False
@@ -9852,7 +9661,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 9936,EmpkinS,VP_027,prep,4,93.0,126.0,150,1,False,True
 9937,EmpkinS,VP_027,prep,5,86.0,118.0,139,1,False,True
 9938,EmpkinS,VP_027,prep,6,85.0,117.0,138,1,False,False
-9939,EmpkinS,VP_027,prep,7,88.0,120.0,230,1,False,True
 9940,EmpkinS,VP_027,prep,8,97.0,130.0,344,1,False,True
 9941,EmpkinS,VP_027,prep,9,94.0,126.0,178,1,True,True
 9942,EmpkinS,VP_027,prep,10,87.0,120.0,180,1,True,False
@@ -9921,7 +9729,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 10005,EmpkinS,VP_027,talk,22,35.0,68.0,233,1,True,True
 10006,EmpkinS,VP_027,talk,23,84.0,118.0,137,1,False,True
 10007,EmpkinS,VP_027,talk,24,87.0,121.0,131,1,False,True
-10008,EmpkinS,VP_027,talk,25,35.0,69.0,181,1,False,True
 10009,EmpkinS,VP_027,talk,26,88.0,122.0,124,1,False,False
 10010,EmpkinS,VP_027,talk,27,71.0,105.0,134,1,False,True
 10011,EmpkinS,VP_027,talk,28,77.0,111.0,130,1,False,True
@@ -10048,8 +9855,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 10132,EmpkinS,VP_027,talk,0,95.0,127.0,173,1,False,True
 10133,EmpkinS,VP_027,talk,1,71.0,104.0,141,1,False,True
 10134,EmpkinS,VP_027,talk,2,68.0,102.0,371,1,False,True
-10135,EmpkinS,VP_027,talk,3,44.0,109.0,66,1,False,False
-10136,EmpkinS,VP_027,talk,4,-7.0,27.0,400,0,True,False
 10137,EmpkinS,VP_027,talk,5,85.0,118.0,298,1,True,True
 10138,EmpkinS,VP_027,talk,6,65.0,98.0,131,1,True,False
 10139,EmpkinS,VP_027,talk,7,78.0,113.0,124,1,False,True
@@ -10114,7 +9919,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 10198,EmpkinS,VP_027,math,21,75.0,109.0,156,1,False,True
 10199,EmpkinS,VP_027,math,22,73.0,107.0,136,1,True,False
 10200,EmpkinS,VP_027,math,23,50.0,85.0,400,1,True,True
-10201,EmpkinS,VP_027,math,24,95.0,127.0,168,1,False,False
 10202,EmpkinS,VP_027,math,25,81.0,114.0,138,1,False,True
 10203,EmpkinS,VP_027,math,26,77.0,110.0,126,1,False,True
 10204,EmpkinS,VP_027,math,27,76.0,109.0,226,1,False,True
@@ -10156,7 +9960,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 10240,EmpkinS,VP_028,prep,13,32.0,64.0,125,1,False,True
 10241,EmpkinS,VP_028,prep,14,41.0,71.0,130,1,False,False
 10242,EmpkinS,VP_028,prep,15,41.0,71.0,126,1,False,False
-10243,EmpkinS,VP_028,prep,16,-4.0,29.0,133,0,True,False
 10244,EmpkinS,VP_028,prep,17,93.0,124.0,130,1,True,False
 10247,EmpkinS,VP_028,prep,20,38.0,71.0,127,1,False,False
 10248,EmpkinS,VP_028,prep,21,33.0,64.0,125,1,False,False
@@ -10396,7 +10199,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 10496,EmpkinS,VP_028,prep,23,49.0,82.0,128,1,True,False
 10497,EmpkinS,VP_028,prep,24,42.0,75.0,128,1,True,False
 10498,EmpkinS,VP_028,prep,25,21.0,55.0,115,1,False,False
-10499,EmpkinS,VP_028,prep,26,-12.0,21.0,91,0,False,False
 10500,EmpkinS,VP_028,prep,27,17.0,51.0,123,1,False,False
 10501,EmpkinS,VP_028,prep,28,13.0,49.0,131,1,False,False
 10502,EmpkinS,VP_028,prep,29,41.0,73.0,119,1,False,False
@@ -10409,8 +10211,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 10510,EmpkinS,VP_028,prep,37,13.0,46.0,118,1,False,False
 10511,EmpkinS,VP_028,prep,38,81.0,114.0,130,1,True,False
 10512,EmpkinS,VP_028,prep,39,34.0,66.0,125,1,False,False
-10513,EmpkinS,VP_028,prep,40,-5.0,29.0,128,0,True,False
-10514,EmpkinS,VP_028,prep,41,-2.0,27.0,117,0,False,False
 10515,EmpkinS,VP_028,prep,42,88.0,136.0,123,1,False,False
 10516,EmpkinS,VP_028,prep,43,17.0,49.0,123,1,True,False
 10517,EmpkinS,VP_028,prep,44,19.0,50.0,117,1,False,False
@@ -10452,7 +10252,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 10556,EmpkinS,VP_028,talk,7,62.0,87.0,135,1,False,True
 10557,EmpkinS,VP_028,talk,8,62.0,96.0,148,1,False,False
 10558,EmpkinS,VP_028,talk,9,17.0,36.0,102,1,False,False
-10560,EmpkinS,VP_028,talk,11,84.0,105.0,50,1,False,False
 10561,EmpkinS,VP_028,talk,12,68.0,102.0,136,1,False,True
 10562,EmpkinS,VP_028,talk,13,59.0,83.0,117,1,True,False
 10563,EmpkinS,VP_028,talk,14,59.0,83.0,126,1,True,False
@@ -10476,7 +10275,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 10581,EmpkinS,VP_028,talk,32,70.0,90.0,255,1,False,False
 10582,EmpkinS,VP_028,talk,33,42.0,60.0,120,1,False,True
 10583,EmpkinS,VP_028,talk,34,60.0,79.0,106,1,False,False
-10585,EmpkinS,VP_028,talk,36,83.0,104.0,284,1,False,True
 10586,EmpkinS,VP_028,talk,37,75.0,95.0,121,1,False,False
 10587,EmpkinS,VP_028,talk,38,86.0,105.0,119,1,False,False
 10588,EmpkinS,VP_028,talk,39,79.0,97.0,115,1,False,False
@@ -10490,7 +10288,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 10596,EmpkinS,VP_028,talk,47,67.0,85.0,125,1,False,True
 10597,EmpkinS,VP_028,talk,48,63.0,82.0,400,1,False,True
 10598,EmpkinS,VP_028,talk,49,75.0,94.0,103,1,False,False
-10599,EmpkinS,VP_028,talk,50,154.0,174.0,291,0,False,False
 10600,EmpkinS,VP_028,talk,51,34.0,53.0,102,1,True,True
 10601,EmpkinS,VP_028,talk,52,14.0,33.0,270,1,True,False
 10602,EmpkinS,VP_028,talk,53,50.0,69.0,121,1,False,True
@@ -10502,7 +10299,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 10610,EmpkinS,VP_028,talk,61,130.0,150.0,51,1,False,False
 10611,EmpkinS,VP_028,talk,62,145.0,163.0,207,1,False,True
 10612,EmpkinS,VP_028,talk,63,74.0,93.0,127,1,False,True
-10613,EmpkinS,VP_028,talk,64,71.0,91.0,386,1,False,False
 10614,EmpkinS,VP_028,talk,65,74.0,93.0,109,1,False,False
 10615,EmpkinS,VP_028,talk,66,73.0,93.0,356,1,True,False
 10616,EmpkinS,VP_028,talk,67,75.0,96.0,170,1,True,False
@@ -10516,9 +10312,7 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 10624,EmpkinS,VP_028,math,7,70.0,90.0,109,1,False,False
 10625,EmpkinS,VP_028,math,8,66.0,87.0,99,1,False,False
 10626,EmpkinS,VP_028,math,9,52.0,71.0,352,1,False,True
-10627,EmpkinS,VP_028,math,10,84.0,107.0,50,1,False,False
 10628,EmpkinS,VP_028,math,11,56.0,78.0,318,1,False,True
-10629,EmpkinS,VP_028,math,12,44.0,64.0,50,1,False,False
 10630,EmpkinS,VP_028,math,13,24.0,46.0,111,1,False,False
 10631,EmpkinS,VP_028,math,14,54.0,76.0,108,1,True,False
 10632,EmpkinS,VP_028,math,15,81.0,99.0,160,1,False,False
@@ -10907,7 +10701,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 11015,EmpkinS,VP_030,prep,32,36.0,58.0,87,1,False,True
 11016,EmpkinS,VP_030,prep,33,29.0,52.0,89,1,False,False
 11017,EmpkinS,VP_030,prep,34,30.0,51.0,90,1,False,True
-11018,EmpkinS,VP_030,prep,35,27.0,48.0,94,1,False,False
 11019,EmpkinS,VP_030,prep,36,46.0,69.0,96,1,True,False
 11020,EmpkinS,VP_030,prep,37,35.0,55.0,87,1,False,True
 11021,EmpkinS,VP_030,prep,38,37.0,58.0,91,1,False,True
@@ -11017,7 +10810,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 11125,EmpkinS,VP_030,talk,55,36.0,57.0,84,1,False,False
 11126,EmpkinS,VP_030,talk,56,39.0,60.0,95,1,False,True
 11127,EmpkinS,VP_030,talk,57,31.0,52.0,88,1,False,False
-11128,EmpkinS,VP_030,talk,58,42.0,62.0,84,1,False,False
 11129,EmpkinS,VP_030,talk,59,45.0,66.0,93,1,False,False
 11130,EmpkinS,VP_030,talk,60,36.0,57.0,104,1,False,False
 11131,EmpkinS,VP_030,talk,61,44.0,65.0,125,1,False,True
@@ -11606,7 +11398,6 @@ row,dataset,patient,phase,beat_id,B_ms_after_R_rater1,PEP_ms_rater1,C_ms_after_R
 11715,EmpkinS,VP_031,math,25,44.0,77.0,126,1,False,True
 11716,EmpkinS,VP_031,math,26,74.0,107.0,118,1,True,False
 11717,EmpkinS,VP_031,math,27,39.0,73.0,122,1,False,False
-11718,EmpkinS,VP_031,math,28,4.0,37.0,116,1,True,False
 11719,EmpkinS,VP_031,math,29,38.0,71.0,117,1,False,False
 11720,EmpkinS,VP_031,math,30,43.0,76.0,117,1,False,True
 11721,EmpkinS,VP_031,math,31,47.0,80.0,123,1,False,True

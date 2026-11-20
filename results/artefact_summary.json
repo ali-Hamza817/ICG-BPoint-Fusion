@@ -1,0 +1,12 @@
+{
+ "n_beats": 12014,
+ "rater1_beats_with_artefact_B_or_Q": 250,
+ "rater2_beats_with_artefact_B_or_Q": 413,
+ "usable_before": 11903,
+ "usable_after": 11694,
+ "removed_from_usable": 209,
+ "by_dataset_after": {
+  "EmpkinS": 4936,
+  "Guardian": 6758
+ }
+}
