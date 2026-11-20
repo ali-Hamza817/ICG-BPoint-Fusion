@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>ICG Patient Beats</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&display=swap">
+<style>
+/* Layout: login gate -> app (header + tabs, patient list left, content right). Click any image or chart to enlarge. */
+:root{--bg:#f3f5f7;--surface:#fff;--fg:#14202b;--muted:#5b6b7a;--line:#d9e0e6;--accent:#0b6e99;--accent-soft:#e1f0f6;--warn:#9a4a07;--warn-soft:#fbeedd;--ok:#0a7a52;
+--p0:#0072B2;--p1:#D55E00;--p2:#009E73;--p3:#CC79A7;--p4:#E69F00;--font-head:"Space Grotesk",system-ui,sans-serif;--font-body:"Inter",system-ui,sans-serif;--font-mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1519;--surface:#162027;--fg:#e6edf2;--muted:#8fa1b0;--line:#26343e;--accent:#4cb8e0;--accent-soft:#16303b;--warn:#f0a35c;--warn-soft:#33260f;--ok:#4cc79a;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0f1519;--surface:#162027;--fg:#e6edf2;--muted:#8fa1b0;--line:#26343e;--accent:#4cb8e0;--accent-soft:#16303b;--warn:#f0a35c;--warn-soft:#33260f;--ok:#4cc79a;color-scheme:dark}
+*{box-sizing:border-box}
+html{color-scheme:light}:root[data-theme="dark"]{color-scheme:dark}
+[hidden]{display:none!important}img{max-width:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font:14px/1.5 var(--font-body);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--font-head);font-weight:600;margin:0;text-wrap:balance}
+h1{font-size:24px;letter-spacing:-.01em}h2{font-size:18px}h3{font-size:12px;color:var(--muted);font-weight:500;letter-spacing:.06em;text-transform:uppercase}
+a{color:var(--accent)}
+button{font:inherit}
+/* login */
+.login{min-height:100vh;display:grid;place-items:center;padding-block:24px}
+.login form{width:min(380px,100%);background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:28px 26px;display:grid;gap:8px}
+.login p{margin:0 0 10px;color:var(--muted)}
+.login label{font-size:12px;color:var(--muted);font-weight:500;margin-top:6px}
+.login input{font:inherit;color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:10px 12px}
+.login input:focus{outline:2px solid var(--accent);outline-offset:1px}
+.login .go{margin-top:12px;background:var(--accent);color:#fff;border:0;border-radius:6px;padding:11px;font-weight:600;cursor:pointer}
+:root[data-theme="dark"] .login .go{color:#06222d}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .login .go{color:#06222d}}
+.login .go:disabled{opacity:.6;cursor:wait}
+.err{min-height:20px;color:var(--warn);font-size:13px;margin:6px 0 0!important}
+/* app shell */
+.wrap{max-width:1280px;margin:0 auto;padding-block:18px 40px}
+.top{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;justify-content:space-between}
+.top .out{background:none;border:1px solid var(--line);color:var(--muted);border-radius:6px;padding:5px 12px;cursor:pointer}.top .out:hover{color:var(--fg);border-color:var(--muted)}
+.tabs{display:flex;gap:4px;margin:12px 0 14px;border-bottom:1px solid var(--line)}
+.tabs a{padding:8px 14px;text-decoration:none;color:var(--muted);border-bottom:3px solid transparent;font-weight:500}
+.tabs a[aria-current="page"]{color:var(--fg);border-bottom-color:var(--accent)}
+details.def{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:8px 14px;margin-bottom:14px;font-size:13px}
+details.def summary{cursor:pointer;color:var(--muted);font-weight:500}details.def p{margin:6px 0 0}
+.layout{display:grid;grid-template-columns:200px minmax(0,1fr);gap:16px;align-items:start}
+@media(max-width:820px){.layout{grid-template-columns:minmax(0,1fr)}.list{max-height:200px}}
+.list{background:var(--surface);border:1px solid var(--line);border-radius:6px;max-height:82vh;overflow:auto}
+.list h3{padding:9px 12px 5px;position:sticky;top:0;background:var(--surface);border-bottom:1px solid var(--line)}
+.list button{display:flex;justify-content:space-between;width:100%;text-align:left;color:inherit;background:none;border:0;border-bottom:1px solid var(--line);padding:6px 12px;cursor:pointer}
+.list button:hover{background:var(--accent-soft)}.list button[aria-current="true"]{background:var(--accent-soft);box-shadow:inset 3px 0 0 var(--accent);font-weight:600}
+.list small{color:var(--muted);font-variant-numeric:tabular-nums}
+button:focus-visible,.chip:focus-visible,tr[tabindex]:focus-visible,a:focus-visible,.thumb:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.back{background:none;border:0;color:var(--accent);cursor:pointer;padding:0;margin-bottom:6px}
+/* patient view */
+.pill{font-size:11px;border-radius:999px;padding:1px 9px;background:var(--accent-soft);color:var(--accent);font-weight:600;vertical-align:middle}.pill.g{background:var(--warn-soft);color:var(--warn)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:10px 0 12px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:9px 12px}
+.card .k{color:var(--muted);font-size:12px}.card .v{font:600 20px var(--font-head);font-variant-numeric:tabular-nums}.card .s{color:var(--muted);font-size:12px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 12px}
+.chip{display:inline-flex;gap:6px;align-items:center;border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:999px;padding:3px 11px;font-size:12px;cursor:pointer}
+.chip i{width:9px;height:9px;border-radius:50%}.chip[aria-pressed="false"]{opacity:.45}.chip[aria-pressed="true"].f{border-color:var(--accent);background:var(--accent-soft)}
+.grid2{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:12px;margin-bottom:12px}
+@media(max-width:900px){.grid2{grid-template-columns:minmax(0,1fr)}}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:12px;min-width:0}
+.panel p{margin:2px 0 8px;color:var(--muted);font-size:12px}
+canvas{width:100%;display:block}canvas.zoomable{cursor:zoom-in}
+.zi{cursor:zoom-in;display:block;width:100%;height:auto;border:1px solid var(--line);border-radius:4px;background:#fff}
+.tablewrap{overflow:auto;max-height:360px;border:1px solid var(--line);border-radius:6px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums;font-size:13px}
+th,td{padding:5px 10px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
+th{position:sticky;top:0;background:var(--surface);color:var(--muted);font-weight:500;font-size:12px;z-index:1}
+td:first-child,th:first-child,td.l,th.l{text-align:left}
+tbody tr[tabindex]{cursor:pointer}tbody tr[tabindex]:hover{background:var(--accent-soft)}
+tr.sel{background:var(--accent-soft);box-shadow:inset 3px 0 0 var(--accent)}tr.bad td{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--warn)}
+.flag{color:var(--warn);font-size:12px}.sp{display:block;width:110px;height:30px}
+.note{color:var(--muted);font-size:12px;margin:8px 0 0}
+/* task 2 */
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:12px 0 22px}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:14px 16px}
+.tile b{display:block;font:600 30px/1.1 var(--font-head);color:var(--accent);font-variant-numeric:tabular-nums}.tile span{color:var(--muted);font-size:13px}
+.sec{margin:26px 0 10px}
+.flow{display:grid;grid-template-columns:1fr 28px 1fr 28px 1fr;gap:8px;align-items:stretch}
+@media(max-width:820px){.flow{grid-template-columns:1fr}.arrow{display:none}}
+.step{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:14px 16px;display:grid;gap:6px;align-content:start}
+.step .n{width:24px;height:24px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;font:600 13px var(--font-head)}
+:root[data-theme="dark"] .step .n{color:#06222d}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .step .n{color:#06222d}}
+.step h2{font-size:16px}.step p{margin:0;color:var(--muted);font-size:13px}
+.arrow{display:grid;place-items:center;color:var(--muted);font-size:22px}
+.files{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.file{font:12px var(--font-mono);background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:2px 7px;color:var(--fg);text-decoration:none}.file:hover{border-color:var(--accent);color:var(--accent)}
+.gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.fig{margin:0;background:var(--surface);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.fig .zi{border:0;border-radius:0}.fig figcaption{padding:8px 12px;font-size:13px;font-weight:500}
+.sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}
+.thumb{background:var(--surface);border:1px solid var(--line);border-radius:6px;overflow:hidden;cursor:zoom-in;padding:0;text-align:left;color:inherit}
+.thumb img{display:block;width:100%;height:auto;background:#fff;min-height:56px}.thumb span{display:block;padding:4px 8px;font-size:12px;color:var(--muted)}
+.callout{margin-top:22px;background:var(--warn-soft);border-radius:6px;padding:10px 14px;font-size:13px;color:var(--fg)}
+/* lightbox */
+#lb{position:fixed;inset:0;z-index:100;background:rgba(6,12,16,.9);display:grid;grid-template-rows:auto minmax(0,1fr) auto}
+#lb .bar{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 16px;color:#e6edf2}
+#lb .bar button,#lb .nav{background:rgba(255,255,255,.12);border:0;color:#fff;border-radius:6px;padding:6px 12px;cursor:pointer}
+#lb .bar button:hover,#lb .nav:hover{background:rgba(255,255,255,.24)}
+#lb .stage{overflow:auto;display:grid;place-items:center;padding:0 56px;min-height:0}
+#lb img{max-width:100%;max-height:100%;background:#fff;border-radius:4px;cursor:zoom-in}
+#lb.zoom .stage{place-items:start center}#lb.zoom img{max-width:none;max-height:none;cursor:zoom-out}
+#lb .nav{position:absolute;top:50%;transform:translateY(-50%);font-size:28px;line-height:1;padding:10px 14px}
+#lb .prev{left:10px}#lb .next{right:10px}
+#lb .cap{padding:8px 16px 14px;color:#cbd6de;text-align:center;font-size:13px}
+</style>
+</head>
+<body>
+<section class="login" id="login" hidden>
+  <form id="lf">
+    <h1>ICG Patient Beats</h1>
+    <p>Sign in to view the results.</p>
+    <label for="uid">Login ID</label><input id="uid" name="username" autocomplete="username" required autocapitalize="none" spellcheck="false">
+    <label for="pw">Password</label><input id="pw" name="password" type="password" autocomplete="current-password" required>
+    <button class="go" id="go" type="submit">Sign in</button>
+    <p class="err" id="err" role="alert"></p>
+  </form>
+</section>
+
+<div class="wrap" id="app" hidden>
+  <div class="top"><h1>ICG Patient Beats</h1><button class="out" id="out">Sign out</button></div>
+  <nav class="tabs" aria-label="Sections"><a href="#" id="tab1">Task 1 · Patient beats</a><a href="#task2" id="tab2">Task 2 · Dataset and features</a></nav>
+  <details class="def"><summary>Definitions</summary>
+    <p><b>PEP</b> = B − Q (manual annotation, rater 1). <b>RB</b> = B-point time after the R-peak. <b>C</b> = main ICG peak.</p>
+    <p>Usable beat: B label present and PEP 20 to 250 ms. Others are flagged. Data: public Abel et al. 2026 (EmpkinS 15, Guardian 24 patients).</p>
+  </details>
+  <div class="layout">
+    <nav class="list" aria-label="Patients"><h3>Patients</h3><div id="plist"></div></nav>
+    <main id="main" aria-live="polite"></main>
+  </div>
+</div>
+
+<div id="lb" role="dialog" aria-modal="true" aria-label="Enlarged image" hidden>
+  <div class="bar"><span id="lbt"></span><span><button id="lbz" type="button">Actual size</button> <button id="lbx" type="button" aria-label="Close">Close ✕</button></span></div>
+  <div class="stage" id="lbs"><img id="lbi" alt=""></div>
+  <div class="cap" id="lbc"></div>
+  <button class="nav prev" id="lbp" type="button" aria-label="Previous">‹</button><button class="nav next" id="lbn" type="button" aria-label="Next">›</button>
+</div>
+
+<script>
+"use strict";
+/* ============ crypto: unlock the vault with login id + password, then decrypt assets locally ============ */
+var te=new TextEncoder(),td=new TextDecoder(),KEY=null,CACHE={};
+function b64(s){return Uint8Array.from(atob(s),function(c){return c.charCodeAt(0)})}
+function toB64(u){var s="";for(var i=0;i<u.length;i++)s+=String.fromCharCode(u[i]);return btoa(s)}
+async function unlock(id,pw){
+  var v=await (await fetch("vault.json",{cache:"no-store"})).json();
+  var base=await crypto.subtle.importKey("raw",te.encode(id.trim().toLowerCase()+"\n"+pw),"PBKDF2",false,["deriveKey"]);
+  var kek=await crypto.subtle.deriveKey({name:"PBKDF2",salt:b64(v.salt),iterations:v.iter,hash:"SHA-256"},base,{name:"AES-GCM",length:256},false,["decrypt"]);
+  var raw=await crypto.subtle.decrypt({name:"AES-GCM",iv:b64(v.iv)},kek,b64(v.ct));           /* throws when id or password is wrong */
+  await useKey(new Uint8Array(raw));try{sessionStorage.setItem("icg_k",toB64(new Uint8Array(raw)))}catch(e){}
+}
+async function useKey(raw){KEY=await crypto.subtle.importKey("raw",raw,"AES-GCM",false,["decrypt"])}
+async function asset(path){
+  if(CACHE[path])return CACHE[path];
+  var r=await fetch("enc/"+path.replace(/\//g,"__")+".bin");if(!r.ok)throw new Error("missing "+path);
+  var b=new Uint8Array(await r.arrayBuffer());
+  var pt=await crypto.subtle.decrypt({name:"AES-GCM",iv:b.slice(0,12),additionalData:te.encode(path)},KEY,b.slice(12));
+  return (CACHE[path]=pt);
+}
+async function jsonAsset(p){return JSON.parse(td.decode(await asset(p)))}
+var URLS={};async function imgURL(p){if(!URLS[p])URLS[p]=URL.createObjectURL(new Blob([await asset(p)],{type:"image/png"}));return URLS[p]}
+
+/* ============ small helpers ============ */
+var PH_COL=["--p0","--p1","--p2","--p3","--p4"],S={ov:null,cur:null,hidden:{},sel:-1,flt:"All"},K=1;
+function $(i){return document.getElementById(i)}
+function css(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim()}
+function fmt(x,d){return x==null?"–":Number(x).toFixed(d==null?0:d)}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function hashOf(id){return id.replace(/_/g,"-")}
+function idOf(h){var m=S.ov.patients.filter(function(p){return hashOf(p.id)===h});return m.length?m[0].id:null}
+function mean(a){return a.length?a.reduce(function(x,y){return x+y},0)/a.length:NaN}
+function sd(a){var m=mean(a);return a.length>1?Math.sqrt(a.reduce(function(s,x){return s+(x-m)*(x-m)},0)/(a.length-1)):NaN}
+function hexA(h,a){if(h[0]!=="#")return h;var n=parseInt(h.slice(1),16);return "rgba("+(n>>16)+","+((n>>8)&255)+","+(n&255)+","+a+")"}
+var GH="https://github.com/ali-Hamza817/ICG-BPoint-Fusion/";
+
+/* ============ login flow ============ */
+if(!window.isSecureContext&&location.protocol==="http:"&&!/^(localhost|127\.)/.test(location.hostname))location.replace("https:"+location.href.substring(location.protocol.length));
+var fails=0,lockUntil=0;
+$("lf").addEventListener("submit",async function(e){
+  e.preventDefault();var err=$("err"),go=$("go");
+  if(Date.now()<lockUntil){err.textContent="Too many attempts. Wait "+Math.ceil((lockUntil-Date.now())/1000)+" s.";return}
+  go.disabled=true;err.textContent="";
+  try{await unlock($("uid").value,$("pw").value);$("pw").value="";await start()}
+  catch(x){fails++;if(fails>=5){lockUntil=Date.now()+30000;fails=0}err.textContent="Login ID or password is incorrect."}
+  go.disabled=false;
+});
+$("out").addEventListener("click",function(){try{sessionStorage.removeItem("icg_k")}catch(e){}location.hash="";location.reload()});
+async function boot(){
+  try{var k=sessionStorage.getItem("icg_k");if(k){await useKey(b64(k));await start();return}}catch(e){KEY=null}
+  $("login").hidden=false;$("uid").focus();
+}
+async function start(){
+  S.ov=await jsonAsset("data/patients.json");$("login").hidden=true;$("app").hidden=false;buildList();route();
+}
+boot();
+
+/* ============ routing ============ */
+window.addEventListener("hashchange",function(){if(S.ov)route()});
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change",function(){redraw()});
+new MutationObserver(function(){redraw()}).observe(document.documentElement,{attributes:true,attributeFilter:["data-theme"]});
+window.addEventListener("resize",function(){redraw()});
+function buildList(){
+  var h="";["EmpkinS","Guardian"].forEach(function(ds){h+='<h3>'+ds+'</h3>';S.ov.patients.filter(function(p){return p.dataset===ds}).forEach(function(p){h+='<button data-id="'+p.id+'"><span>'+esc(p.patient)+'</span><small>'+fmt(p.PEP)+' ms</small></button>'})});
+  $("plist").innerHTML=h;$("plist").addEventListener("click",function(e){var b=e.target.closest("button");if(b)location.hash=hashOf(b.dataset.id)});
+}
+function route(){
+  var h=location.hash.replace("#",""),id=h&&idOf(h);
+  [].forEach.call($("plist").querySelectorAll("button"),function(b){b.setAttribute("aria-current",String(b.dataset.id===id))});
+  var t2=h==="task2";$("tab1").removeAttribute("aria-current");$("tab2").removeAttribute("aria-current");$(t2?"tab2":"tab1").setAttribute("aria-current","page");
+  if(t2){S.cur=null;task2View();return}
+  if(!id){S.cur=null;overview();return}
+  $("main").innerHTML='<p class="note">Loading…</p>';
+  jsonAsset("data/"+id+".json").then(function(d){S.cur=d;S.hidden={};S.sel=-1;patientView()}).catch(function(){$("main").innerHTML='<p class="note">Could not load this patient.</p>'});
+}
+
+/* ============ lightbox ============ */
+var LB={items:[],i:0};
+function lbOpen(items,i){LB.items=items;LB.i=i;$("lb").hidden=false;$("lb").classList.remove("zoom");$("lbz").textContent="Actual size";document.body.style.overflow="hidden";lbShow();$("lbx").focus()}
+async function lbShow(){
+  var it=LB.items[LB.i];$("lbt").textContent=(LB.items.length>1?(LB.i+1)+" / "+LB.items.length+"  ·  ":"")+(it.title||"");$("lbc").textContent=it.cap||"";
+  $("lbp").hidden=$("lbn").hidden=LB.items.length<2;$("lbi").alt=it.title||"";$("lbi").removeAttribute("src");
+  var u=it.url||await imgURL(it.asset);if(LB.items[LB.i]===it)$("lbi").src=u;
+}
+function lbClose(){$("lb").hidden=true;document.body.style.overflow=""}
+function lbStep(d){LB.i=(LB.i+d+LB.items.length)%LB.items.length;$("lb").classList.remove("zoom");$("lbz").textContent="Actual size";lbShow()}
+function lbZoom(){var z=$("lb").classList.toggle("zoom");$("lbz").textContent=z?"Fit to screen":"Actual size"}
+$("lbx").onclick=lbClose;$("lbp").onclick=function(){lbStep(-1)};$("lbn").onclick=function(){lbStep(1)};$("lbz").onclick=lbZoom;$("lbi").onclick=lbZoom;
+$("lb").addEventListener("click",function(e){if(e.target===$("lb")||e.target===$("lbs"))lbClose()});
+document.addEventListener("keydown",function(e){if($("lb").hidden)return;if(e.key==="Escape")lbClose();else if(e.key==="ArrowLeft"&&LB.items.length>1)lbStep(-1);else if(e.key==="ArrowRight"&&LB.items.length>1)lbStep(1)});
+/* images in the page: data-asset = thumbnail, data-full = full-size asset, data-group = gallery */
+function hydrate(root){
+  [].forEach.call(root.querySelectorAll("img[data-asset]"),function(im){
+    imgURL(im.dataset.asset).then(function(u){im.src=u});
+    if(!im.dataset.full)return;
+    var open=function(){var gr=im.dataset.group,g=gr?[].slice.call(document.querySelectorAll('[data-group="'+gr+'"]')).filter(function(x){return x.offsetParent!==null}):[im];
+      var items=g.map(function(x){var t=x.tagName==="IMG"?x:x.querySelector("img");return {asset:t.dataset.full,title:t.dataset.title||"",cap:t.dataset.cap||""}});lbOpen(items,Math.max(0,g.indexOf(im.closest("[data-group]")||im)))};
+    var host=im.closest("button.thumb")||im;host.addEventListener("click",open);
+  });
+}
+/* charts enlarge into the lightbox: redraw at high resolution */
+function enlarge(fn,title,cap){var c=document.createElement("canvas");K=1.6;fn(c,720,1500);K=1;c.toBlob(function(b){lbOpen([{url:URL.createObjectURL(b),title:title,cap:cap}],0)})}
+
+/* ============ Task 1: overview ============ */
+function overview(){
+  var P=S.ov.patients,n=P.reduce(function(a,p){return a+p.n_beats},0),u=P.reduce(function(a,p){return a+p.n_usable},0);
+  var h='<h2>39 patients · '+n.toLocaleString()+' beats</h2><p class="note" style="margin:2px 0 12px">'+u.toLocaleString()+' usable. Select a patient to see every beat.</p>';
+  h+='<div class="tablewrap" style="max-height:none"><table><thead><tr><th>Patient</th><th class="l">Dataset</th><th>Beats</th><th>HR</th><th>PEP (ms)</th><th>RB (ms)</th><th>Rater gap</th><th class="l">Average beat</th></tr></thead><tbody>';
+  P.forEach(function(p,i){h+='<tr tabindex="0" data-id="'+p.id+'"><td>'+esc(p.patient)+'</td><td class="l">'+p.dataset+'</td><td>'+p.n_beats+'</td><td>'+fmt(p.HR)+'</td><td>'+fmt(p.PEP)+' ± '+fmt(p.PEP_sd)+'</td><td>'+fmt(p.RB)+'</td><td>'+fmt(p.IR_MAE,1)+'</td><td class="l"><canvas class="sp" data-i="'+i+'"></canvas></td></tr>'});
+  h+='</tbody></table></div>';$("main").innerHTML=h;
+  var tb=$("main").querySelector("tbody");tb.addEventListener("click",function(e){var r=e.target.closest("tr");if(r)location.hash=hashOf(r.dataset.id)});
+  tb.addEventListener("keydown",function(e){if(e.key==="Enter"){var r=e.target.closest("tr");if(r)location.hash=hashOf(r.dataset.id)}});drawSparks();
+}
+function drawSparks(){
+  var cs=document.querySelectorAll("canvas.sp");if(!cs.length)return;var col=css("--accent"),line=css("--line");
+  [].forEach.call(cs,function(c){var p=S.ov.patients[+c.dataset.i],dpr=window.devicePixelRatio||1,w=110,h=30;c.width=w*dpr;c.height=h*dpr;var g=c.getContext("2d");g.scale(dpr,dpr);
+    var m=p.mean,lo=Math.min.apply(null,m),hi=Math.max.apply(null,m);g.strokeStyle=line;g.beginPath();g.moveTo(w*0.1,0);g.lineTo(w*0.1,h);g.stroke();
+    g.strokeStyle=col;g.lineWidth=1.5;g.beginPath();m.forEach(function(v,k){var x=k/(m.length-1)*(w-2)+1,y=h-2-(v-lo)/(hi-lo||1)*(h-4);k?g.lineTo(x,y):g.moveTo(x,y)});g.stroke()});
+}
+
+/* ============ Task 1: patient view ============ */
+function patientView(){
+  var d=S.cur,B=d.beats,us=B.filter(function(b){return b[11]===1}),pep=us.map(function(b){return b[8]}),hr=us.map(function(b){return b[4]}).filter(function(x){return x!=null}),rb=us.map(function(b){return b[6]});
+  var gap=us.filter(function(b){return b[9]!=null}).map(function(b){return Math.abs(b[8]-b[9])});
+  var h='<button class="back" onclick="location.hash=\'\'">← All patients</button> <h2 style="display:inline">'+esc(d.patient)+'</h2> <span class="pill'+(d.dataset==="Guardian"?" g":"")+'">'+d.dataset+' · '+d.fs+' Hz</span>';
+  h+='<div class="cards"><div class="card"><div class="k">Beats</div><div class="v">'+B.length+'</div><div class="s">'+(B.length-us.length)+' flagged</div></div>'
+   +'<div class="card"><div class="k">PEP</div><div class="v">'+fmt(mean(pep))+' ms</div><div class="s">± '+fmt(sd(pep))+'</div></div>'
+   +'<div class="card"><div class="k">RB</div><div class="v">'+fmt(mean(rb))+' ms</div><div class="s">± '+fmt(sd(rb))+'</div></div>'
+   +'<div class="card"><div class="k">Heart rate</div><div class="v">'+fmt(mean(hr))+'</div><div class="s">bpm</div></div>'
+   +'<div class="card"><div class="k">Rater gap</div><div class="v">'+fmt(mean(gap),1)+' ms</div><div class="s">PEP, rater 1 vs 2</div></div></div>';
+  h+='<div class="chips" id="chips" role="group" aria-label="Phases">'+d.phases.map(function(p,i){return '<button class="chip" aria-pressed="true" data-ph="'+i+'"><i style="background:var('+PH_COL[i%5]+')"></i>'+esc(p)+' '+B.filter(function(b){return b[1]===i}).length+'</button>'}).join("")+'</div>';
+  h+='<div class="grid2"><div class="panel"><h3>ICG · every beat</h3><p id="wfnote"></p><canvas id="cwf" class="zoomable" height="280"></canvas></div><div class="panel"><h3>PEP histogram</h3><p>Usable beats</p><canvas id="chist" class="zoomable" height="280"></canvas></div></div>';
+  h+='<div class="grid2"><div class="panel"><h3>ECG · every beat</h3><p id="ecgnote"></p><canvas id="cecg" class="zoomable" height="240"></canvas></div><div class="panel"><h3>Recording · 10 s</h3><p>Click to enlarge</p><img class="zi" alt="Continuous ECG and ICG of '+esc(d.id)+' with annotation marks" data-asset="task2/thumbs/strip_'+d.id+'.png" data-full="task2/strips/'+d.id+'.png" data-title="'+esc(d.patient)+' · ECG and ICG with annotations" data-cap="R-peak, Q onset, B point (rater 1 filled, rater 2 hollow), C point"></div></div>';
+  h+='<div class="panel" style="margin-bottom:12px"><h3>PEP per beat</h3><p>Click a dot to pick the beat</p><canvas id="cpep" class="zoomable" height="220"></canvas></div>';
+  h+='<div class="tablewrap"><table><thead><tr><th>Beat</th><th class="l">Phase</th><th>Time (s)</th><th>RR</th><th>HR</th><th>Q</th><th>B rater 1</th><th>B rater 2</th><th>PEP rater 1</th><th>PEP rater 2</th><th>C</th><th class="l"></th></tr></thead><tbody id="tb"></tbody></table></div>';
+  $("main").innerHTML=h;hydrate($("main"));
+  $("chips").addEventListener("click",function(e){var b=e.target.closest(".chip");if(!b)return;var i=+b.dataset.ph;S.hidden[i]=!S.hidden[i];b.setAttribute("aria-pressed",String(!S.hidden[i]));redraw();fillTable()});
+  fillTable();redraw();
+  $("cwf").addEventListener("click",function(){enlarge(drawWave,d.patient+" · ICG, every beat aligned at the R-peak","Thick line = average of the usable beats shown")});
+  $("cecg").addEventListener("click",function(){enlarge(drawEcg,d.patient+" · ECG, every beat aligned at the R-peak","Thick line = average of the usable beats shown")});
+  $("chist").addEventListener("click",function(){enlarge(drawHist,d.patient+" · PEP histogram","PEP = B − Q, rater 1")});
+  $("cpep").addEventListener("click",function(e){if(!pickScatter(e))enlarge(drawPep,d.patient+" · PEP of every beat","Colour = phase")});
+}
+function fillTable(){
+  var d=S.cur,h="";d.beats.forEach(function(b,i){if(S.hidden[b[1]])return;
+    h+='<tr tabindex="0" data-i="'+i+'" class="'+(b[11]?"":"bad")+(i===S.sel?" sel":"")+'"><td>'+b[0]+'</td><td class="l">'+esc(d.phases[b[1]])+'</td><td>'+fmt(b[2],1)+'</td><td>'+fmt(b[3])+'</td><td>'+fmt(b[4])+'</td><td>'+fmt(b[5])+'</td><td>'+fmt(b[6])+'</td><td>'+fmt(b[7])+'</td><td>'+fmt(b[8])+'</td><td>'+fmt(b[9])+'</td><td>'+fmt(b[10])+'</td><td class="l">'+(b[11]?"":'<span class="flag">flagged</span>')+'</td></tr>'});
+  $("tb").innerHTML=h;$("tb").onclick=function(e){var r=e.target.closest("tr");if(r)selectBeat(+r.dataset.i,false)};$("tb").onkeydown=function(e){if(e.key==="Enter"){var r=e.target.closest("tr");if(r)selectBeat(+r.dataset.i,false)}};
+}
+function selectBeat(i,scroll){S.sel=i;[].forEach.call($("tb").querySelectorAll("tr"),function(r){r.classList.toggle("sel",+r.dataset.i===i)});if(scroll){var r=$("tb").querySelector('tr[data-i="'+i+'"]');if(r)r.scrollIntoView({block:"nearest"})}redraw()}
+function redraw(){if(S.cur&&$("cwf")){drawWave($("cwf"),280);drawEcg($("cecg"),240);drawHist($("chist"),280);drawPep($("cpep"),220)}else drawSparks()}
+
+/* ---------- charts (K = scale factor, larger when enlarged) ---------- */
+function setup(c,h,w){var dpr=window.devicePixelRatio||1;w=w||c.clientWidth;c.width=Math.round(w*dpr);c.height=Math.round(h*dpr);if(!c.isConnected||!c.clientWidth)c.style.width=w+"px";c.style.height=h+"px";var g=c.getContext("2d");g.setTransform(dpr,0,0,dpr,0,0);return {g:g,w:w,h:h}}
+function axes(g,x0,y0,x1,y1,xt,yt,xl,yl,fx,fy,mut,line){
+  g.strokeStyle=line;g.fillStyle=mut;g.font=(11*K)+"px "+css("--font-body");g.lineWidth=1;
+  xt.forEach(function(t){var x=fx(t);g.beginPath();g.moveTo(x,y0);g.lineTo(x,y1);g.stroke();g.textAlign="center";g.fillText(t,x,y0+14*K)});
+  yt.forEach(function(t){var y=fy(t);g.beginPath();g.moveTo(x0,y);g.lineTo(x1,y);g.stroke();g.textAlign="right";g.fillText(t,x0-6*K,y+4*K)});
+  g.textAlign="center";g.fillText(xl,(x0+x1)/2,y0+30*K);g.save();g.translate(12*K,(y0+y1)/2);g.rotate(-Math.PI/2);g.fillText(yl,0,0);g.restore();
+}
+function curves(g,d,key,idx,fx,fy,T,color){
+  var step=Math.max(1,Math.ceil(idx.length/140));g.lineWidth=1;
+  idx.forEach(function(i,k){if(k%step)return;var w=d[key][i];g.beginPath();g.strokeStyle=hexA(color,0.16);w.forEach(function(v,j){var x=fx(T[j]),y=fy(v/1000);j?g.lineTo(x,y):g.moveTo(x,y)});g.stroke()});
+  if(idx.length){var m=T.map(function(_,j){return mean(idx.map(function(i){return d[key][i][j]}))/1000});g.beginPath();g.strokeStyle=css("--fg");g.lineWidth=2.4*K;m.forEach(function(v,j){var x=fx(T[j]),y=fy(v);j?g.lineTo(x,y):g.moveTo(x,y)});g.stroke()}
+}
+function marks(g,d,key,fx,fy,list){
+  var b=d.beats[S.sel],w=d[key][S.sel];g.lineWidth=2.4*K;g.strokeStyle=css("--p1");g.beginPath();w.forEach(function(v,j){var x=fx(d.t_ms[j]),y=fy(v/1000);j?g.lineTo(x,y):g.moveTo(x,y)});g.stroke();
+  var at=function(t){var f=(t+50)/5,a=Math.floor(f),r=f-a;if(a<0||a>=w.length-1)return null;return (w[a]*(1-r)+w[a+1]*r)/1000};
+  list.forEach(function(p){if(p[0]==null)return;var y=at(p[0]);if(y==null)return;g.fillStyle=css("--p1");g.beginPath();g.arc(fx(p[0]),fy(y),4*K,0,7);g.fill();g.fillStyle=css("--fg");g.textAlign="center";g.fillText(p[1],fx(p[0]),fy(y)-8*K)});
+}
+function usable(){var d=S.cur,idx=[];d.beats.forEach(function(b,i){if(b[11]&&!S.hidden[b[1]])idx.push(i)});return idx}
+function drawWave(c,h,w){
+  var d=S.cur,o=setup(c,h,w),g=o.g,mut=css("--muted"),line=css("--line"),warn=css("--warn"),x0=44*K,x1=o.w-10,y0=o.h-38*K,y1=10,T=d.t_ms,idx=usable(),all=[];
+  idx.forEach(function(i){d.wf[i].forEach(function(v){all.push(v/1000)})});var lo=-2,hi=4;if(all.length){all.sort(function(a,b){return a-b});lo=all[Math.floor(all.length*0.005)];hi=all[Math.floor(all.length*0.995)]}
+  var pad=(hi-lo)*0.08;lo-=pad;hi+=pad;var fx=function(t){return x0+(t+50)/500*(x1-x0)},fy=function(v){return y0-(v-lo)/(hi-lo)*(y0-y1)},yt=[],st=Math.max(1,Math.round((hi-lo)/5));for(var v=Math.ceil(lo);v<=hi;v+=st)yt.push(v);
+  axes(g,x0,y0,x1,y1,[-50,0,100,200,300,400],yt,"time after R-peak (ms)","dZ/dt",fx,fy,mut,line);
+  g.save();g.beginPath();g.rect(x0,y1,x1-x0,y0-y1);g.clip();curves(g,d,"wf",idx,fx,fy,T,css("--accent"));g.restore();
+  g.strokeStyle=mut;g.setLineDash([3,3]);g.beginPath();g.moveTo(fx(0),y0);g.lineTo(fx(0),y1);g.stroke();g.setLineDash([]);g.fillStyle=mut;g.textAlign="left";g.fillText("R",fx(0)+3,y1+10*K);
+  var rbs=idx.map(function(i){return d.beats[i][6]}).filter(function(v){return v!=null});
+  if(rbs.length){var mb=mean(rbs);g.strokeStyle=warn;g.setLineDash([5,3]);g.beginPath();g.moveTo(fx(mb),y0);g.lineTo(fx(mb),y1);g.stroke();g.setLineDash([]);g.fillStyle=warn;g.textAlign="left";g.fillText("mean B",fx(mb)+3,y1+22*K)}
+  var note=c.id==="cwf"||!c.id;
+  if(S.sel>=0&&d.beats[S.sel]){var b=d.beats[S.sel];marks(g,d,"wf",fx,fy,[[b[5],"Q"],[0,"R"],[b[6],"B"],[b[7],"B2"],[b[10],"C"]]);if($("wfnote")&&c.id==="cwf")$("wfnote").textContent="Beat "+b[0]+" · Q "+fmt(b[5])+", B "+fmt(b[6])+", PEP "+fmt(b[8])+" ms"+(b[11]?"":" · flagged")}
+  else if($("wfnote")&&c.id==="cwf")$("wfnote").textContent=idx.length+" beats · thick line = mean · pick a row to highlight one";
+}
+function drawEcg(c,h,w){
+  var d=S.cur;if(!d.ecg)return;var o=setup(c,h,w),g=o.g,mut=css("--muted"),line=css("--line"),x0=44*K,x1=o.w-10,y0=o.h-38*K,y1=10,T=d.t_ms,idx=usable(),all=[];
+  idx.forEach(function(i){d.ecg[i].forEach(function(v){all.push(v/1000)})});var lo=-1,hi=2;if(all.length){all.sort(function(a,b){return a-b});lo=all[Math.floor(all.length*0.002)];hi=all[Math.floor(all.length*0.998)]}
+  var pad=(hi-lo)*0.1;lo-=pad;hi+=pad;var fx=function(t){return x0+(t+50)/500*(x1-x0)},fy=function(v){return y0-(v-lo)/(hi-lo)*(y0-y1)};
+  var yt=[],st=(hi-lo)/4,sg=Math.pow(10,Math.floor(Math.log10(st))),stp=Math.max(sg,Math.round(st/sg)*sg);for(var v=Math.ceil(lo/stp)*stp;v<=hi;v+=stp)yt.push(Math.round(v*100)/100);
+  axes(g,x0,y0,x1,y1,[-50,0,100,200,300,400],yt,"time after R-peak (ms)","ECG (a.u.)",fx,fy,mut,line);
+  g.save();g.beginPath();g.rect(x0,y1,x1-x0,y0-y1);g.clip();curves(g,d,"ecg",idx,fx,fy,T,css("--accent"));g.restore();
+  if(S.sel>=0&&d.beats[S.sel]){var b=d.beats[S.sel];marks(g,d,"ecg",fx,fy,[[b[5],"Q"],[0,"R"]]);if($("ecgnote")&&c.id==="cecg")$("ecgnote").textContent="Beat "+b[0]+" · Q "+fmt(b[5])+" ms"}
+  else if($("ecgnote")&&c.id==="cecg")$("ecgnote").textContent=idx.length+" beats · thick line = mean";
+}
+function drawHist(c,h,w){
+  var d=S.cur,o=setup(c,h,w),g=o.g,mut=css("--muted"),line=css("--line"),v=[];d.beats.forEach(function(b){if(b[11]&&!S.hidden[b[1]])v.push(b[8])});
+  var x0=40*K,x1=o.w-10,y0=o.h-38*K,y1=10;if(!v.length){g.fillStyle=mut;g.fillText("no beats",x0,40);return}
+  var lo=Math.floor(Math.min.apply(null,v)/10)*10,hi=Math.ceil(Math.max.apply(null,v)/10)*10,bw=5,nb=Math.max(1,Math.ceil((hi-lo)/bw)),cnt=new Array(nb).fill(0);v.forEach(function(x){cnt[Math.min(nb-1,Math.floor((x-lo)/bw))]++});var mx=Math.max.apply(null,cnt);
+  var fx=function(t){return x0+(t-lo)/(hi-lo||1)*(x1-x0)},fy=function(t){return y0-t/mx*(y0-y1)},xt=[];for(var t=lo;t<=hi;t+=Math.max(10,Math.ceil((hi-lo)/6/10)*10))xt.push(t);
+  axes(g,x0,y0,x1,y1,xt,[0,Math.round(mx/2),mx],"PEP (ms)","beats",fx,fy,mut,line);
+  g.fillStyle=css("--accent");cnt.forEach(function(k,i){var xa=fx(lo+i*bw),xb=fx(lo+(i+1)*bw);g.fillRect(xa+0.5,fy(k),Math.max(1,xb-xa-1),y0-fy(k))});
+  var m=mean(v);g.strokeStyle=css("--warn");g.setLineDash([5,3]);g.beginPath();g.moveTo(fx(m),y0);g.lineTo(fx(m),y1);g.stroke();g.setLineDash([]);g.fillStyle=css("--warn");g.textAlign="left";g.fillText("mean "+fmt(m),fx(m)+4,y1+10*K);
+}
+var PEPGEO=null;
+function drawPep(c,h,w){
+  var d=S.cur,o=setup(c,h,w),g=o.g,mut=css("--muted"),line=css("--line");
+  var pts=d.beats.map(function(b,i){return {i:i,t:b[2],y:b[8],ph:b[1],ok:b[11]}}).filter(function(p){return p.y!=null&&!S.hidden[p.ph]});
+  var x0=44*K,x1=o.w-10,y0=o.h-38*K,y1=10;if(!pts.length)return;
+  var tmin=Math.min.apply(null,pts.map(function(p){return p.t})),tmax=Math.max.apply(null,pts.map(function(p){return p.t})),ys=pts.map(function(p){return p.y}),lo=Math.floor(Math.min.apply(null,ys)/20)*20,hi=Math.ceil(Math.max.apply(null,ys)/20)*20;
+  var fx=function(t){return x0+(t-tmin)/((tmax-tmin)||1)*(x1-x0)},fy=function(v){return y0-(v-lo)/(hi-lo||1)*(y0-y1)},xt=[],sx=Math.max(10,Math.ceil((tmax-tmin)/6/10)*10);for(var t=Math.ceil(tmin/sx)*sx;t<=tmax;t+=sx)xt.push(t);
+  var yt=[];for(var v=lo;v<=hi;v+=Math.max(20,Math.ceil((hi-lo)/5/20)*20))yt.push(v);
+  axes(g,x0,y0,x1,y1,xt,yt,"R-peak time in the recording (s)","PEP (ms)",fx,fy,mut,line);
+  pts.forEach(function(p){g.fillStyle=css(PH_COL[p.ph%5]);g.globalAlpha=p.ok?0.9:0.35;g.beginPath();g.arc(fx(p.t),fy(p.y),(p.i===S.sel?5:2.6)*K,0,7);g.fill();if(p.i===S.sel){g.globalAlpha=1;g.strokeStyle=css("--fg");g.lineWidth=2;g.stroke()}});g.globalAlpha=1;
+  if(c.id==="cpep")PEPGEO={pts:pts,fx:fx,fy:fy};
+}
+function pickScatter(e){
+  if(!PEPGEO)return false;var r=e.target.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top,best=null,bd=1e9;
+  PEPGEO.pts.forEach(function(p){var dx=PEPGEO.fx(p.t)-x,dy=PEPGEO.fy(p.y)-y,dd=dx*dx+dy*dy;if(dd<bd){bd=dd;best=p}});
+  if(best&&bd<400){selectBeat(best.i,true);return true}return false;
+}
+
+/* ============ Task 2 ============ */
+function task2View(){
+  var P=S.ov.patients,n=P.reduce(function(a,p){return a+p.n_beats},0),u=P.reduce(function(a,p){return a+p.n_usable},0);
+  var f=function(name,path){return '<a class="file" href="'+GH+'tree/main/dataset_task2/'+path+'" target="_blank" rel="noopener">'+name+'</a>'};
+  var h='<h2>From annotated beats to 465 features</h2>';
+  h+='<div class="tiles"><div class="tile"><b>39</b><span>patients</span></div><div class="tile"><b>'+u.toLocaleString()+'</b><span>usable beats (of '+n.toLocaleString()+')</span></div><div class="tile"><b>465</b><span>features per beat</span></div><div class="tile"><b>2</b><span>raters</span></div></div>';
+  h+='<div class="flow"><div class="step"><div class="n">1</div><h2>Beat dataset</h2><p>For every beat: ECG, ICG, B and PEP (rater 1), C value.</p><div class="files">'+f("task2_beats.csv","task2_beats.csv")+f("signals/","signals")+'</div></div><div class="arrow">→</div>'
+   +'<div class="step"><div class="n">2</div><h2>Sheikh\'s code</h2><p><code>feat_vec_465.m</code> reads each beat.</p><div class="files">'+f("MATLAB format (zip)","matlab_demo_format_Guardian.zip")+'</div></div><div class="arrow">→</div>'
+   +'<div class="step"><div class="n">3</div><h2>Feature matrix</h2><p>One 465-value vector per beat.</p><div class="files">'+f("features_465.npy","features_465.npy")+f("columns","features_465_columns.txt")+'</div></div></div>';
+  h+='<h3 class="sec">Plots · click to enlarge</h3><div class="gal">'
+   +[["dataset_overview","Dataset overview"],["example_beats","Annotated beats"],["features_465_summary","The 465 features"]].map(function(x){return '<figure class="fig"><img class="zi" alt="'+x[1]+'" data-asset="task2/thumbs/'+x[0]+'.png" data-full="task2/'+x[0]+'.png" data-group="plots" data-title="'+x[1]+'"><figcaption>'+x[1]+'</figcaption></figure>'}).join("")+'</div>';
+  h+='<h3 class="sec">Every patient · ECG and ICG with annotations</h3><div class="chips" id="flt">'+["All","EmpkinS","Guardian"].map(function(x){return '<button class="chip f" aria-pressed="'+(S.flt===x)+'" data-f="'+x+'">'+x+'</button>'}).join("")+'</div><div class="sgrid" id="sg"></div>';
+  h+='<div class="callout">261 beats (2.2 %) have the B point more than 150 ms after R. The MATLAB file cannot read them; the Python features include them.</div>';
+  $("main").innerHTML=h;hydrate($("main"));fillStrips();
+  $("flt").addEventListener("click",function(e){var b=e.target.closest(".chip");if(!b)return;S.flt=b.dataset.f;[].forEach.call($("flt").children,function(x){x.setAttribute("aria-pressed",String(x.dataset.f===S.flt))});fillStrips()});
+}
+function fillStrips(){
+  var P=S.ov.patients.filter(function(p){return S.flt==="All"||p.dataset===S.flt});
+  $("sg").innerHTML=P.map(function(p){return '<button class="thumb" data-group="strips" type="button"><img alt="'+esc(p.patient)+' ECG and ICG" data-asset="task2/thumbs/strip_'+p.id+'.png" data-full="task2/strips/'+p.id+'.png" data-title="'+esc(p.patient)+' · '+p.dataset+'" data-cap="PEP '+fmt(p.PEP)+' ms · '+p.n_usable+' usable beats"><span>'+esc(p.patient)+' · PEP '+fmt(p.PEP)+'</span></button>'}).join("");
+  hydrate($("sg"));
+}
+</script>
+</body>
+</html>
