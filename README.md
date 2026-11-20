@@ -59,7 +59,7 @@ The raw data are not stored in the repository; `download_datasets.sh` fetches th
 - **Faithful re-implementations.** Abel's 12 B-point algorithms run unmodified (`external/` shim, fetched on demand); Sheikh's `feat_vec_465.m` ported line by line to Python and validated against his demo output (0.0 deviation on his two demo beats).
 - **Model comparison.** Abel's design vs Sheikh's AdaBoost vs a fusion, subject-wise nested cross-validation and a cross-dataset test. → [`reports/`](reports)
 - **Ensemble-averaging analysis.** Sheikh's three-stage averaging algorithm ported and applied to Abel's beats, to compare single-beat and averaged-beat evaluation.
-- **Website** with a login gate (section 8): patient pages, Task 2 page, and a **Visualization** tab (animated heartbeat monitor, ridgeline of beats, constellation of all 39 patients) (a concise Summary tab is prepared in the code and currently hidden).
+- **Website** with a login gate (section 8): patient pages, Task 2 page, and a **Visualization** tab (animated heartbeat monitor, ridgeline of beats, constellation of all 39 patients) a **Lab** tab for plug-and-play exploration and experiments (below), and a concise Summary tab that is prepared in the code and currently hidden.
 
 ## 5. Repository layout
 ```
@@ -98,6 +98,7 @@ run_*.sh             resumable end-to-end runners
 | 23 | `23_ada_cross_all_configs.py` | Cross-dataset AdaBoost, all 4 settings (sensitivity) |
 | 24 | `24_final_report.py` | Final results vs Abel's published numbers, `reports/RESULTS.md` |
 | 25 | `25_summary_data.py` | Numbers for the website's Summary tab (generated from the result files) |
+| 26 | `26_lab_data.py` | Data for the website's Lab (waveforms, morphology features, Abel's estimates; checks that features 1–450 rebuild bit-identically) |
 
 ## 7. Key findings
 All numbers are computed from saved predictions on the **clean beats** (11,694 usable; 11,018 evaluated, i.e. beats with at least one rule estimate). Abel's figures are his **published** results, used as the reference; his cohort (11,239 cycles) and folds differ from ours, so differences are indicative, not like-for-like. Full tables: [`reports/RESULTS.md`](reports/RESULTS.md).
@@ -137,6 +138,13 @@ GitHub Pages is a static host, so there is no server to check a password. Instea
 - The data key is kept in a private, git-ignored file and reused across updates, so a browser tab left open during an update keeps working; if the key is ever rotated, an open tab is sent back to the login page automatically.
 
 **What this does and does not protect.** It keeps the *website* content from casual visitors and from search engines. It is **not** server-side security: the encrypted files are downloadable (a long random password makes guessing impractical), and the same data and figures also exist **unencrypted in the public repository** (`dataset_*`, `figures/`, `docs/`). For true confidentiality use a private repository.
+
+**Lab tab (no download, no server).** Everything runs in the visitor's browser:
+- *Beat explorer:* pick a patient and beat; see the ICG with the true B point, C point, Sheikh's search window and landmarks, all 465 values, and Abel's 12 rule estimates laid against the truth. A button recomputes the 465 features with Python in the browser and compares them with the stored vector (largest difference 0.0).
+- *Feature comparison:* error of every estimator against the true B point, Sheikh features most related to B, estimate-vs-truth scatter, per dataset.
+- *Experiments:* choose features (Sheikh 465, waveform only, morphology only, Abel 13, fusion), model (AdaBoost, Random Forest, gradient boosting, Ridge) and validation (5-fold with patients held out, train on one dataset and test on the other, hold out one patient); press Run, watch progress, and read the result in a leaderboard next to the verified full-study results and Abel's published figure. The generated Python code is shown in an editor and can be edited and re-run; two runs can be compared patient by patient; one button runs Sheikh vs Abel vs fusion with the same model.
+- *How:* Python (Pyodide with numpy, scipy, scikit-learn) runs in a Web Worker, loaded from a CDN on first use (about 50 MB, cached by the browser); the ICG waveforms (about 18 MB, encrypted like the rest) are decrypted in the browser.
+- *Limits:* browser runs are slower than a server, so presets use fewer trees than the study (the study used 500 trees with depth 12–20); quick runs therefore show larger errors than the "full settings" rows, which are the verified results.
 
 Features: click any image or chart to enlarge (zoom, previous/next); per-patient ECG, ICG and PEP views; Task 2 overview; Visualization tab.
 

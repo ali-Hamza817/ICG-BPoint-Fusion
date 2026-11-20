@@ -137,7 +137,7 @@ tr.sel{background:var(--accent-soft);box-shadow:inset 3px 0 0 var(--accent)}tr.b
 
 <div class="wrap" id="app" hidden>
   <div class="top"><h1>ICG Patient Beats</h1><button class="out" id="out">Sign out</button></div>
-  <nav class="tabs" aria-label="Sections"><a href="#" id="tab1">Task 1 · Patient beats</a><a href="#task2" id="tab2">Task 2 · Dataset and features</a><a href="#visualization" id="tab3">Visualization</a><a href="#summary" id="tab4">Summary</a></nav>
+  <nav class="tabs" aria-label="Sections"><a href="#" id="tab1">Task 1 · Patient beats</a><a href="#task2" id="tab2">Task 2 · Dataset and features</a><a href="#visualization" id="tab3">Visualization</a><a href="#lab" id="tab5">Lab</a><a href="#summary" id="tab4">Summary</a></nav>
   <details class="def"><summary>Definitions</summary>
     <p><b>PEP</b> = B − Q (manual annotation, rater 1). <b>RB</b> = B-point time after the R-peak. <b>C</b> = main ICG peak.</p>
     <p>Usable beat: B label present and PEP 20 to 250 ms. Others are flagged. Data: public Abel et al. 2026 (EmpkinS 15, Guardian 24 patients).</p>
@@ -226,8 +226,9 @@ function buildList(){
 function route(){
   var h=location.hash.replace("#",""),id=h&&idOf(h);
   [].forEach.call($("plist").querySelectorAll("button"),function(b){b.setAttribute("aria-current",String(b.dataset.id===id))});
-  var t2=h==="task2",tv=h==="visualization",sm=h==="summary"&&SHOW_SUMMARY;["tab1","tab2","tab3","tab4"].forEach(function(t){$(t).removeAttribute("aria-current")});$(sm?"tab4":tv?"tab3":t2?"tab2":"tab1").setAttribute("aria-current","page");
-  S.viz=false;S.sumOn=false;if(VZ.raf){cancelAnimationFrame(VZ.raf);VZ.raf=0}document.querySelector(".layout").classList.toggle("one",tv||sm);document.querySelector("details.def").hidden=tv||sm;
+  var t2=h==="task2",tv=h==="visualization",sm=h==="summary"&&SHOW_SUMMARY,lb=h==="lab";["tab1","tab2","tab3","tab4","tab5"].forEach(function(t){$(t).removeAttribute("aria-current")});$(lb?"tab5":sm?"tab4":tv?"tab3":t2?"tab2":"tab1").setAttribute("aria-current","page");
+  S.viz=false;S.sumOn=false;S.labOn=false;if(VZ.raf){cancelAnimationFrame(VZ.raf);VZ.raf=0}document.querySelector(".layout").classList.toggle("one",tv||sm||lb);document.querySelector("details.def").hidden=tv||sm||lb;
+  if(lb){S.cur=null;S.labOn=true;labView();return}
   if(sm){S.cur=null;summaryView();return}
   if(tv){S.cur=null;vizView();return}
   if(t2){S.cur=null;task2View();return}
@@ -309,7 +310,7 @@ function fillTable(){
   $("tb").innerHTML=h;$("tb").onclick=function(e){var r=e.target.closest("tr");if(r)selectBeat(+r.dataset.i,false)};$("tb").onkeydown=function(e){if(e.key==="Enter"){var r=e.target.closest("tr");if(r)selectBeat(+r.dataset.i,false)}};
 }
 function selectBeat(i,scroll){S.sel=i;[].forEach.call($("tb").querySelectorAll("tr"),function(r){r.classList.toggle("sel",+r.dataset.i===i)});if(scroll){var r=$("tb").querySelector('tr[data-i="'+i+'"]');if(r)r.scrollIntoView({block:"nearest"})}redraw()}
-function redraw(){if(S.sumOn){drawSumCharts();return}if(S.viz){vizRedraw();return}if(S.cur&&$("cwf")){drawWave($("cwf"),280);drawEcg($("cecg"),240);drawHist($("chist"),280);drawPep($("cpep"),220)}else drawSparks()}
+function redraw(){if(S.labOn&&window.LabApp){LabApp.redraw();return}if(S.sumOn){drawSumCharts();return}if(S.viz){vizRedraw();return}if(S.cur&&$("cwf")){drawWave($("cwf"),280);drawEcg($("cecg"),240);drawHist($("chist"),280);drawPep($("cpep"),220)}else drawSparks()}
 
 /* ---------- charts (K = scale factor, larger when enlarged) ---------- */
 function setup(c,h,w){var dpr=window.devicePixelRatio||1;w=w||c.clientWidth||(c.parentElement?c.parentElement.clientWidth-24:0)||600;c.width=Math.round(w*dpr);c.height=Math.round(h*dpr);if(!c.isConnected||!c.clientWidth)c.style.width=w+"px";c.style.height=h+"px";var g=c.getContext("2d");g.setTransform(dpr,0,0,dpr,0,0);return {g:g,w:w,h:h}}
@@ -586,6 +587,13 @@ function drawSumCharts(){
   g.strokeStyle=line;g.lineWidth=1;[0,2,4,6,8,10].forEach(function(t){g.beginPath();g.moveTo(x0,fy(t));g.lineTo(x1,fy(t));g.stroke();tick(g,x0-6,fy(t)+4,t,"right")});
   var bars=[["Single beat",E.single_beat,.5],["Predictions\naveraged",E.single_avg,1],["Averaged-beat\nmodel (best)",E.ea_best,.5],["Averaged-beat\nAdaBoost",E.ea_ada,.5]],bc=(x1-x0)/bars.length,bw4=Math.min(60,bc*.5);
   bars.forEach(function(b,i){var cx=x0+bc*(i+.5);g.fillStyle=acc;g.globalAlpha=b[2];g.fillRect(cx-bw4/2,fy(b[1]),bw4,y1-fy(b[1]));g.globalAlpha=1;g.fillStyle=fg;g.textAlign="center";g.fillText(b[1].toFixed(2),cx,fy(b[1])-5);b[0].split("\n").forEach(function(l,j){tick(g,cx,y1+16+j*14,l)})});tick(g,x0-6,y0-8,"ms","right");
+}
+/* ============ Lab (loaded on demand from lab.js) ============ */
+function labView(){
+  var go=function(){LabApp.mount($("main"))};
+  if(window.LabApp){go();return}
+  $("main").innerHTML='<p class="note">Loading the Lab…</p>';
+  var sc=document.createElement("script");sc.src="lab.js?v="+VER;sc.onload=go;sc.onerror=function(){$("main").innerHTML='<p class="note">Could not load the Lab.</p>'};document.head.appendChild(sc);
 }
 </script>
 </body>
