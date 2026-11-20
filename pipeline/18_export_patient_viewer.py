@@ -11,13 +11,14 @@ overview = []
 for _, s in summ.iterrows():
     pid = f"{s.dataset}_{s.patient}"; g = tab[(tab.dataset == s.dataset) & (tab.patient == s.patient)].reset_index(drop=True)
     z = np.load(D / "waveforms" / f"{pid}.npz", allow_pickle=True); W = z["icg"][:, SL]; assert len(W) == len(g)
+    z2 = np.load(ROOT / "dataset_task2" / "signals" / f"{pid}.npz", allow_pickle=True); EC = z2["ecg"][:, SL]; assert (z2["beat_id"] == g.beat_id.values).all()   # ECG windows come from the task-2 dataset
     ok = g.in_analysis_cohort.values.astype(bool); t0 = g.R_peak_time_s.min()
     phases = list(dict.fromkeys(g.phase))
     d = dict(id=pid, dataset=s.dataset, patient=s.patient, fs=int(g.fs_Hz.iloc[0]), phases=phases, t_ms=list(range(-50, 451, 5)),
              cols=["beat_id", "phase", "t_s", "RR_ms", "HR_bpm", "Q_ms", "B1_ms", "B2_ms", "PEP1_ms", "PEP2_ms", "C_ms", "ok"],
-             beats=[[int(r.beat_id), phases.index(r.phase), rnd(r.R_peak_time_s - t0, 2), rnd(r.RR_prev_ms, 0), rnd(r.HR_bpm, 1), rnd(r.Q_onset_ms_after_R_rater1, 0), rnd(r.B_point_ms_after_R_rater1, 0),
+             beats=[[int(r.beat_id), phases.index(r.phase), rnd(r.R_peak_time_s, 2), rnd(r.RR_prev_ms, 0), rnd(r.HR_bpm, 1), rnd(r.Q_onset_ms_after_R_rater1, 0), rnd(r.B_point_ms_after_R_rater1, 0),
                      rnd(r.B_point_ms_after_R_rater2, 0), rnd(r.PEP_ms_rater1, 0), rnd(r.PEP_ms_rater2, 0), rnd(r.C_point_ms_after_R, 0), int(r.in_analysis_cohort)] for r in g.itertuples()],
-             wf=np.round(W * 1000).astype(int).tolist())
+             wf=np.round(W * 1000).astype(int).tolist(), ecg=np.round(EC * 1000).astype(int).tolist())
     json.dump(d, open(OUT / f"{pid}.json", "w"), separators=(",", ":"))
     mean = np.round(W[ok].mean(0) * 1000).astype(int).tolist()
     overview.append(dict(id=pid, dataset=s.dataset, patient=s.patient, n_beats=int(s.n_beats), n_usable=int(s.n_usable), phases=int(s.n_phases), HR=rnd(s.HR_mean, 1), PEP=rnd(s.PEP_mean_ms, 1), PEP_sd=rnd(s.PEP_sd_ms, 1),

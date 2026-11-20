@@ -1,3 +1,8 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>ICG Patient Beats</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&display=swap">
@@ -8,7 +13,9 @@
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1519;--surface:#162027;--fg:#e6edf2;--muted:#8fa1b0;--line:#26343e;--accent:#4cb8e0;--accent-soft:#16303b;--warn:#f0a35c;--warn-soft:#33260f;color-scheme:dark}}
 :root[data-theme="dark"]{--bg:#0f1519;--surface:#162027;--fg:#e6edf2;--muted:#8fa1b0;--line:#26343e;--accent:#4cb8e0;--accent-soft:#16303b;--warn:#f0a35c;--warn-soft:#33260f;color-scheme:dark}
 *{box-sizing:border-box}
-body{background:var(--bg);color:var(--fg);font:14px/1.5 var(--font-body);padding-block:0;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+html{color-scheme:light}:root[data-theme="dark"]{color-scheme:dark}
+img{max-width:100%}[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--fg);font:14px/1.5 var(--font-body);padding-block:0;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 .wrap{max-width:1280px;margin:0 auto;padding-block:20px 40px}
 h1,h2,h3{font-family:var(--font-head);font-weight:600;margin:0;text-wrap:balance}
 h1{font-size:24px;letter-spacing:-.01em}h2{font-size:17px}h3{font-size:14px;color:var(--muted);font-weight:500;letter-spacing:.04em;text-transform:uppercase}
@@ -50,9 +57,16 @@ tr.bad td{color:var(--muted);text-decoration:line-through;text-decoration-color:
 .sp{display:block;width:110px;height:30px}
 .back{background:none;border:0;color:var(--accent);font:inherit;cursor:pointer;padding:0;margin-bottom:6px}
 .note{color:var(--muted);font-size:12px;margin-top:10px}
+.tabs{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:12px;border-bottom:1px solid var(--line)}
+.tabs a{padding:8px 14px;text-decoration:none;color:var(--muted);border-bottom:3px solid transparent;font-weight:500}
+.tabs a[aria-current="page"]{color:var(--fg);border-bottom-color:var(--accent)}
+.figs{display:grid;gap:14px}.figs img,.panel img{width:100%;height:auto;display:block;border:1px solid var(--line);border-radius:4px;background:#fff}
+.dl{width:100%}.dl td,.dl th{text-align:left;white-space:normal}.dl code{font-family:var(--font-mono);font-size:12px}
 .pill{font-size:11px;border-radius:999px;padding:1px 8px;background:var(--accent-soft);color:var(--accent);font-weight:600}
 .pill.g{background:var(--warn-soft);color:var(--warn)}
 </style>
+</head>
+<body>
 <div class="wrap">
   <div class="top">
     <div>
@@ -60,6 +74,7 @@ tr.bad td{color:var(--muted);text-decoration:line-through;text-decoration-color:
       <p class="sub">Every heartbeat of every patient in the public Abel et al. 2026 datasets (EmpkinS n=15, Guardian n=24): its R-peak, its B-point and Q-onset from the manual annotation, and its PEP.</p>
     </div>
   </div>
+  <nav class="tabs" aria-label="Sections"><a href="#" id="tab1">Task 1 · Patient beats</a><a href="#task2" id="tab2">Task 2 · ECG, ICG and 465 features</a></nav>
   <div class="def">
     <span><b>PEP</b> = B-point time minus Q-wave onset, both from the manual annotation by rater 1 (rater 2 shown for comparison). <b>RB</b> = B-point time after the R-peak.</span>
     <span><b>R-peak</b> is found in the cleaned ECG next to the annotated Q onset. Waveform = ICG dZ/dt, band-pass 0.5 to 40 Hz, aligned at the R-peak (0 ms).</span>
@@ -78,7 +93,7 @@ var $=function(i){return document.getElementById(i)};
 function css(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim()}
 function fmt(x,d){return x==null?"–":Number(x).toFixed(d==null?0:d)}
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
-function hashOf(id){return id.replace("_","-")}
+function hashOf(id){return id.replace(/_/g,"-")}
 function idOf(h){return S.ov.patients.map(function(p){return p.id}).filter(function(i){return hashOf(i)===h})[0]}
 function mean(a){return a.length?a.reduce(function(x,y){return x+y},0)/a.length:NaN}
 function sd(a){var m=mean(a);return a.length>1?Math.sqrt(mean(a.map(function(x){return (x-m)*(x-m)}))*a.length/(a.length-1)):NaN}
@@ -100,6 +115,8 @@ function buildList(){
 function route(){
   var h=location.hash.replace("#",""),id=h&&idOf(h);
   [].forEach.call($("plist").querySelectorAll("button"),function(b){b.setAttribute("aria-current",String(b.dataset.id===id))});
+  if(h==="task2"){S.cur=null;$("tab1").removeAttribute("aria-current");$("tab2").setAttribute("aria-current","page");task2View();return}
+  $("tab2").removeAttribute("aria-current");$("tab1").setAttribute("aria-current","page");
   if(!id){S.cur=null;overview();return}
   $("main").innerHTML='<p class="note">Loading '+esc(id)+'…</p>';
   fetch("data/"+id+".json").then(function(r){return r.json()}).then(function(d){S.cur=d;S.hidden={};S.sel=-1;patientView()}).catch(function(e){$("main").innerHTML='<p class="note">Could not load patient data ('+esc(e)+').</p>'});
@@ -141,9 +158,10 @@ function patientView(){
    +'<div class="card"><div class="k">Rater gap (PEP)</div><div class="v">'+fmt(mean(gap),1)+' ms</div><div class="s">mean |rater 1 − rater 2|</div></div></div>';
   h+='<div class="chips" id="chips" role="group" aria-label="Phases">'+d.phases.map(function(p,i){return '<button class="chip" aria-pressed="true" data-ph="'+i+'"><i style="background:var('+PH_COL[i%5]+')"></i>'+esc(p)+' ('+B.filter(function(b){return b[1]===i}).length+')</button>'}).join("")+'</div>';
   h+='<div class="grid2"><div class="panel"><h3>ICG waveform, every beat aligned at the R-peak</h3><p id="wfnote"></p><canvas id="cwf" height="300"></canvas></div><div class="panel"><h3>PEP distribution</h3><p>Usable beats of the shown phases.</p><canvas id="chist" height="300"></canvas></div></div>';
+  h+='<div class="grid2"><div class="panel"><h3>ECG, every beat aligned at the R-peak</h3><p id="ecgnote"></p><canvas id="cecg" height="260"></canvas></div><div class="panel"><h3>Continuous recording, 10 s</h3><p>ECG on top, ICG below, with R-peak, Q onset, B point (rater 1 filled, rater 2 hollow) and C point marked on the original signals.</p><img loading="lazy" alt="Continuous ECG and ICG strip of '+esc(d.id)+' with annotation marks" src="task2/strips/'+d.id+'.png"></div></div>';
   h+='<div class="panel" style="margin-bottom:12px"><h3>PEP of every beat over the recording</h3><p>Each dot is one heartbeat; colour = phase. Click a dot to pick that beat.</p><canvas id="cpep" height="240"></canvas></div>';
   h+='<h3 style="margin:14px 0 6px">All beats</h3><div class="tablewrap"><table><thead><tr><th>Beat</th><th class="l">Phase</th><th>Time (s)</th><th>RR (ms)</th><th>HR</th><th>Q (ms)</th><th>B rater 1</th><th>B rater 2</th><th>PEP rater 1</th><th>PEP rater 2</th><th>C (ms)</th><th class="l"></th></tr></thead><tbody id="tb"></tbody></table></div>';
-  h+='<p class="note">Times in ms are relative to the R-peak (Q, B, C) unless stated. Click a row to draw that beat\'s own waveform with its Q, R and B marks. Time is seconds since the first annotated beat of this patient\'s recording.</p>';
+  h+='<p class="note">Times in ms are relative to the R-peak (Q, B, C) unless stated. Click a row to draw that beat\'s own waveform with its Q, R and B marks. Time = R-peak time inside the recording file, in seconds (EmpkinS has two recording files per patient, one per session).</p>';
   $("main").innerHTML=h;
   $("chips").addEventListener("click",function(e){var b=e.target.closest(".chip");if(!b)return;var i=+b.dataset.ph;S.hidden[i]=!S.hidden[i];b.setAttribute("aria-pressed",String(!S.hidden[i]));redraw();fillTable()});
   fillTable();redraw();
@@ -163,7 +181,7 @@ function selectBeat(i,scroll){
   redraw();
 }
 function redraw(){
-  if(S.cur&&$("cwf")){drawWave();drawHist();drawPep()}
+  if(S.cur&&$("cwf")){drawWave();drawEcg();drawHist();drawPep()}
   else drawSparks();
 }
 function setup(c,h){var dpr=window.devicePixelRatio||1,w=c.clientWidth;c.width=Math.round(w*dpr);c.height=Math.round(h*dpr);c.style.height=h+"px";var g=c.getContext("2d");g.setTransform(dpr,0,0,dpr,0,0);return {g:g,w:w,h:h}}
@@ -194,9 +212,42 @@ function drawWave(){
   if(S.sel>=0&&S.cur.beats[S.sel]){
     var b=d.beats[S.sel],w=d.wf[S.sel];g.lineWidth=2.4;g.strokeStyle=css("--p1");g.beginPath();w.forEach(function(v,j){var x=fx(T[j]),y=fy(v/1000);j?g.lineTo(x,y):g.moveTo(x,y)});g.stroke();
     var at=function(t){var f=(t+50)/5,a=Math.floor(f),r=f-a;if(a<0||a>=w.length-1)return null;return (w[a]*(1-r)+w[a+1]*r)/1000};
-    [[b[5],"Q"],[0,"R"],[b[6],"B"],[b[7],"B2"]].forEach(function(p){if(p[0]==null)return;var y=at(p[0]);if(y==null)return;g.fillStyle=css("--p1");g.beginPath();g.arc(fx(p[0]),fy(y),4,0,7);g.fill();g.fillStyle=fg;g.textAlign="center";g.fillText(p[1],fx(p[0]),fy(y)-8)});
+    [[b[5],"Q"],[0,"R"],[b[6],"B"],[b[7],"B2"],[b[10],"C"]].forEach(function(p){if(p[0]==null)return;var y=at(p[0]);if(y==null)return;g.fillStyle=css("--p1");g.beginPath();g.arc(fx(p[0]),fy(y),4,0,7);g.fill();g.fillStyle=fg;g.textAlign="center";g.fillText(p[1],fx(p[0]),fy(y)-8)});
     $("wfnote").textContent="Selected: beat "+b[0]+" ("+d.phases[b[1]]+"). Q "+fmt(b[5])+" ms, B "+fmt(b[6])+" ms after R, PEP "+fmt(b[8])+" ms (rater 1)"+(b[11]?"":". Flagged: outside the usable PEP range.");
   } else $("wfnote").textContent=idx.length+" usable beats drawn (thin lines, up to 140 shown), thick line = average of all usable beats in the shown phases. Select a table row to highlight one beat.";
+}
+function drawEcg(){
+  var d=S.cur,c=$("cecg");if(!c||!d.ecg)return;var o=setup(c,260),g=o.g,mut=css("--muted"),line=css("--line"),fg=css("--fg");
+  var x0=44,x1=o.w-10,y0=o.h-38,y1=10,T=d.t_ms,idx=[];d.beats.forEach(function(b,i){if(b[11]&&!S.hidden[b[1]])idx.push(i)});
+  var all=[];idx.forEach(function(i){d.ecg[i].forEach(function(v){all.push(v/1000)})});var lo=-1,hi=2;
+  if(all.length){all.sort(function(a,b){return a-b});lo=all[Math.floor(all.length*0.002)];hi=all[Math.floor(all.length*0.998)]}
+  var pad=(hi-lo)*0.1;lo-=pad;hi+=pad;var fx=function(t){return x0+(t+50)/500*(x1-x0)},fy=function(v){return y0-(v-lo)/(hi-lo)*(y0-y1)};
+  var yt=[],st=(hi-lo)/4,sg=Math.pow(10,Math.floor(Math.log10(st))),stp=Math.max(sg,Math.round(st/sg)*sg);for(var v=Math.ceil(lo/stp)*stp;v<=hi;v+=stp)yt.push(Math.round(v*100)/100);
+  axes(g,x0,y0,x1,y1,[-50,0,100,200,300,400],yt,"time after R-peak (ms)","ECG (a.u.)",fx,fy,mut,line);
+  g.save();g.beginPath();g.rect(x0,y1,x1-x0,y0-y1);g.clip();var step=Math.max(1,Math.ceil(idx.length/140));g.lineWidth=1;
+  idx.forEach(function(k,j){if(j%step)return;var w=d.ecg[k];g.beginPath();g.strokeStyle=hexA(css("--accent"),0.16);w.forEach(function(v,q){var x=fx(T[q]),y=fy(v/1000);q?g.lineTo(x,y):g.moveTo(x,y)});g.stroke()});
+  if(idx.length){var m=T.map(function(_,q){return mean(idx.map(function(i){return d.ecg[i][q]}))/1000});g.beginPath();g.strokeStyle=fg;g.lineWidth=2.4;m.forEach(function(v,q){var x=fx(T[q]),y=fy(v);q?g.lineTo(x,y):g.moveTo(x,y)});g.stroke()}
+  g.restore();
+  if(S.sel>=0&&d.beats[S.sel]){var b=d.beats[S.sel],w=d.ecg[S.sel];g.lineWidth=2.4;g.strokeStyle=css("--p1");g.beginPath();w.forEach(function(v,q){var x=fx(T[q]),y=fy(v/1000);q?g.lineTo(x,y):g.moveTo(x,y)});g.stroke();
+    var at=function(t){var f=(t+50)/5,a=Math.floor(f),r=f-a;if(a<0||a>=w.length-1)return null;return (w[a]*(1-r)+w[a+1]*r)/1000};
+    [[b[5],"Q"],[0,"R"]].forEach(function(p){if(p[0]==null)return;var y=at(p[0]);if(y==null)return;g.fillStyle=css("--p1");g.beginPath();g.arc(fx(p[0]),fy(y),4,0,7);g.fill();g.fillStyle=fg;g.textAlign="center";g.fillText(p[1],fx(p[0]),fy(y)-8)});
+    $("ecgnote").textContent="Selected: beat "+b[0]+" ("+d.phases[b[1]]+"), Q onset "+fmt(b[5])+" ms before R."
+  } else $("ecgnote").textContent=idx.length+" usable beats (cleaned ECG), thick line = average.";
+}
+function task2View(){
+  var P=S.ov.patients,n=P.reduce(function(a,p){return a+p.n_beats},0),u=P.reduce(function(a,p){return a+p.n_usable},0),gh="https://github.com/ali-Hamza817/ICG-BPoint-Fusion/tree/main/";
+  var h='<h2>Task 2: dataset with ECG, ICG, B, PEP and C for every beat</h2><p class="sub">For each of the '+n.toLocaleString()+' annotated heartbeats ('+u.toLocaleString()+' usable) of the 39 patients: the ECG signal, the ICG signal, the B point and PEP from rater 1, and the C value. Prepared in the input format of Sheikh\'s <code>feat_vec_465.m</code> so his 465-feature code can be run on these waveforms. Select a patient on the left for their beats, ECG, ICG and a continuous annotated recording.</p>';
+  h+='<div class="panel" style="margin:12px 0"><h3>What is in the dataset</h3><table class="dl"><thead><tr><th>File (folder <a href="'+gh+'dataset_task2">dataset_task2</a>)</th><th>Content</th></tr></thead><tbody>'
+   +'<tr><td><code>task2_beats.csv</code></td><td>One row per beat: patient, phase, beat id, R-peak time, RR, HR, Q, B and PEP (rater 1 and rater 2), C time (RC) and C amplitude, usable flag.</td></tr>'
+   +'<tr><td><code>signals/&lt;patient&gt;.npz</code></td><td>ECG and ICG waveform of every beat (R−100 to R+600 ms, 1 kHz) with the labels, per patient.</td></tr>'
+   +'<tr><td><code>matlab_demo_format_*.zip</code></td><td>The same beats as MATLAB files with the exact fields <code>feat_vec_465.m</code> reads (id, feat_icg, derivatives, vel_index, RC, RB_out).</td></tr>'
+   +'<tr><td><code>features_465.npy</code></td><td>The 465 features of all usable beats (11,903 × 465), computed with a Python port of <code>feat_vec_465.m</code>; column names and a row index are included.</td></tr></tbody></table>'
+   +'<p class="note">Definitions: PEP = B − Q (rater 1). C = main ICG peak (RC = its time after R). B and C are times after the R-peak. ICG = dZ/dt band-pass 0.5 to 40 Hz. Guardian (500 Hz) is resampled to 1 kHz.</p></div>';
+  h+='<div class="panel" style="margin-bottom:12px"><h3>Checks done on the feature code</h3><p style="color:var(--fg);font-size:13px">The Python port reproduces the output of <code>feat_vec_465.m</code> on its two demo beats with zero difference, and gives identical features whether fed the exported MATLAB-format inputs or the waveforms (11,614 beats, zero difference). Sheikh\'s MATLAB file itself could not be run on the analysis server (no MATLAB). It cannot process beats whose B point lies more than 150 ms after R: 289 usable beats (2.3 %, mostly Guardian) are not in the MATLAB zips, but are in the Python feature matrix.</p></div>';
+  h+='<div class="figs"><div class="panel"><h3>Dataset overview</h3><img loading="lazy" alt="Overview of the annotated dataset: beats per patient, PEP, B versus C, C amplitude, heart rate, rater agreement" src="task2/dataset_overview.png"></div>'
+   +'<div class="panel"><h3>Annotated beats: R, Q, B (rater 1 and 2), C</h3><img loading="lazy" alt="Example beats with ECG and ICG and annotation marks" src="task2/example_beats.png"></div>'
+   +'<div class="panel"><h3>The 465 features</h3><img loading="lazy" alt="Summary of the 465 features by dataset" src="task2/features_465_summary.png"></div></div>';
+  $("main").innerHTML=h;
 }
 function hexA(h,a){if(h[0]!=="#")return h;var n=parseInt(h.slice(1),16);return "rgba("+(n>>16)+","+((n>>8)&255)+","+(n&255)+","+a+")"}
 function drawHist(){
@@ -219,7 +270,7 @@ function drawPep(){
   var tmax=Math.max.apply(null,pts.map(function(p){return p.t})),ys=pts.map(function(p){return p.y}),lo=Math.floor(Math.min.apply(null,ys)/20)*20,hi=Math.ceil(Math.max.apply(null,ys)/20)*20;
   var fx=function(t){return x0+t/(tmax||1)*(x1-x0)},fy=function(v){return y0-(v-lo)/(hi-lo||1)*(y0-y1)};
   var xt=[];var sx=Math.max(5,Math.ceil(tmax/6/5)*5);for(var t=0;t<=tmax;t+=sx)xt.push(t);var yt=[];for(var v=lo;v<=hi;v+=Math.max(20,Math.ceil((hi-lo)/5/20)*20))yt.push(v);
-  axes(g,x0,y0,x1,y1,xt,yt,"time since first annotated beat (s); phases are separate recording segments","PEP (ms)",fx,fy,mut,line);
+  axes(g,x0,y0,x1,y1,xt,yt,"R-peak time in the recording file (s); each phase is a separate segment","PEP (ms)",fx,fy,mut,line);
   pts.forEach(function(p){g.fillStyle=css(PH_COL[p.ph%5]);g.globalAlpha=p.ok?0.9:0.35;g.beginPath();g.arc(fx(p.t),fy(p.y),p.i===S.sel?5:2.6,0,7);g.fill();if(p.i===S.sel){g.globalAlpha=1;g.strokeStyle=css("--fg");g.lineWidth=2;g.stroke()}});g.globalAlpha=1;
   PEPGEO={pts:pts,fx:fx,fy:fy};
 }
@@ -229,3 +280,5 @@ function pickScatter(e){
   if(best&&bd<400)selectBeat(best.i,true);
 }
 </script>
+</body>
+</html>
