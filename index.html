@@ -100,6 +100,13 @@ tr.sel{background:var(--accent-soft);box-shadow:inset 3px 0 0 var(--accent)}tr.b
 .vpanel{position:relative;background:#071014;border:1px solid #17262e;border-radius:10px;overflow:hidden;margin-bottom:16px}
 .vpanel canvas{width:100%;display:block}
 .vt{position:absolute;left:18px;top:14px;font:500 11px var(--font-head);letter-spacing:.24em;text-transform:uppercase;color:rgba(200,225,235,.5);z-index:1;pointer-events:none}
+/* summary tab: technical log style */
+.doc{max-width:1000px}.doc h2{font-size:22px}.doc .lead{color:var(--muted);margin:6px 0 4px;max-width:78ch}
+.doc h3{margin:30px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+.sumtable{width:100%;border-collapse:collapse;font-size:13px}.sumtable th,.sumtable td{text-align:left;white-space:normal;vertical-align:top;padding:8px 12px;border-bottom:1px solid var(--line)}
+.sumtable th{position:static;background:none;color:var(--muted);font-weight:500;font-size:11px;letter-spacing:.06em;text-transform:uppercase}.sumtable td:first-child{font-weight:600;white-space:nowrap}
+.sumtable td.n,.sumtable th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}.sumtable tr.best td{background:var(--accent-soft)}
+.doc ol,.doc ul{margin:0;padding-left:20px;display:grid;gap:6px}.doc li{max-width:92ch}.doc .sm{font-size:12px;color:var(--muted);margin-top:8px}
 /* lightbox */
 #lb{position:fixed;inset:0;z-index:100;background:rgba(6,12,16,.9);display:grid;grid-template-rows:auto minmax(0,1fr) auto}
 #lb .bar{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 16px;color:#e6edf2}
@@ -127,7 +134,7 @@ tr.sel{background:var(--accent-soft);box-shadow:inset 3px 0 0 var(--accent)}tr.b
 
 <div class="wrap" id="app" hidden>
   <div class="top"><h1>ICG Patient Beats</h1><button class="out" id="out">Sign out</button></div>
-  <nav class="tabs" aria-label="Sections"><a href="#" id="tab1">Task 1 · Patient beats</a><a href="#task2" id="tab2">Task 2 · Dataset and features</a><a href="#visualization" id="tab3">Visualization</a></nav>
+  <nav class="tabs" aria-label="Sections"><a href="#" id="tab1">Task 1 · Patient beats</a><a href="#task2" id="tab2">Task 2 · Dataset and features</a><a href="#visualization" id="tab3">Visualization</a><a href="#summary" id="tab4">Summary</a></nav>
   <details class="def"><summary>Definitions</summary>
     <p><b>PEP</b> = B − Q (manual annotation, rater 1). <b>RB</b> = B-point time after the R-peak. <b>C</b> = main ICG peak.</p>
     <p>Usable beat: B label present and PEP 20 to 250 ms. Others are flagged. Data: public Abel et al. 2026 (EmpkinS 15, Guardian 24 patients).</p>
@@ -215,8 +222,9 @@ function buildList(){
 function route(){
   var h=location.hash.replace("#",""),id=h&&idOf(h);
   [].forEach.call($("plist").querySelectorAll("button"),function(b){b.setAttribute("aria-current",String(b.dataset.id===id))});
-  var t2=h==="task2",tv=h==="visualization";["tab1","tab2","tab3"].forEach(function(t){$(t).removeAttribute("aria-current")});$(tv?"tab3":t2?"tab2":"tab1").setAttribute("aria-current","page");
-  S.viz=false;if(VZ.raf){cancelAnimationFrame(VZ.raf);VZ.raf=0}document.querySelector(".layout").classList.toggle("one",tv);document.querySelector("details.def").hidden=tv;
+  var t2=h==="task2",tv=h==="visualization",sm=h==="summary";["tab1","tab2","tab3","tab4"].forEach(function(t){$(t).removeAttribute("aria-current")});$(sm?"tab4":tv?"tab3":t2?"tab2":"tab1").setAttribute("aria-current","page");
+  S.viz=false;if(VZ.raf){cancelAnimationFrame(VZ.raf);VZ.raf=0}document.querySelector(".layout").classList.toggle("one",tv||sm);document.querySelector("details.def").hidden=tv||sm;
+  if(sm){S.cur=null;summaryView();return}
   if(tv){S.cur=null;vizView();return}
   if(t2){S.cur=null;task2View();return}
   if(!id){S.cur=null;overview();return}
@@ -492,6 +500,50 @@ function drawConst(){
     if(p.RC!=null&&p.RC<450){g.fillStyle=MK.C;g.beginPath();g.arc(fx(p.RC),at(p.RC),2.8,0,7);g.fill()}
     g.fillStyle=hot?"rgba(255,255,255,.95)":"rgba(200,225,235,.45)";g.font=(hot?"600 ":"500 ")+"11px "+css("--font-body");g.textAlign="center";g.fillText(p.patient.replace("GDN","G").replace("VP_","V")+(hot?"  ·  "+fmt(p.PEP)+" ms":""),cx+cw/2,y1+ch*.22);});
   g.fillStyle="rgba(200,225,235,.35)";g.font="500 11px "+css("--font-body");g.textAlign="right";g.fillText("each curve scaled to its own range",o.w-16,26);
+}
+/* ============ Summary (technical log; every number comes from data/summary.json) ============ */
+function summaryView(){
+  $("main").innerHTML='<p class="note">Loading…</p>';
+  jsonAsset("data/summary.json").then(function(S0){
+    var c=S0.counts,d=S0.data,pb=S0.published,f2=function(x){return Number(x).toFixed(2)},f1=function(x){return Number(x).toFixed(1)},n=function(x){return Number(x).toLocaleString("en-US")};
+    var P=S0.pooled,sh=P.filter(function(r){return r.model==="sheikh_ada"})[0],X=S0.cross,e2g=X["EmpkinS->Guardian"],g2e=X["Guardian->EmpkinS"],ir=S0.inter_rater,ea=S0.ea;
+    var FEAT={sheikh:"Sheikh 465",fus:"Sheikh 465 + Abel 13"},MOD={ada:"AdaBoost",rf:"Random Forest",lgbm:"LightGBM",svr:"SVR"};
+    var tb=function(head,rows,cls){return '<div class="tablewrap" style="max-height:none"><table class="sumtable"><thead><tr>'+head.map(function(h,i){return '<th'+(h[0]==="#"?' class="n"':'')+'>'+h.replace(/^#/,"")+'</th>'}).join("")+'</tr></thead><tbody>'+rows.map(function(r,ri){return '<tr'+(cls&&cls(ri)?' class="'+cls(ri)+'"':'')+'>'+r.map(function(c,i){return '<td'+(head[i][0]==="#"?' class="n"':'')+'>'+c+'</td>'}).join("")+'</tr>'}).join("")+'</tbody></table></div>'};
+    var h='<div class="doc"><h2>Summary</h2><p class="lead">Per-beat detection of the aortic-valve-opening (B) point in the impedance cardiogram, applying the 465-feature method of Sheikh et al. (2022) to the public datasets of Abel et al. (2026).</p>';
+    h+='<h3>1 · Scope</h3>'+tb(["Item","Detail"],[
+      ["Objective","Detect the B point of every heartbeat; PEP = B − Q."],
+      ["Data","Two public datasets, "+c.patients+" patients: EmpkinS (15, 1000 Hz, stress protocol) and Guardian (24, 500 Hz, breathing and tilt protocol)."],
+      ["Beats",n(c.annotated)+" annotated · <b>"+n(c.usable)+" usable</b> (EmpkinS "+n(c.empkins)+", Guardian "+n(c.guardian)+") · "+c.removed_artefact+" removed because a rater's B or Q point was an artefact marker."],
+      ["Reference labels","Manual annotation, rater 1. Inter-rater B-point difference "+f2(ir.mean)+" ± "+f2(ir.sd)+" ms."]]);
+    h+='<h3>2 · Features</h3>'+tb(["Set","#Count","Content"],[
+      ["Sheikh","465","450 waveform values (ICG, 1st and 2nd derivative, R to R+150 ms) + 15 morphology features: last notch, last inflection, maximum of the 3rd derivative, C amplitude, RC interval, and their amplitude and time differences."],
+      ["Abel","13","B-point estimates of 12 classical algorithms + RR interval."],
+      ["Fusion","478","Both sets combined."]]);
+    h+='<h3>3 · Methodology</h3><ol>'
+      +'<li><b>Signals.</b> R-peak from the cleaned ECG; ICG (dZ/dt) band-pass 0.5 to 40 Hz; each beat on a 1 kHz grid from R−100 to R+600 ms. Usable beat: clean B and Q label, PEP 20 to 250 ms.</li>'
+      +'<li><b>Features.</b> Sheikh: line-by-line Python port of <code>feat_vec_465.m</code>, validated against his demo output with zero deviation. Abel: his 12 algorithms run unmodified.</li>'
+      +'<li><b>Models.</b> AdaBoost (standardised inputs, exponential loss, 500 trees, max_features 0.7; depth 12 or 20 and learning rate 0.1 or 1 chosen by inner cross-validation), Random Forest, LightGBM, SVR.</li>'
+      +'<li><b>Validation.</b> Subject-wise 5-fold cross-validation (no subject in both training and test), tuning inside the training folds only. Cross-dataset test: train on one dataset, test on the other.</li>'
+      +'<li><b>Reference.</b> Abel et al.\'s published results, taken as given. Cohort and folds differ from ours.</li></ol>';
+    h+='<h3>4 · Results</h3><ul>'
+      +'<li><b>Best single-beat model:</b> Sheikh 465 features + AdaBoost, MAE <b>'+f2(sh.MAE)+' ms</b> (SD '+f2(sh.SD)+', median '+f2(sh.MedAE)+') on '+n(c.evaluated)+' beats. Ranking: AdaBoost, Random Forest, LightGBM, SVR. Adding Abel\'s 13 features does not improve it.</li>'
+      +'<li><b>Cross-dataset:</b> EmpkinS → Guardian '+f1(e2g.min)+' to '+f1(e2g.max)+' ms; Guardian → EmpkinS '+f1(g2e.min)+' to '+f1(g2e.max)+' ms (all settings).</li>'
+      +'<li><b>Datasets differ:</b> B point after R '+f1(d.EmpkinS.RB)+' ms (EmpkinS) vs '+f1(d.Guardian.RB)+' ms (Guardian); PEP '+f1(d.EmpkinS.PEP)+' vs '+f1(d.Guardian.PEP)+' ms; heart rate '+f1(d.EmpkinS.HR)+' vs '+f1(d.Guardian.HR)+' bpm. This causes a systematic bias when a model is applied to the other dataset.</li>'
+      +'<li><b>Single vs averaged beat:</b> averaging a single-beat model\'s predictions over a 10 s window gives '+f2(ea["10"].single_avg)+' ms; a model trained on averaged beats gives '+f2(ea["10"].ea_best)+' to '+f2(ea["10"].ea_ada)+' ms ('+ea["10"].n_windows+' windows).</li></ul>';
+    h+='<h3>5 · Comparative analysis</h3><p class="note" style="margin:0 0 8px">Against Abel et al. (published). Cohorts and folds differ, so differences are indicative.</p>'
+      +tb(["Metric (MAE, ms)","#Abel 2026 (published)","#This work","#Difference"],[
+        ["Pooled, single beat",f2(pb.pooled)+" ± "+f2(pb.pooled_sd),f2(sh.MAE)+" ± "+f2(sh.SD),(sh.MAE-pb.pooled>=0?"+":"−")+f2(Math.abs(sh.MAE-pb.pooled))],
+        ["EmpkinS → Guardian","RF "+f2(pb.e2g_RF)+" · SVR "+f2(pb.e2g_SVR),f1(e2g.min)+" – "+f1(e2g.max),"lower than both"],
+        ["Guardian → EmpkinS","RF "+f2(pb.g2e_RF)+" · SVR "+f2(pb.g2e_SVR),f1(g2e.min)+" – "+f1(g2e.max),"below RF, above SVR"],
+        ["Inter-rater B difference",f2(pb.inter_rater)+" ± "+f2(pb.inter_rater_sd),f2(ir.mean)+" ± "+f2(ir.sd),"−"+f2(pb.inter_rater-ir.mean)]]);
+    h+='<p class="sm" style="margin:6px 0 16px">Per-subject 95 % interval of our best model: ['+f2(sh.lo)+', '+f2(sh.hi)+'] ms, which contains the published '+f2(pb.pooled)+' ms.</p>'
+      +tb(["Features","Model","#MAE","#SD","#Median","#Per-subject 95 % CI"],P.map(function(r){var k=r.model.split("_");return [FEAT[k[0]],MOD[k[1]],f2(r.MAE),f2(r.SD),f2(r.MedAE),"["+f2(r.lo)+", "+f2(r.hi)+"]"]}),function(i){return i<2?"best":""});
+    h+='<h3>6 · Notes</h3><ul>'
+      +'<li>AdaBoost: one run, small tuning grid inside Sheikh\'s published range; cross-dataset results depend on the setting, hence the ranges.</li>'
+      +'<li>Averaged-beat models train on a few hundred beats, and the averaged-beat label is the mean rater-1 B point (an assumption).</li>'
+      +'<li>'+c.matlab_not+' usable beats ('+f1(100*c.matlab_not/c.usable)+' %) have the B point more than 150 ms after R; Sheikh\'s MATLAB file cannot read them, the Python features include them.</li></ul></div>';
+    $("main").innerHTML=h;
+  }).catch(function(){$("main").innerHTML='<p class="note">Could not load the summary.</p>'});
 }
 </script>
 </body>
