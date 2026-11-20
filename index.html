@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>ICG Patient Beats</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23071014%27/%3E%3Cpath d=%27M3 17h6l3-9 5 17 4-12 2 4h6%27 fill=%27none%27 stroke=%27%236fd3ff%27 stroke-width=%272.4%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&display=swap">
 <style>
 /* Layout: login gate -> app (header + tabs, patient list left, content right). Click any image or chart to enlarge. */
@@ -242,7 +243,7 @@ function hydrate(root){
   [].forEach.call(root.querySelectorAll("img[data-asset]"),function(im){
     imgURL(im.dataset.asset).then(function(u){im.src=u});
     if(!im.dataset.full)return;
-    var open=function(){var gr=im.dataset.group,g=gr?[].slice.call(document.querySelectorAll('[data-group="'+gr+'"]')).filter(function(x){return x.offsetParent!==null}):[im];
+    var open=function(){var h0=im.closest("[data-group]"),gr=im.dataset.group||(h0&&h0.dataset.group),g=gr?[].slice.call(document.querySelectorAll('[data-group="'+gr+'"]')).filter(function(x){return x.offsetParent!==null}):[im];
       var items=g.map(function(x){var t=x.tagName==="IMG"?x:x.querySelector("img");return {asset:t.dataset.full,title:t.dataset.title||"",cap:t.dataset.cap||""}});lbOpen(items,Math.max(0,g.indexOf(im.closest("[data-group]")||im)))};
     var host=im.closest("button.thumb")||im;host.addEventListener("click",open);
   });
