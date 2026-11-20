@@ -107,6 +107,9 @@ tr.sel{background:var(--accent-soft);box-shadow:inset 3px 0 0 var(--accent)}tr.b
 .sumtable th{position:static;background:none;color:var(--muted);font-weight:500;font-size:11px;letter-spacing:.06em;text-transform:uppercase}.sumtable td:first-child{font-weight:600;white-space:nowrap}
 .sumtable td.n,.sumtable th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}.sumtable tr.best td{background:var(--accent-soft)}
 .doc ol,.doc ul{margin:0;padding-left:20px;display:grid;gap:6px}.doc li{max-width:92ch}.doc .sm{font-size:12px;color:var(--muted);margin-top:8px}
+/* summary charts */
+.cgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}@media(max-width:820px){.cgrid{grid-template-columns:minmax(0,1fr)}}
+.cgrid .panel{padding:12px 12px 6px}.cgrid canvas{margin-top:6px}.cgrid .panel h3{margin:0 0 4px;padding:0;border:0}
 /* lightbox */
 #lb{position:fixed;inset:0;z-index:100;background:rgba(6,12,16,.9);display:grid;grid-template-rows:auto minmax(0,1fr) auto}
 #lb .bar{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 16px;color:#e6edf2}
@@ -223,7 +226,7 @@ function route(){
   var h=location.hash.replace("#",""),id=h&&idOf(h);
   [].forEach.call($("plist").querySelectorAll("button"),function(b){b.setAttribute("aria-current",String(b.dataset.id===id))});
   var t2=h==="task2",tv=h==="visualization",sm=h==="summary";["tab1","tab2","tab3","tab4"].forEach(function(t){$(t).removeAttribute("aria-current")});$(sm?"tab4":tv?"tab3":t2?"tab2":"tab1").setAttribute("aria-current","page");
-  S.viz=false;if(VZ.raf){cancelAnimationFrame(VZ.raf);VZ.raf=0}document.querySelector(".layout").classList.toggle("one",tv||sm);document.querySelector("details.def").hidden=tv||sm;
+  S.viz=false;S.sumOn=false;if(VZ.raf){cancelAnimationFrame(VZ.raf);VZ.raf=0}document.querySelector(".layout").classList.toggle("one",tv||sm);document.querySelector("details.def").hidden=tv||sm;
   if(sm){S.cur=null;summaryView();return}
   if(tv){S.cur=null;vizView();return}
   if(t2){S.cur=null;task2View();return}
@@ -305,7 +308,7 @@ function fillTable(){
   $("tb").innerHTML=h;$("tb").onclick=function(e){var r=e.target.closest("tr");if(r)selectBeat(+r.dataset.i,false)};$("tb").onkeydown=function(e){if(e.key==="Enter"){var r=e.target.closest("tr");if(r)selectBeat(+r.dataset.i,false)}};
 }
 function selectBeat(i,scroll){S.sel=i;[].forEach.call($("tb").querySelectorAll("tr"),function(r){r.classList.toggle("sel",+r.dataset.i===i)});if(scroll){var r=$("tb").querySelector('tr[data-i="'+i+'"]');if(r)r.scrollIntoView({block:"nearest"})}redraw()}
-function redraw(){if(S.viz){vizRedraw();return}if(S.cur&&$("cwf")){drawWave($("cwf"),280);drawEcg($("cecg"),240);drawHist($("chist"),280);drawPep($("cpep"),220)}else drawSparks()}
+function redraw(){if(S.sumOn){drawSumCharts();return}if(S.viz){vizRedraw();return}if(S.cur&&$("cwf")){drawWave($("cwf"),280);drawEcg($("cecg"),240);drawHist($("chist"),280);drawPep($("cpep"),220)}else drawSparks()}
 
 /* ---------- charts (K = scale factor, larger when enlarged) ---------- */
 function setup(c,h,w){var dpr=window.devicePixelRatio||1;w=w||c.clientWidth||(c.parentElement?c.parentElement.clientWidth-24:0)||600;c.width=Math.round(w*dpr);c.height=Math.round(h*dpr);if(!c.isConnected||!c.clientWidth)c.style.width=w+"px";c.style.height=h+"px";var g=c.getContext("2d");g.setTransform(dpr,0,0,dpr,0,0);return {g:g,w:w,h:h}}
@@ -525,11 +528,15 @@ function summaryView(){
       +'<li><b>Models.</b> AdaBoost (standardised inputs, exponential loss, 500 trees, max_features 0.7; depth 12 or 20 and learning rate 0.1 or 1 chosen by inner cross-validation), Random Forest, LightGBM, SVR.</li>'
       +'<li><b>Validation.</b> Subject-wise 5-fold cross-validation (no subject in both training and test), tuning inside the training folds only. Cross-dataset test: train on one dataset, test on the other.</li>'
       +'<li><b>Reference.</b> Abel et al.\'s published results, taken as given. Cohort and folds differ from ours.</li></ol>';
-    h+='<h3>4 · Results</h3><ul>'
-      +'<li><b>Best single-beat model:</b> Sheikh 465 features + AdaBoost, MAE <b>'+f2(sh.MAE)+' ms</b> (SD '+f2(sh.SD)+', median '+f2(sh.MedAE)+') on '+n(c.evaluated)+' beats. Ranking: AdaBoost, Random Forest, LightGBM, SVR. Adding Abel\'s 13 features does not improve it.</li>'
-      +'<li><b>Cross-dataset:</b> EmpkinS → Guardian '+f1(e2g.min)+' to '+f1(e2g.max)+' ms; Guardian → EmpkinS '+f1(g2e.min)+' to '+f1(g2e.max)+' ms (all settings).</li>'
-      +'<li><b>Datasets differ:</b> B point after R '+f1(d.EmpkinS.RB)+' ms (EmpkinS) vs '+f1(d.Guardian.RB)+' ms (Guardian); PEP '+f1(d.EmpkinS.PEP)+' vs '+f1(d.Guardian.PEP)+' ms; heart rate '+f1(d.EmpkinS.HR)+' vs '+f1(d.Guardian.HR)+' bpm. This causes a systematic bias when a model is applied to the other dataset.</li>'
-      +'<li><b>Single vs averaged beat:</b> averaging a single-beat model\'s predictions over a 10 s window gives '+f2(ea["10"].single_avg)+' ms; a model trained on averaged beats gives '+f2(ea["10"].ea_best)+' to '+f2(ea["10"].ea_ada)+' ms ('+ea["10"].n_windows+' windows).</li></ul>';
+    h+='<h3>4 · Results</h3><div class="tiles" style="margin:0 0 14px">'
+      +'<div class="tile"><b>'+f2(sh.MAE)+'</b><span>ms · best pooled MAE</span></div>'
+      +'<div class="tile"><b>'+f1(e2g.min)+'–'+f1(e2g.max)+'</b><span>ms · EmpkinS → Guardian</span></div>'
+      +'<div class="tile"><b>'+f1(g2e.min)+'–'+f1(g2e.max)+'</b><span>ms · Guardian → EmpkinS</span></div>'
+      +'<div class="tile"><b>'+f2(ea["10"].single_avg)+'</b><span>ms · averaged over a 10 s window</span></div></div>'
+      +'<div class="cgrid"><div class="panel"><h3>Single-beat MAE by model</h3><canvas id="sc1" role="img" aria-label="Bar chart of pooled MAE per model with Abel published value"></canvas></div>'
+      +'<div class="panel"><h3>Cross-dataset MAE</h3><canvas id="sc2" role="img" aria-label="Range of our cross-dataset MAE against Abel published RF and SVR"></canvas></div>'
+      +'<div class="panel"><h3>The two datasets differ · ms</h3><canvas id="sc3" role="img" aria-label="B point and PEP by dataset"></canvas></div>'
+      +'<div class="panel"><h3>Single vs averaged beat · 10 s</h3><canvas id="sc4" role="img" aria-label="MAE of single-beat and averaged-beat approaches"></canvas></div></div>';
     h+='<h3>5 · Comparative analysis</h3><p class="note" style="margin:0 0 8px">Against Abel et al. (published). Cohorts and folds differ, so differences are indicative.</p>'
       +tb(["Metric (MAE, ms)","#Abel 2026 (published)","#This work","#Difference"],[
         ["Pooled, single beat",f2(pb.pooled)+" ± "+f2(pb.pooled_sd),f2(sh.MAE)+" ± "+f2(sh.SD),(sh.MAE-pb.pooled>=0?"+":"−")+f2(Math.abs(sh.MAE-pb.pooled))],
@@ -542,8 +549,42 @@ function summaryView(){
       +'<li>AdaBoost: one run, small tuning grid inside Sheikh\'s published range; cross-dataset results depend on the setting, hence the ranges.</li>'
       +'<li>Averaged-beat models train on a few hundred beats, and the averaged-beat label is the mean rater-1 B point (an assumption).</li>'
       +'<li>'+c.matlab_not+' usable beats ('+f1(100*c.matlab_not/c.usable)+' %) have the B point more than 150 ms after R; Sheikh\'s MATLAB file cannot read them, the Python features include them.</li></ul></div>';
-    $("main").innerHTML=h;
+    $("main").innerHTML=h;S.sum=S0;S.sumOn=true;drawSumCharts();
   }).catch(function(){$("main").innerHTML='<p class="note">Could not load the summary.</p>'});
+}
+/* summary charts: drawn from data/summary.json (theme-aware) */
+function scv(c,h){var dpr=Math.min(2,window.devicePixelRatio||1),w=c.clientWidth||(c.parentElement?c.parentElement.clientWidth-24:0)||520;c.width=Math.round(w*dpr);c.height=Math.round(h*dpr);c.style.height=h+"px";var g=c.getContext("2d");g.setTransform(dpr,0,0,dpr,0,0);g.font="12px "+css("--font-body");return {g:g,w:w,h:h}}
+function drawSumCharts(){
+  var S0=S.sum;if(!S0||!$("sc1"))return;var mut=css("--muted"),line=css("--line"),acc=css("--accent"),fg=css("--fg"),warn=css("--warn"),C1="#0072B2",C2="#D55E00",RED="#d1243e";
+  var tick=function(g,x,y,t,al){g.fillStyle=mut;g.textAlign=al||"center";g.fillText(t,x,y)};
+  var MOD={ada:"AdaBoost",rf:"Random Forest",lgbm:"LightGBM",svr:"SVR"};
+  /* 1 · pooled MAE per model, with Abel's published value */
+  var o=scv($("sc1"),300),g=o.g,w=o.w,h=o.h,P=S0.pooled,lx=Math.min(150,w*.34),x0=lx,x1=w-52,y0=6,y1=h-34,mx=12,fx=function(v){return x0+v/mx*(x1-x0)},rh=(y1-y0)/P.length;
+  g.strokeStyle=line;g.lineWidth=1;for(var t=0;t<=mx;t+=2){g.beginPath();g.moveTo(fx(t),y0);g.lineTo(fx(t),y1);g.stroke();tick(g,fx(t),y1+16,t)}tick(g,(x0+x1)/2,h-4,"MAE (ms)");
+  P.forEach(function(r,i){var k=r.model.split("_"),y=y0+i*rh+rh*.19,bh=rh*.62,ada=k[1]==="ada";g.fillStyle=acc;g.globalAlpha=ada?1:.5;g.fillRect(x0,y,fx(r.MAE)-x0,bh);g.globalAlpha=1;
+    g.fillStyle=fg;g.textAlign="right";g.fillText(MOD[k[1]]+" · "+(k[0]==="fus"?"465+13":"465"),x0-8,y+bh*.72);g.textAlign="right";g.fillStyle=fg;g.fillText(r.MAE.toFixed(2),w-4,y+bh*.72)});
+  g.strokeStyle=RED;g.setLineDash([5,4]);g.lineWidth=1.6;g.beginPath();g.moveTo(fx(S0.published.pooled),y0);g.lineTo(fx(S0.published.pooled),y1);g.stroke();g.setLineDash([]);g.fillStyle=RED;g.textAlign="left";g.fillText("Abel "+S0.published.pooled.toFixed(2),fx(S0.published.pooled)+5,y0+12);
+  /* 2 · cross-dataset: our range vs Abel's published RF and SVR */
+  o=scv($("sc2"),300);g=o.g;w=o.w;h=o.h;lx=Math.min(120,w*.3);x0=lx;x1=w-16;y0=4;y1=h-34;mx=60;fx=function(v){return x0+v/mx*(x1-x0)};
+  g.strokeStyle=line;g.lineWidth=1;for(t=0;t<=mx;t+=10){g.beginPath();g.moveTo(fx(t),y0);g.lineTo(fx(t),y1);g.stroke();tick(g,fx(t),y1+16,t)}tick(g,(x0+x1)/2,h-4,"MAE (ms)");
+  var dirs=[["EmpkinS → Guardian","EmpkinS->Guardian",S0.published.e2g_RF,S0.published.e2g_SVR],["Guardian → EmpkinS","Guardian->EmpkinS",S0.published.g2e_RF,S0.published.g2e_SVR]],ph=(y1-y0)/2;
+  dirs.forEach(function(d,k){var c0=S0.cross[d[1]],by=y0+k*ph,rows=[["This work",c0],["Abel RF",d[2]],["Abel SVR",d[3]]],rr=(ph-22)/3;
+    g.fillStyle=fg;g.font="600 12px "+css("--font-body");g.textAlign="left";g.fillText(d[0],4,by+14);g.font="12px "+css("--font-body");
+    rows.forEach(function(r,i){var yc=by+22+i*rr+rr/2;g.fillStyle=mut;g.textAlign="right";g.fillText(r[0],x0-8,yc+4);
+      if(i===0){g.fillStyle=acc;g.fillRect(fx(r[1].min),yc-7,fx(r[1].max)-fx(r[1].min),14);g.fillStyle=fg;g.textAlign="left";g.fillText(r[1].min.toFixed(1)+" – "+r[1].max.toFixed(1),fx(r[1].max)+6,yc+4)}
+      else{var col=i===1?"#8a8f94":RED;g.fillStyle=col;g.beginPath();g.moveTo(fx(r[1]),yc-8);g.lineTo(fx(r[1])+8,yc);g.lineTo(fx(r[1]),yc+8);g.lineTo(fx(r[1])-8,yc);g.closePath();g.fill();g.fillStyle=mut;g.textAlign="left";g.fillText(r[1].toFixed(2),fx(r[1])+12,yc+4)}});
+    if(k===0){g.strokeStyle=line;g.beginPath();g.moveTo(4,by+ph-1);g.lineTo(x1,by+ph-1);g.stroke()}});
+  /* 3 · dataset differences */
+  o=scv($("sc3"),260);g=o.g;w=o.w;h=o.h;x0=40;x1=w-12;y0=22;y1=h-34;mx=150;var fy=function(v){return y1-v/mx*(y1-y0)};
+  g.strokeStyle=line;g.lineWidth=1;[0,50,100,150].forEach(function(t){g.beginPath();g.moveTo(x0,fy(t));g.lineTo(x1,fy(t));g.stroke();tick(g,x0-6,fy(t)+4,t,"right")});
+  var cats=[["B point after R",S0.data.EmpkinS.RB,S0.data.Guardian.RB],["PEP (B − Q)",S0.data.EmpkinS.PEP,S0.data.Guardian.PEP]],cw=(x1-x0)/cats.length,bw=Math.min(54,cw*.26);
+  cats.forEach(function(c,i){var cx=x0+cw*(i+.5);[[c[1],C1,-bw-3],[c[2],C2,3]].forEach(function(b){g.fillStyle=b[1];g.fillRect(cx+b[2],fy(b[0]),bw,y1-fy(b[0]));g.fillStyle=fg;g.textAlign="center";g.fillText(Math.round(b[0]),cx+b[2]+bw/2,fy(b[0])-5)});tick(g,cx,y1+17,c[0])});
+  g.fillStyle=C1;g.fillRect(x0+4,4,10,10);g.fillStyle=mut;g.textAlign="left";g.fillText("EmpkinS",x0+18,13);g.fillStyle=C2;g.fillRect(x0+84,4,10,10);g.fillStyle=mut;g.fillText("Guardian",x0+98,13);
+  /* 4 · single vs averaged beat (10 s windows) */
+  o=scv($("sc4"),260);g=o.g;w=o.w;h=o.h;x0=40;x1=w-12;y0=22;y1=h-46;mx=10;fy=function(v){return y1-v/mx*(y1-y0)};var E=S0.ea["10"];
+  g.strokeStyle=line;g.lineWidth=1;[0,2,4,6,8,10].forEach(function(t){g.beginPath();g.moveTo(x0,fy(t));g.lineTo(x1,fy(t));g.stroke();tick(g,x0-6,fy(t)+4,t,"right")});
+  var bars=[["Single beat",E.single_beat,.5],["Predictions\naveraged",E.single_avg,1],["Averaged-beat\nmodel (best)",E.ea_best,.5],["Averaged-beat\nAdaBoost",E.ea_ada,.5]],bc=(x1-x0)/bars.length,bw4=Math.min(60,bc*.5);
+  bars.forEach(function(b,i){var cx=x0+bc*(i+.5);g.fillStyle=acc;g.globalAlpha=b[2];g.fillRect(cx-bw4/2,fy(b[1]),bw4,y1-fy(b[1]));g.globalAlpha=1;g.fillStyle=fg;g.textAlign="center";g.fillText(b[1].toFixed(2),cx,fy(b[1])-5);b[0].split("\n").forEach(function(l,j){tick(g,cx,y1+16+j*14,l)})});tick(g,x0-6,y0-8,"ms","right");
 }
 </script>
 </body>
