@@ -1,16 +1,16 @@
 {
  "raw_beats": 12014,
- "cohort_beats": 11903,
+ "cohort_beats": 11694,
  "raw_by_dataset": {
   "EmpkinS": 5095,
   "Guardian": 6919
  },
  "cohort_by_dataset": {
-  "EmpkinS": 4990,
-  "Guardian": 6913
+  "EmpkinS": 4936,
+  "Guardian": 6758
  },
- "excluded_outlier_beats": 110,
- "missing_B1": 1,
+ "excluded_outlier_beats": 69,
+ "missing_B1": 251,
  "demo_cols": {
   "emp": [
    "participant",
@@ -47,93 +47,87 @@
  },
  "target_stats": {
   "EmpkinS": {
-   "RB_mean": 58.19498997995992,
-   "RB_sd": 23.795140556865295,
-   "RB_min": -29.0,
+   "RB_mean": 58.43152350081037,
+   "RB_sd": 23.250073721460513,
+   "RB_min": 4.0,
    "RB_max": 194.0,
-   "PEP_mean": 88.3871743486974,
-   "PEP_sd": 25.301152585215757,
-   "skew": 0.4613898068951646,
-   "kurtosis": 0.7650211598883345
+   "PEP_mean": 88.61041329011346,
+   "PEP_sd": 24.92819200803863,
+   "skew": 0.5181458740675493,
+   "kurtosis": 0.6288272925615739
   },
   "Guardian": {
-   "RB_mean": 106.04426442933604,
-   "RB_sd": 27.76315184848394,
+   "RB_mean": 106.44746966558154,
+   "RB_sd": 27.199771400949892,
    "RB_min": -38.0,
    "RB_max": 226.0,
-   "PEP_mean": 138.3888326341675,
-   "PEP_sd": 27.551222334476392,
-   "skew": -0.4365116215097939,
-   "kurtosis": 0.6426202564518388
+   "PEP_mean": 138.7664989641906,
+   "PEP_sd": 26.910134255376295,
+   "skew": -0.4144102594589664,
+   "kurtosis": 0.5781445330116375
   }
  },
  "ks_RB_between_datasets": {
-  "stat": 0.6521204132552679,
+  "stat": 0.6592875338814481,
   "p": 0.0
  },
  "between_subject_var_share_RB": {
-  "EmpkinS": 0.3376875497008735,
-  "Guardian": 0.2720096150272202
+  "EmpkinS": 0.3484810382740078,
+  "Guardian": 0.2771734103466502
  },
  "spearman_HR_RB": {
-  "EmpkinS": -0.3057572675773705,
-  "Guardian": 0.18491253859286189
+  "EmpkinS": -0.31377134855485306,
+  "Guardian": 0.19860077629382666
  },
  "hr_group_counts": {
-  "60\u2013100": 7065,
-  ">100": 2402,
-  "<60": 2157
+  "60\u2013100": 6922,
+  ">100": 2370,
+  "<60": 2128
  },
  "inter_rater": {
-  "n": 11748,
-  "mae": 8.528260129383725,
-  "sd_abs": 16.292203919099393,
-  "median_abs": 3.0,
-  "bias": 4.193054136874362,
-  "loa_low": -30.900805859316048,
-  "loa_high": 39.28691413306477,
+  "n": 11360,
+  "mae": 7.942605633802817,
+  "sd_abs": 14.264750402558642,
+  "median_abs": 2.0,
+  "bias": 4.175176056338028,
+  "loa_low": -26.761796504480852,
+  "loa_high": 35.112148617156905,
   "agree_pct": {
-   "EmpkinS|high \u22644 ms": 59.86367281475541,
-   "EmpkinS|medium 4\u201310 ms": 21.672012830793907,
-   "EmpkinS|low >10 ms": 18.464314354450682,
-   "Guardian|high \u22644 ms": 71.98224852071006,
-   "Guardian|medium 4\u201310 ms": 13.550295857988166,
-   "Guardian|low >10 ms": 14.467455621301776
+   "EmpkinS|high \u22644 ms": 60.42410245643502,
+   "EmpkinS|medium 4\u201310 ms": 21.667016586185177,
+   "EmpkinS|low >10 ms": 17.908880957379804,
+   "Guardian|high \u22644 ms": 72.95740488100652,
+   "Guardian|medium 4\u201310 ms": 13.566772775504017,
+   "Guardian|low >10 ms": 13.475822343489465
   },
-  "pearson_r": 0.882246260023658
+  "pearson_r": 0.9040264100022226
  },
  "amplitude": {
   "EmpkinS": {
-   "C_amp_mean": 2.999164342880249,
-   "C_amp_sd": 1.0810253620147705,
-   "C_amp_median": 2.8676514625549316
+   "C_amp_mean": 2.989823579788208,
+   "C_amp_sd": 1.044500470161438,
+   "C_amp_median": 2.8622326850891113
   },
   "Guardian": {
-   "C_amp_mean": 1.6127727031707764,
-   "C_amp_sd": 0.6342520713806152,
-   "C_amp_median": 1.638399362564087
+   "C_amp_mean": 1.614914059638977,
+   "C_amp_sd": 0.6261669993400574,
+   "C_amp_median": 1.6388860940933228
   }
  },
  "RB_vs_RC_linreg": {
   "EmpkinS": {
-   "slope": 0.3720191692616611,
-   "intercept": 7.274735719625525,
-   "r2": 0.23100177880300204
+   "slope": 0.3862633253773709,
+   "intercept": 5.614004725794089,
+   "r2": 0.24265653669831738
   },
   "Guardian": {
-   "slope": 0.16806077243403975,
-   "intercept": 72.36238648016142,
-   "r2": 0.07080316006535194
+   "slope": 0.17117480577473368,
+   "intercept": 72.14457556759132,
+   "r2": 0.0746280176611388
   }
  },
  "excluded_top_segments": {
   "VP_002 tsst talk": 66,
-  "VP_028 tsst talk": 7,
-  "VP_028 tsst prep": 5,
-  "VP_028 ftsst talk": 4,
-  "VP_028 ftsst prep": 3,
-  "VP_028 tsst pause_1": 3,
-  "VP_005 tsst talk": 2,
-  "VP_028 ftsst pause_1": 2
+  "VP_023 tsst talk": 1
  }
 }

@@ -1,0 +1,9 @@
+[07:44:14] re-training 7 AdaBoost models from scratch (500 trees each) with the recorded settings
+[07:55:42] x_e2g__sheikh_ada__r0f0: config {'lr': 1.0, 'depth': 20} | trained on 4931 beats in 685.1 s | MAE new 13.0510 vs stored 13.0510 | max |prediction difference| 0.0 -> IDENTICAL
+[08:01:02] x_g2e__sheikh_ada__r0f0: config {'lr': 0.1, 'depth': 20} | trained on 6087 beats in 1005.2 s | MAE new 31.5858 vs stored 31.5858 | max |prediction difference| 0.0 -> IDENTICAL
+[08:06:13] pooled__sheikh_ada__r0f3: config {'lr': 1.0, 'depth': 20} | trained on 8816 beats in 1316.3 s | MAE new 6.7326 vs stored 6.7326 | max |prediction difference| 0.0 -> IDENTICAL
+[08:08:42] pooled__sheikh_ada__r0f1: config {'lr': 0.1, 'depth': 20} | trained on 8857 beats in 1464.9 s | MAE new 7.4763 vs stored 7.4763 | max |prediction difference| 0.0 -> IDENTICAL
+[08:08:52] pooled__sheikh_ada__r0f4: config {'lr': 0.1, 'depth': 20} | trained on 8746 beats in 1475.3 s | MAE new 6.5338 vs stored 6.5338 | max |prediction difference| 0.0 -> IDENTICAL
+[08:09:07] pooled__sheikh_ada__r0f0: config {'lr': 0.1, 'depth': 20} | trained on 8758 beats in 1490.3 s | MAE new 5.6661 vs stored 5.6661 | max |prediction difference| 0.0 -> IDENTICAL
+[08:09:14] pooled__sheikh_ada__r0f2: config {'lr': 0.1, 'depth': 20} | trained on 8895 beats in 1497.4 s | MAE new 7.3357 vs stored 7.3357 | max |prediction difference| 0.0 -> IDENTICAL
+[08:09:16] total 1503 s | all 7 re-trained models give identical predictions: True

@@ -1,0 +1,503 @@
+{
+ "audit": {
+  "pooled": [
+   {
+    "model": "fus_ada",
+    "repeats": 1,
+    "n_beats": 11018,
+    "mae_recomputed": 6.73,
+    "mae_reported": 6.73,
+    "abs_diff": 0.0
+   },
+   {
+    "model": "fus_lgbm",
+    "repeats": 3,
+    "n_beats": 11018,
+    "mae_recomputed": 8.2085,
+    "mae_reported": 8.2085,
+    "abs_diff": 0.0
+   },
+   {
+    "model": "fus_rf",
+    "repeats": 3,
+    "n_beats": 11018,
+    "mae_recomputed": 7.7433,
+    "mae_reported": 7.7433,
+    "abs_diff": 0.0
+   },
+   {
+    "model": "fus_svr",
+    "repeats": 3,
+    "n_beats": 11018,
+    "mae_recomputed": 10.1616,
+    "mae_reported": 10.1616,
+    "abs_diff": 0.0
+   },
+   {
+    "model": "sheikh_ada",
+    "repeats": 1,
+    "n_beats": 11018,
+    "mae_recomputed": 6.7349,
+    "mae_reported": 6.7349,
+    "abs_diff": 0.0
+   },
+   {
+    "model": "sheikh_lgbm",
+    "repeats": 3,
+    "n_beats": 11018,
+    "mae_recomputed": 8.2775,
+    "mae_reported": 8.2775,
+    "abs_diff": 0.0
+   },
+   {
+    "model": "sheikh_rf",
+    "repeats": 3,
+    "n_beats": 11018,
+    "mae_recomputed": 7.8235,
+    "mae_reported": 7.8235,
+    "abs_diff": 0.0
+   },
+   {
+    "model": "sheikh_svr",
+    "repeats": 3,
+    "n_beats": 11018,
+    "mae_recomputed": 10.6278,
+    "mae_reported": 10.6278,
+    "abs_diff": 0.0
+   }
+  ],
+  "cross": [
+   {
+    "direction": "EmpkinS->Guardian",
+    "model": "sheikh_ada",
+    "mae_selected_run": 13.051,
+    "range_min": 13.051,
+    "range_max": 14.077,
+    "inside_reported_range": true
+   },
+   {
+    "direction": "EmpkinS->Guardian",
+    "model": "fus_ada",
+    "mae_selected_run": 12.461,
+    "range_min": 12.461,
+    "range_max": 13.878,
+    "inside_reported_range": true
+   },
+   {
+    "direction": "Guardian->EmpkinS",
+    "model": "sheikh_ada",
+    "mae_selected_run": 31.5858,
+    "range_min": 29.217,
+    "range_max": 34.486,
+    "inside_reported_range": true
+   },
+   {
+    "direction": "Guardian->EmpkinS",
+    "model": "fus_ada",
+    "mae_selected_run": 28.2237,
+    "range_min": 25.4,
+    "range_max": 33.117,
+    "inside_reported_range": true
+   }
+  ],
+  "published": [
+   {
+    "quote": "pooled MAE 8.13 +- 12.12",
+    "found_in_pdf": true
+   },
+   {
+    "quote": "inter-rater 8.35 +- 14.78",
+    "found_in_pdf": true
+   },
+   {
+    "quote": "cross-dataset RF 36.24",
+    "found_in_pdf": true
+   },
+   {
+    "quote": "cross-dataset SVR 19.39",
+    "found_in_pdf": true
+   },
+   {
+    "quote": "reverse RF 52.92 +- 39.35",
+    "found_in_pdf": true
+   },
+   {
+    "quote": "reverse SVR 12.70 +- 6.33",
+    "found_in_pdf": true
+   },
+   {
+    "quote": "best traditional Drost 17.9 +- 23.0",
+    "found_in_pdf": true
+   }
+  ],
+  "notes": [],
+  "largest_pooled_difference": 4.6542472187383055e-07,
+  "all_ok": true
+ },
+ "repro": {
+  "all_identical": true,
+  "runs": [
+   {
+    "key": "pooled__sheikh_ada__r0f0",
+    "kind": "pooled",
+    "fold": 0,
+    "config": {
+     "lr": 0.1,
+     "depth": 20
+    },
+    "n_train": 8758,
+    "n_test": 2260,
+    "seconds_new": 1490.3,
+    "seconds_original": 3062.6,
+    "mae_new": 5.666067404159136,
+    "mae_stored": 5.666067404159136,
+    "max_abs_pred_diff": 0.0,
+    "identical": true
+   },
+   {
+    "key": "pooled__sheikh_ada__r0f1",
+    "kind": "pooled",
+    "fold": 1,
+    "config": {
+     "lr": 0.1,
+     "depth": 20
+    },
+    "n_train": 8857,
+    "n_test": 2161,
+    "seconds_new": 1464.9,
+    "seconds_original": 2952.0,
+    "mae_new": 7.476297651767162,
+    "mae_stored": 7.476297651767162,
+    "max_abs_pred_diff": 0.0,
+    "identical": true
+   },
+   {
+    "key": "pooled__sheikh_ada__r0f2",
+    "kind": "pooled",
+    "fold": 2,
+    "config": {
+     "lr": 0.1,
+     "depth": 20
+    },
+    "n_train": 8895,
+    "n_test": 2123,
+    "seconds_new": 1497.4,
+    "seconds_original": 2998.2,
+    "mae_new": 7.335688545092931,
+    "mae_stored": 7.335688545092931,
+    "max_abs_pred_diff": 0.0,
+    "identical": true
+   },
+   {
+    "key": "pooled__sheikh_ada__r0f3",
+    "kind": "pooled",
+    "fold": 3,
+    "config": {
+     "lr": 1.0,
+     "depth": 20
+    },
+    "n_train": 8816,
+    "n_test": 2202,
+    "seconds_new": 1316.3,
+    "seconds_original": 2807.4,
+    "mae_new": 6.732571263066018,
+    "mae_stored": 6.732571263066018,
+    "max_abs_pred_diff": 0.0,
+    "identical": true
+   },
+   {
+    "key": "pooled__sheikh_ada__r0f4",
+    "kind": "pooled",
+    "fold": 4,
+    "config": {
+     "lr": 0.1,
+     "depth": 20
+    },
+    "n_train": 8746,
+    "n_test": 2272,
+    "seconds_new": 1475.3,
+    "seconds_original": 3043.7,
+    "mae_new": 6.533813704636158,
+    "mae_stored": 6.533813704636158,
+    "max_abs_pred_diff": 0.0,
+    "identical": true
+   },
+   {
+    "key": "x_e2g__sheikh_ada__r0f0",
+    "kind": "x_e2g",
+    "fold": 0,
+    "config": {
+     "lr": 1.0,
+     "depth": 20
+    },
+    "n_train": 4931,
+    "n_test": 6087,
+    "seconds_new": 685.1,
+    "seconds_original": 1419.1,
+    "mae_new": 13.051025970055028,
+    "mae_stored": 13.051025970055028,
+    "max_abs_pred_diff": 0.0,
+    "identical": true
+   },
+   {
+    "key": "x_g2e__sheikh_ada__r0f0",
+    "kind": "x_g2e",
+    "fold": 0,
+    "config": {
+     "lr": 0.1,
+     "depth": 20
+    },
+    "n_train": 6087,
+    "n_test": 4931,
+    "seconds_new": 1005.2,
+    "seconds_original": 2077.5,
+    "mae_new": 31.585789301133484,
+    "mae_stored": 31.585789301133484,
+    "max_abs_pred_diff": 0.0,
+    "identical": true
+   }
+  ],
+  "finished": "2026-11-24 08:09:16"
+ },
+ "screens": [
+  {
+   "file": "1_live_feature_verification.png",
+   "title": "Live check",
+   "cap": "Python in the browser recomputes the 465 features of a beat and compares them with the stored ones"
+  },
+  {
+   "file": "2_training_in_progress.png",
+   "title": "Training in progress",
+   "cap": "AdaBoost (quick setting) training in the browser, progress per split"
+  },
+  {
+   "file": "3_code_editor_and_run_result.png",
+   "title": "Code and result",
+   "cap": "The Python that runs, and the result it produced"
+  },
+  {
+   "file": "4_leaderboard_sheikh_vs_abel.png",
+   "title": "Leaderboard",
+   "cap": "Sheikh 465, Abel 13 and the fusion, same model and validation, next to the verified results"
+  }
+ ],
+ "logs": {
+  "model_run": [
+   "# model training run: 184 tasks (nested cross-validation inside each; AdaBoost 500 trees), 40 parallel workers",
+   "184 tasks, 184 to do; evaluation set n=11018 beats",
+   "13:16:20 done 5/184",
+   "13:16:30 done 10/184",
+   "13:16:37 done 15/184",
+   "13:17:58 done 20/184",
+   "13:18:04 done 25/184",
+   "13:18:09 done 30/184",
+   "13:19:11 done 35/184",
+   "13:19:15 done 40/184",
+   "13:20:14 done 45/184",
+   "13:20:31 done 50/184",
+   "13:22:51 done 55/184",
+   "13:23:35 done 60/184",
+   "13:23:44 done 65/184",
+   "13:23:50 done 70/184",
+   "13:23:54 done 75/184",
+   "13:24:01 done 80/184",
+   "13:25:27 done 85/184",
+   "13:59:52 done 90/184",
+   "14:06:23 done 95/184",
+   "14:07:23 done 100/184",
+   "14:08:12 done 105/184",
+   "14:08:56 done 110/184",
+   "14:09:31 done 115/184",
+   "14:11:46 done 120/184",
+   "14:13:35 done 125/184",
+   "14:14:18 done 130/184",
+   "14:14:20 done 135/184",
+   "14:14:21 done 140/184",
+   "14:14:22 done 145/184",
+   "14:14:54 done 150/184",
+   "14:39:47 done 155/184",
+   "14:42:00 done 160/184",
+   "14:46:13 done 165/184",
+   "14:48:52 done 170/184",
+   "14:52:28 done 175/184",
+   "15:07:34 done 180/184",
+   "ALL V3 TASKS DONE"
+  ],
+  "reproduction": [
+   "[07:44:14] re-training 7 AdaBoost models from scratch (500 trees each) with the recorded settings",
+   "[07:55:42] x_e2g__sheikh_ada__r0f0: config {'lr': 1.0, 'depth': 20} | trained on 4931 beats in 685.1 s | MAE new 13.0510 vs stored 13.0510 | max |prediction difference| 0.0 -> IDENTICAL",
+   "[08:01:02] x_g2e__sheikh_ada__r0f0: config {'lr': 0.1, 'depth': 20} | trained on 6087 beats in 1005.2 s | MAE new 31.5858 vs stored 31.5858 | max |prediction difference| 0.0 -> IDENTICAL",
+   "[08:06:13] pooled__sheikh_ada__r0f3: config {'lr': 1.0, 'depth': 20} | trained on 8816 beats in 1316.3 s | MAE new 6.7326 vs stored 6.7326 | max |prediction difference| 0.0 -> IDENTICAL",
+   "[08:08:42] pooled__sheikh_ada__r0f1: config {'lr': 0.1, 'depth': 20} | trained on 8857 beats in 1464.9 s | MAE new 7.4763 vs stored 7.4763 | max |prediction difference| 0.0 -> IDENTICAL",
+   "[08:08:52] pooled__sheikh_ada__r0f4: config {'lr': 0.1, 'depth': 20} | trained on 8746 beats in 1475.3 s | MAE new 6.5338 vs stored 6.5338 | max |prediction difference| 0.0 -> IDENTICAL",
+   "[08:09:07] pooled__sheikh_ada__r0f0: config {'lr': 0.1, 'depth': 20} | trained on 8758 beats in 1490.3 s | MAE new 5.6661 vs stored 5.6661 | max |prediction difference| 0.0 -> IDENTICAL",
+   "[08:09:14] pooled__sheikh_ada__r0f2: config {'lr': 0.1, 'depth': 20} | trained on 8895 beats in 1497.4 s | MAE new 7.3357 vs stored 7.3357 | max |prediction difference| 0.0 -> IDENTICAL",
+   "[08:09:16] total 1503 s | all 7 re-trained models give identical predictions: True"
+  ],
+  "audit": [
+   "pooled fus_ada      recomputed 6.7300 | reported 6.7300 | diff 6.9e-09",
+   "pooled fus_lgbm     recomputed 8.2085 | reported 8.2085 | diff 7.2e-08",
+   "pooled fus_rf       recomputed 7.7433 | reported 7.7433 | diff 4.7e-07",
+   "pooled fus_svr      recomputed 10.1616 | reported 10.1616 | diff 4.3e-07",
+   "pooled sheikh_ada   recomputed 6.7349 | reported 6.7349 | diff 3.0e-08",
+   "pooled sheikh_lgbm  recomputed 8.2775 | reported 8.2775 | diff 1.7e-07",
+   "pooled sheikh_rf    recomputed 7.8235 | reported 7.8235 | diff 1.3e-07",
+   "pooled sheikh_svr   recomputed 10.6278 | reported 10.6278 | diff 3.8e-08",
+   "cross EmpkinS->Guardian  sheikh_ada  stored selected-run MAE 13.051 | all-settings range 13.051-14.077 | inside range: True",
+   "cross EmpkinS->Guardian  fus_ada     stored selected-run MAE 12.461 | all-settings range 12.461-13.878 | inside range: True",
+   "cross Guardian->EmpkinS  sheikh_ada  stored selected-run MAE 31.586 | all-settings range 29.217-34.486 | inside range: True",
+   "cross Guardian->EmpkinS  fus_ada     stored selected-run MAE 28.224 | all-settings range 25.400-33.117 | inside range: True",
+   "Abel paper contains 'pooled MAE 8.13 +- 12.12': True",
+   "Abel paper contains 'inter-rater 8.35 +- 14.78': True",
+   "Abel paper contains 'cross-dataset RF 36.24': True",
+   "Abel paper contains 'cross-dataset SVR 19.39': True",
+   "Abel paper contains 'reverse RF 52.92 +- 39.35': True",
+   "Abel paper contains 'reverse SVR 12.70 +- 6.33': True",
+   "Abel paper contains 'best traditional Drost 17.9 +- 23.0': True",
+   "AUDIT OK: True | largest pooled difference 4.7e-07"
+  ]
+ },
+ "fold_log": [
+  {
+   "model": "fus_ada",
+   "validation": "5-fold, patients held out",
+   "repeat": 0,
+   "fold": 0,
+   "settings_chosen": "{\"lr\": 0.1, \"depth\": 20}",
+   "training_seconds": 3050.4,
+   "test_beats": 2260,
+   "mae_ms": 5.621
+  },
+  {
+   "model": "fus_ada",
+   "validation": "5-fold, patients held out",
+   "repeat": 0,
+   "fold": 1,
+   "settings_chosen": "{\"lr\": 0.1, \"depth\": 20}",
+   "training_seconds": 3021.8,
+   "test_beats": 2161,
+   "mae_ms": 7.633
+  },
+  {
+   "model": "fus_ada",
+   "validation": "5-fold, patients held out",
+   "repeat": 0,
+   "fold": 2,
+   "settings_chosen": "{\"lr\": 0.1, \"depth\": 20}",
+   "training_seconds": 3086.1,
+   "test_beats": 2123,
+   "mae_ms": 7.356
+  },
+  {
+   "model": "fus_ada",
+   "validation": "5-fold, patients held out",
+   "repeat": 0,
+   "fold": 3,
+   "settings_chosen": "{\"lr\": 1.0, \"depth\": 20}",
+   "training_seconds": 2899.6,
+   "test_beats": 2202,
+   "mae_ms": 6.763
+  },
+  {
+   "model": "fus_ada",
+   "validation": "5-fold, patients held out",
+   "repeat": 0,
+   "fold": 4,
+   "settings_chosen": "{\"lr\": 0.1, \"depth\": 20}",
+   "training_seconds": 3082.0,
+   "test_beats": 2272,
+   "mae_ms": 6.357
+  },
+  {
+   "model": "fus_ada",
+   "validation": "train EmpkinS, test Guardian",
+   "repeat": 0,
+   "fold": "",
+   "settings_chosen": "{\"lr\": 1.0, \"depth\": 20}",
+   "training_seconds": 1467.3,
+   "test_beats": 6087,
+   "mae_ms": 12.461
+  },
+  {
+   "model": "fus_ada",
+   "validation": "train Guardian, test EmpkinS",
+   "repeat": 0,
+   "fold": "",
+   "settings_chosen": "{\"lr\": 0.1, \"depth\": 20}",
+   "training_seconds": 2073.7,
+   "test_beats": 4931,
+   "mae_ms": 28.224
+  },
+  {
+   "model": "sheikh_ada",
+   "validation": "5-fold, patients held out",
+   "repeat": 0,
+   "fold": 0,
+   "settings_chosen": "{\"lr\": 0.1, \"depth\": 20}",
+   "training_seconds": 3062.6,
+   "test_beats": 2260,
+   "mae_ms": 5.666
+  },
+  {
+   "model": "sheikh_ada",
+   "validation": "5-fold, patients held out",
+   "repeat": 0,
+   "fold": 1,
+   "settings_chosen": "{\"lr\": 0.1, \"depth\": 20}",
+   "training_seconds": 2952.0,
+   "test_beats": 2161,
+   "mae_ms": 7.476
+  },
+  {
+   "model": "sheikh_ada",
+   "validation": "5-fold, patients held out",
+   "repeat": 0,
+   "fold": 2,
+   "settings_chosen": "{\"lr\": 0.1, \"depth\": 20}",
+   "training_seconds": 2998.2,
+   "test_beats": 2123,
+   "mae_ms": 7.336
+  },
+  {
+   "model": "sheikh_ada",
+   "validation": "5-fold, patients held out",
+   "repeat": 0,
+   "fold": 3,
+   "settings_chosen": "{\"lr\": 1.0, \"depth\": 20}",
+   "training_seconds": 2807.4,
+   "test_beats": 2202,
+   "mae_ms": 6.733
+  },
+  {
+   "model": "sheikh_ada",
+   "validation": "5-fold, patients held out",
+   "repeat": 0,
+   "fold": 4,
+   "settings_chosen": "{\"lr\": 0.1, \"depth\": 20}",
+   "training_seconds": 3043.7,
+   "test_beats": 2272,
+   "mae_ms": 6.534
+  },
+  {
+   "model": "sheikh_ada",
+   "validation": "train EmpkinS, test Guardian",
+   "repeat": 0,
+   "fold": "",
+   "settings_chosen": "{\"lr\": 1.0, \"depth\": 20}",
+   "training_seconds": 1419.1,
+   "test_beats": 6087,
+   "mae_ms": 13.051
+  },
+  {
+   "model": "sheikh_ada",
+   "validation": "train Guardian, test EmpkinS",
+   "repeat": 0,
+   "fold": "",
+   "settings_chosen": "{\"lr\": 0.1, \"depth\": 20}",
+   "training_seconds": 2077.5,
+   "test_beats": 4931,
+   "mae_ms": 31.586
+  }
+ ],
+ "n_tasks": 184
+}

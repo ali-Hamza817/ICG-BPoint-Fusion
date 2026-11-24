@@ -110,6 +110,7 @@ tr.sel{background:var(--accent-soft);box-shadow:inset 3px 0 0 var(--accent)}tr.b
 /* summary charts */
 .cgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}@media(max-width:820px){.cgrid{grid-template-columns:minmax(0,1fr)}}
 .cgrid .panel{padding:12px 12px 6px}.cgrid canvas{margin-top:6px}.cgrid .panel h3{margin:0 0 4px;padding:0;border:0}
+.logbox{margin:0;max-height:260px;overflow:auto;background:#0e151a;color:#cfe3d4;font:11.5px/1.45 ui-monospace,Menlo,Consolas,monospace;padding:10px;border-radius:6px;white-space:pre}
 /* lightbox */
 #lb{position:fixed;inset:0;z-index:100;background:rgba(6,12,16,.9);display:grid;grid-template-rows:auto minmax(0,1fr) auto}
 #lb .bar{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 16px;color:#e6edf2}
@@ -137,7 +138,7 @@ tr.sel{background:var(--accent-soft);box-shadow:inset 3px 0 0 var(--accent)}tr.b
 
 <div class="wrap" id="app" hidden>
   <div class="top"><h1>ICG Patient Beats</h1><button class="out" id="out">Sign out</button></div>
-  <nav class="tabs" aria-label="Sections"><a href="#" id="tab1">Task 1 · Patient beats</a><a href="#task2" id="tab2">Task 2 · Dataset and features</a><a href="#visualization" id="tab3">Visualization</a><a href="#lab" id="tab5">Lab</a><a href="#summary" id="tab4">Summary</a></nav>
+  <nav class="tabs" aria-label="Sections"><a href="#" id="tab1">Task 1 · Patient beats</a><a href="#task2" id="tab2">Task 2 · Dataset and features</a><a href="#visualization" id="tab3">Visualization</a><a href="#lab" id="tab5">Lab</a><a href="#results" id="tab6">Final Results</a><a href="#summary" id="tab4">Summary</a></nav>
   <details class="def"><summary>Definitions</summary>
     <p><b>PEP</b> = B − Q (manual annotation, rater 1). <b>RB</b> = B-point time after the R-peak. <b>C</b> = main ICG peak.</p>
     <p>Usable beat: B label present and PEP 20 to 250 ms. Others are flagged. Data: public Abel et al. 2026 (EmpkinS 15, Guardian 24 patients).</p>
@@ -226,8 +227,9 @@ function buildList(){
 function route(){
   var h=location.hash.replace("#",""),id=h&&idOf(h);
   [].forEach.call($("plist").querySelectorAll("button"),function(b){b.setAttribute("aria-current",String(b.dataset.id===id))});
-  var t2=h==="task2",tv=h==="visualization",sm=h==="summary"&&SHOW_SUMMARY,lb=h==="lab";["tab1","tab2","tab3","tab4","tab5"].forEach(function(t){$(t).removeAttribute("aria-current")});$(lb?"tab5":sm?"tab4":tv?"tab3":t2?"tab2":"tab1").setAttribute("aria-current","page");
-  S.viz=false;S.sumOn=false;S.labOn=false;if(VZ.raf){cancelAnimationFrame(VZ.raf);VZ.raf=0}document.querySelector(".layout").classList.toggle("one",tv||sm||lb);document.querySelector("details.def").hidden=tv||sm||lb;
+  var t2=h==="task2",tv=h==="visualization",sm=h==="summary"&&SHOW_SUMMARY,lb=h==="lab",fr=h==="results";["tab1","tab2","tab3","tab4","tab5","tab6"].forEach(function(t){$(t).removeAttribute("aria-current")});$(fr?"tab6":lb?"tab5":sm?"tab4":tv?"tab3":t2?"tab2":"tab1").setAttribute("aria-current","page");
+  S.viz=false;S.sumOn=false;S.labOn=false;if(VZ.raf){cancelAnimationFrame(VZ.raf);VZ.raf=0}document.querySelector(".layout").classList.toggle("one",tv||sm||lb||fr);document.querySelector("details.def").hidden=tv||sm||lb||fr;
+  if(fr){S.cur=null;resultsView();return}
   if(lb){S.cur=null;S.labOn=true;labView();return}
   if(sm){S.cur=null;summaryView();return}
   if(tv){S.cur=null;vizView();return}
@@ -553,6 +555,43 @@ function summaryView(){
       +'<li>'+c.matlab_not+' usable beats ('+f1(100*c.matlab_not/c.usable)+' %) have the B point more than 150 ms after R; Sheikh\'s MATLAB file cannot read them, the Python features include them.</li></ul></div>';
     $("main").innerHTML=h;S.sum=S0;S.sumOn=true;drawSumCharts();
   }).catch(function(){$("main").innerHTML='<p class="note">Could not load the summary.</p>'});
+}
+
+/* ============ Final Results: charts, reproduction proof, logs, screenshots ============ */
+function resultsView(){
+  $("main").innerHTML='<p class="note">Loading…</p>';
+  Promise.all([jsonAsset("data/summary.json"),jsonAsset("data/final.json")]).then(function(R){
+    var S0=R[0],F=R[1],c=S0.counts,pb=S0.published,f2=function(x){return Number(x).toFixed(2)},f1=function(x){return Number(x).toFixed(1)},esc=function(t){return String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;")};
+    var P=S0.pooled,sh=P.filter(function(r){return r.model==="sheikh_ada"})[0],X=S0.cross,e2g=X["EmpkinS->Guardian"],g2e=X["Guardian->EmpkinS"],ea=S0.ea,rp=F.repro,au=F.audit;
+    var tb=function(head,rows){return '<div class="tablewrap" style="max-height:none"><table class="sumtable"><thead><tr>'+head.map(function(h){return '<th'+(h[0]==="#"?' class="n"':'')+'>'+h.replace(/^#/,"")+'</th>'}).join("")+'</tr></thead><tbody>'+rows.map(function(r){return '<tr>'+r.map(function(x,i){return '<td'+(head[i][0]==="#"?' class="n"':'')+'>'+x+'</td>'}).join("")+'</tr>'}).join("")+'</tbody></table></div>'};
+    var KIND={pooled:"5-fold",x_e2g:"EmpkinS → Guardian",x_g2e:"Guardian → EmpkinS"};
+    var h='<div class="doc"><h2>Final results</h2>';
+    h+='<div class="tiles" style="margin:0 0 14px"><div class="tile"><b>'+f2(sh.MAE)+'</b><span>ms · pooled MAE, '+c.usable.toLocaleString("en-US")+' beats, '+c.patients+' patients</span></div>'
+      +'<div class="tile"><b>'+f1(e2g.min)+'–'+f1(e2g.max)+'</b><span>ms · EmpkinS → Guardian</span></div>'
+      +'<div class="tile"><b>'+f1(g2e.min)+'–'+f1(g2e.max)+'</b><span>ms · Guardian → EmpkinS</span></div>'
+      +'<div class="tile"><b>'+f2(ea["10"].single_avg)+'</b><span>ms · averaged over 10 s</span></div></div>';
+    h+='<div class="cgrid"><div class="panel"><h3>Single-beat MAE by model</h3><canvas id="sc1" role="img" aria-label="Pooled MAE per model"></canvas></div>'
+      +'<div class="panel"><h3>Cross-dataset MAE</h3><canvas id="sc2" role="img" aria-label="Cross-dataset MAE"></canvas></div>'
+      +'<div class="panel"><h3>The two datasets differ · ms</h3><canvas id="sc3" role="img" aria-label="B point and PEP by dataset"></canvas></div>'
+      +'<div class="panel"><h3>Single vs averaged beat · 10 s</h3><canvas id="sc4" role="img" aria-label="Single-beat and averaged-beat MAE"></canvas></div></div>';
+    h+='<h3>Against Abel et al. 2026 (published values)</h3>'+tb(["MAE, ms","#Abel","#This work"],[
+      ["Pooled, single beat",f2(pb.pooled)+" ± "+f2(pb.pooled_sd),f2(sh.MAE)+" ± "+f2(sh.SD)],
+      ["EmpkinS → Guardian","RF "+f2(pb.e2g_RF)+" · SVR "+f2(pb.e2g_SVR),f1(e2g.min)+" – "+f1(e2g.max)],
+      ["Guardian → EmpkinS","RF "+f2(pb.g2e_RF)+" · SVR "+f2(pb.g2e_SVR),f1(g2e.min)+" – "+f1(g2e.max)]])
+      +'<p class="sm">Cohorts and folds differ; indicative only. Abel\'s figures are quoted from his paper, not re-run.</p>';
+    h+='<h3>Reproduction</h3>';
+    if(rp){h+=tb(["Run","Settings","#Train beats","#Test beats","#Seconds","#MAE retrained","#MAE stored","#Max prediction difference","Result"],rp.runs.map(function(r){return [KIND[r.kind]+(r.kind==="pooled"?" · fold "+(r.fold+1):""),esc(JSON.stringify(r.config)),r.n_train,r.n_test,Math.round(r.seconds_new),r.mae_new.toFixed(4),r.mae_stored.toFixed(4),r.max_abs_pred_diff,r.identical?"identical":"differs"]}))
+      +'<p class="sm">Each model was retrained from scratch with the recorded settings and seed; '+(rp.all_identical?'all predictions are identical to the stored ones.':'<b>not all predictions match the stored ones.</b>')+' Finished '+esc(rp.finished)+'.</p>'}
+    else h+='<p class="note">Reproduction run not finished yet.</p>';
+    h+='<h3>Independent recomputation</h3>'+tb(["Check","Result"],[
+      ["Pooled MAEs recomputed from raw predictions",au.all_ok?"all match":"mismatch"],["Largest difference",Number(au.largest_pooled_difference).toExponential(1)+" ms"]]);
+    h+='<h3>Logs</h3><div class="cgrid"><div class="panel"><h3>Model training</h3><pre class="logbox">'+esc(F.logs.model_run.join("\n"))+'</pre></div><div class="panel"><h3>Reproduction</h3><pre class="logbox">'+esc(F.logs.reproduction.join("\n"))+'</pre></div></div>'
+      +'<div class="cgrid" style="margin-top:12px;grid-template-columns:minmax(0,1fr)"><div class="panel"><h3>Audit</h3><pre class="logbox" style="max-height:340px">'+esc(F.logs.audit.join("\n"))+'</pre></div></div>';
+    if(F.screens.length)h+='<h3>Screenshots of real runs</h3><div class="cgrid">'+F.screens.map(function(s){return '<div class="panel"><h3>'+esc(s.title)+'</h3><img class="shot" data-asset="evidence/thumbs/'+s.file+'" data-full="evidence/'+s.file+'" data-group="ev" data-title="'+esc(s.title)+'" data-cap="'+esc(s.cap)+'" alt="'+esc(s.title)+'" style="width:100%;cursor:zoom-in;border-radius:4px"></div>'}).join("")+'</div>';
+    h+='<h3>Training settings per fold · AdaBoost</h3>'+tb(["Features","Validation","#Fold","Settings chosen","#Training s","#Test beats","#MAE ms"],F.fold_log.map(function(r){return [r.model==="sheikh_ada"?"465":"465 + 13",esc(r.validation),r.fold===""?"":r.fold+1,esc(r.settings_chosen),r.training_seconds,r.test_beats,r.mae_ms]}));
+    h+='<p class="sm">Full logs, per-fold table and every beat\'s prediction: <b>evidence/</b> in the GitHub repository.</p></div>';
+    $("main").innerHTML=h;S.sum=S0;S.sumOn=true;drawSumCharts();hydrate($("main"));
+  }).catch(function(){$("main").innerHTML='<p class="note">Could not load the results.</p>'});
 }
 /* summary charts: drawn from data/summary.json (theme-aware) */
 function scv(c,h){var dpr=Math.min(2,window.devicePixelRatio||1),w=c.clientWidth||(c.parentElement?c.parentElement.clientWidth-24:0)||520;c.width=Math.round(w*dpr);c.height=Math.round(h*dpr);c.style.height=h+"px";var g=c.getContext("2d");g.setTransform(dpr,0,0,dpr,0,0);g.font="12px "+css("--font-body");return {g:g,w:w,h:h}}

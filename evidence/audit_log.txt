@@ -1,0 +1,20 @@
+pooled fus_ada      recomputed 6.7300 | reported 6.7300 | diff 6.9e-09
+pooled fus_lgbm     recomputed 8.2085 | reported 8.2085 | diff 7.2e-08
+pooled fus_rf       recomputed 7.7433 | reported 7.7433 | diff 4.7e-07
+pooled fus_svr      recomputed 10.1616 | reported 10.1616 | diff 4.3e-07
+pooled sheikh_ada   recomputed 6.7349 | reported 6.7349 | diff 3.0e-08
+pooled sheikh_lgbm  recomputed 8.2775 | reported 8.2775 | diff 1.7e-07
+pooled sheikh_rf    recomputed 7.8235 | reported 7.8235 | diff 1.3e-07
+pooled sheikh_svr   recomputed 10.6278 | reported 10.6278 | diff 3.8e-08
+cross EmpkinS->Guardian  sheikh_ada  stored selected-run MAE 13.051 | all-settings range 13.051-14.077 | inside range: True
+cross EmpkinS->Guardian  fus_ada     stored selected-run MAE 12.461 | all-settings range 12.461-13.878 | inside range: True
+cross Guardian->EmpkinS  sheikh_ada  stored selected-run MAE 31.586 | all-settings range 29.217-34.486 | inside range: True
+cross Guardian->EmpkinS  fus_ada     stored selected-run MAE 28.224 | all-settings range 25.400-33.117 | inside range: True
+Abel paper contains 'pooled MAE 8.13 +- 12.12': True
+Abel paper contains 'inter-rater 8.35 +- 14.78': True
+Abel paper contains 'cross-dataset RF 36.24': True
+Abel paper contains 'cross-dataset SVR 19.39': True
+Abel paper contains 'reverse RF 52.92 +- 39.35': True
+Abel paper contains 'reverse SVR 12.70 +- 6.33': True
+Abel paper contains 'best traditional Drost 17.9 +- 23.0': True
+AUDIT OK: True | largest pooled difference 4.7e-07

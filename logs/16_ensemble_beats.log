@@ -1,8 +1,0 @@
-Traceback (most recent call last):
-  File "/home/administrator/Desktop/ICG-BPoint-Fusion/pipeline/16_ensemble_beats.py", line 105, in <module>
-    df = pd.DataFrame([{k: v for k, v in o.items() if k != "ea"} for o in R]); df["beat_rows"] = df.beat_rows.map(lambda x: ";".join(map(str, x)))
-                                                                                                 ^^^^^^^^^^^^
-  File "/home/administrator/miniconda3/lib/python3.12/site-packages/pandas/core/generic.py", line 6299, in __getattr__
-    return object.__getattribute__(self, name)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-AttributeError: 'DataFrame' object has no attribute 'beat_rows'

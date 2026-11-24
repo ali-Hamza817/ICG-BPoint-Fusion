@@ -1,3 +1,0 @@
-beats 12014 (usable 11903), patients 39; MATLAB-compatible 11614; features (11903, 465)
-his-format route vs window route: max abs deviation over 11614 beats = 0
-flagged for his MATLAB file: RB>150 or <0 among usable: 289

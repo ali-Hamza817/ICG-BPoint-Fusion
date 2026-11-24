@@ -1,0 +1,185 @@
+model,validation,repeat,fold,settings_chosen,training_seconds,test_beats,mae_ms
+abel_rf,"5-fold, patients held out",0,0,"{""mf"": 0.6, ""leaf"": 1}",137.8,2260,7.656
+abel_rf,"5-fold, patients held out",0,1,"{""mf"": 0.6, ""leaf"": 1}",148.5,2161,9.794
+abel_rf,"5-fold, patients held out",0,2,"{""mf"": 0.6, ""leaf"": 1}",122.1,2123,12.434
+abel_rf,"5-fold, patients held out",0,3,"{""mf"": 1.0, ""leaf"": 1}",137.5,2202,9.757
+abel_rf,"5-fold, patients held out",0,4,"{""mf"": 1.0, ""leaf"": 1}",124.9,2272,9.053
+abel_rf,"5-fold, patients held out",1,0,"{""mf"": 0.6, ""leaf"": 1}",119.9,2245,7.219
+abel_rf,"5-fold, patients held out",1,1,"{""mf"": 1.0, ""leaf"": 1}",122.5,2191,9.834
+abel_rf,"5-fold, patients held out",1,2,"{""mf"": 1.0, ""leaf"": 5}",122.1,2260,12.227
+abel_rf,"5-fold, patients held out",1,3,"{""mf"": 1.0, ""leaf"": 1}",126.8,2100,8.86
+abel_rf,"5-fold, patients held out",1,4,"{""mf"": 1.0, ""leaf"": 1}",128.2,2222,11.19
+abel_rf,"5-fold, patients held out",2,0,"{""mf"": 1.0, ""leaf"": 1}",126.7,2216,10.206
+abel_rf,"5-fold, patients held out",2,1,"{""mf"": 0.6, ""leaf"": 1}",116.4,2216,10.298
+abel_rf,"5-fold, patients held out",2,2,"{""mf"": 1.0, ""leaf"": 1}",131.1,2129,10.813
+abel_rf,"5-fold, patients held out",2,3,"{""mf"": 1.0, ""leaf"": 1}",125.8,2219,7.199
+abel_rf,"5-fold, patients held out",2,4,"{""mf"": 1.0, ""leaf"": 1}",123.2,2238,9.982
+abel_rf,"train EmpkinS, test Guardian",0,,"{""mf"": 1.0, ""leaf"": 1}",71.1,6087,23.504
+abel_rf,"train Guardian, test EmpkinS",0,,"{""mf"": 1.0, ""leaf"": 1}",89.4,4931,49.839
+abel_svr,"5-fold, patients held out",0,0,"{""C"": 100}",17.4,2260,9.814
+abel_svr,"5-fold, patients held out",0,1,"{""C"": 100}",20.7,2161,11.454
+abel_svr,"5-fold, patients held out",0,2,"{""C"": 100}",17.8,2123,14.966
+abel_svr,"5-fold, patients held out",0,3,"{""C"": 100}",20.9,2202,11.217
+abel_svr,"5-fold, patients held out",0,4,"{""C"": 100}",17.3,2272,10.66
+abel_svr,"5-fold, patients held out",1,0,"{""C"": 100}",22.0,2245,8.282
+abel_svr,"5-fold, patients held out",1,1,"{""C"": 100}",18.3,2191,10.727
+abel_svr,"5-fold, patients held out",1,2,"{""C"": 100}",22.1,2260,14.561
+abel_svr,"5-fold, patients held out",1,3,"{""C"": 100}",18.1,2100,10.832
+abel_svr,"5-fold, patients held out",1,4,"{""C"": 100}",17.7,2222,12.886
+abel_svr,"5-fold, patients held out",2,0,"{""C"": 100}",21.2,2216,12.67
+abel_svr,"5-fold, patients held out",2,1,"{""C"": 100}",17.9,2216,11.123
+abel_svr,"5-fold, patients held out",2,2,"{""C"": 100}",17.7,2129,14.947
+abel_svr,"5-fold, patients held out",2,3,"{""C"": 100}",17.2,2219,8.3
+abel_svr,"5-fold, patients held out",2,4,"{""C"": 100}",28.3,2238,11.941
+abel_svr,"train EmpkinS, test Guardian",0,,"{""C"": 100}",7.9,6087,27.766
+abel_svr,"train Guardian, test EmpkinS",0,,"{""C"": 100}",10.1,4931,62.887
+fus_ada,"5-fold, patients held out",0,0,"{""lr"": 0.1, ""depth"": 20}",3050.4,2260,5.621
+fus_ada,"5-fold, patients held out",0,1,"{""lr"": 0.1, ""depth"": 20}",3021.8,2161,7.633
+fus_ada,"5-fold, patients held out",0,2,"{""lr"": 0.1, ""depth"": 20}",3086.1,2123,7.356
+fus_ada,"5-fold, patients held out",0,3,"{""lr"": 1.0, ""depth"": 20}",2899.6,2202,6.763
+fus_ada,"5-fold, patients held out",0,4,"{""lr"": 0.1, ""depth"": 20}",3082.0,2272,6.357
+fus_ada,"train EmpkinS, test Guardian",0,,"{""lr"": 1.0, ""depth"": 20}",1467.3,6087,12.461
+fus_ada,"train Guardian, test EmpkinS",0,,"{""lr"": 0.1, ""depth"": 20}",2073.7,4931,28.224
+fus_lgbm,"5-fold, patients held out",0,0,"{""nl"": 31, ""lr"": 0.03}",70.5,2260,6.686
+fus_lgbm,"5-fold, patients held out",0,1,"{""nl"": 31, ""lr"": 0.03}",63.6,2161,8.897
+fus_lgbm,"5-fold, patients held out",0,2,"{""nl"": 31, ""lr"": 0.03}",68.1,2123,9.146
+fus_lgbm,"5-fold, patients held out",0,3,"{""nl"": 31, ""lr"": 0.03}",64.6,2202,7.859
+fus_lgbm,"5-fold, patients held out",0,4,"{""nl"": 31, ""lr"": 0.03}",68.3,2272,8.014
+fus_lgbm,"5-fold, patients held out",1,0,"{""nl"": 31, ""lr"": 0.03}",66.3,2245,6.032
+fus_lgbm,"5-fold, patients held out",1,1,"{""nl"": 31, ""lr"": 0.03}",63.9,2191,8.042
+fus_lgbm,"5-fold, patients held out",1,2,"{""nl"": 31, ""lr"": 0.03}",65.3,2260,9.17
+fus_lgbm,"5-fold, patients held out",1,3,"{""nl"": 31, ""lr"": 0.03}",64.1,2100,7.999
+fus_lgbm,"5-fold, patients held out",1,4,"{""nl"": 31, ""lr"": 0.03}",63.2,2222,9.835
+fus_lgbm,"5-fold, patients held out",2,0,"{""nl"": 31, ""lr"": 0.03}",64.4,2216,8.547
+fus_lgbm,"5-fold, patients held out",2,1,"{""nl"": 31, ""lr"": 0.03}",76.8,2216,8.169
+fus_lgbm,"5-fold, patients held out",2,2,"{""nl"": 31, ""lr"": 0.03}",65.5,2129,9.814
+fus_lgbm,"5-fold, patients held out",2,3,"{""nl"": 31, ""lr"": 0.03}",64.0,2219,6.317
+fus_lgbm,"5-fold, patients held out",2,4,"{""nl"": 31, ""lr"": 0.03}",65.4,2238,8.74
+fus_lgbm,"train EmpkinS, test Guardian",0,,"{""nl"": 31, ""lr"": 0.03}",55.0,6087,15.486
+fus_lgbm,"train Guardian, test EmpkinS",0,,"{""nl"": 31, ""lr"": 0.03}",58.0,4931,30.78
+fus_rf,"5-fold, patients held out",0,0,"{""mf"": 0.3, ""leaf"": 5}",5039.0,2260,6.609
+fus_rf,"5-fold, patients held out",0,1,"{""mf"": 0.6, ""leaf"": 5}",5249.2,2161,8.506
+fus_rf,"5-fold, patients held out",0,2,"{""mf"": 1.0, ""leaf"": 5}",5624.0,2123,8.455
+fus_rf,"5-fold, patients held out",0,3,"{""mf"": 0.3, ""leaf"": 5}",4959.7,2202,7.325
+fus_rf,"5-fold, patients held out",0,4,"{""mf"": 0.6, ""leaf"": 5}",5237.0,2272,7.611
+fus_rf,"5-fold, patients held out",1,0,"{""mf"": 0.6, ""leaf"": 5}",5250.1,2245,5.422
+fus_rf,"5-fold, patients held out",1,1,"{""mf"": 1.0, ""leaf"": 5}",5490.8,2191,7.6
+fus_rf,"5-fold, patients held out",1,2,"{""mf"": 0.6, ""leaf"": 5}",5171.9,2260,8.933
+fus_rf,"5-fold, patients held out",1,3,"{""mf"": 0.3, ""leaf"": 5}",5114.5,2100,7.341
+fus_rf,"5-fold, patients held out",1,4,"{""mf"": 1.0, ""leaf"": 5}",5273.3,2222,9.658
+fus_rf,"5-fold, patients held out",2,0,"{""mf"": 0.3, ""leaf"": 5}",4786.0,2216,8.143
+fus_rf,"5-fold, patients held out",2,1,"{""mf"": 1.0, ""leaf"": 5}",5232.3,2216,7.809
+fus_rf,"5-fold, patients held out",2,2,"{""mf"": 0.3, ""leaf"": 5}",4945.8,2129,8.815
+fus_rf,"5-fold, patients held out",2,3,"{""mf"": 1.0, ""leaf"": 5}",5447.7,2219,5.77
+fus_rf,"5-fold, patients held out",2,4,"{""mf"": 0.3, ""leaf"": 5}",4828.6,2238,8.243
+fus_rf,"train EmpkinS, test Guardian",0,,"{""mf"": 0.3, ""leaf"": 5}",2548.9,6087,16.17
+fus_rf,"train Guardian, test EmpkinS",0,,"{""mf"": 0.6, ""leaf"": 5}",3409.4,4931,36.908
+fus_ridge,"5-fold, patients held out",0,0,"{""alpha"": 1}",1.5,2260,11.001
+fus_ridge,"5-fold, patients held out",0,1,"{""alpha"": 1}",1.5,2161,13.272
+fus_ridge,"5-fold, patients held out",0,2,"{""alpha"": 1}",1.4,2123,14.737
+fus_ridge,"5-fold, patients held out",0,3,"{""alpha"": 1}",1.5,2202,11.379
+fus_ridge,"5-fold, patients held out",0,4,"{""alpha"": 10}",1.6,2272,12.995
+fus_ridge,"5-fold, patients held out",1,0,"{""alpha"": 1}",1.6,2245,9.764
+fus_ridge,"5-fold, patients held out",1,1,"{""alpha"": 1}",1.4,2191,13.141
+fus_ridge,"5-fold, patients held out",1,2,"{""alpha"": 1}",1.4,2260,13.633
+fus_ridge,"5-fold, patients held out",1,3,"{""alpha"": 10}",1.6,2100,12.211
+fus_ridge,"5-fold, patients held out",1,4,"{""alpha"": 10}",1.6,2222,14.523
+fus_ridge,"5-fold, patients held out",2,0,"{""alpha"": 10}",1.5,2216,12.294
+fus_ridge,"5-fold, patients held out",2,1,"{""alpha"": 1}",1.4,2216,14.009
+fus_ridge,"5-fold, patients held out",2,2,"{""alpha"": 1}",1.5,2129,14.614
+fus_ridge,"5-fold, patients held out",2,3,"{""alpha"": 10}",1.6,2219,10.656
+fus_ridge,"5-fold, patients held out",2,4,"{""alpha"": 1}",1.5,2238,13.706
+fus_ridge,"train EmpkinS, test Guardian",0,,"{""alpha"": 10}",0.9,6087,15.66
+fus_ridge,"train Guardian, test EmpkinS",0,,"{""alpha"": 100}",1.1,4931,30.241
+fus_svr,"5-fold, patients held out",0,0,"{""C"": 100}",137.2,2260,8.183
+fus_svr,"5-fold, patients held out",0,1,"{""C"": 100}",143.9,2161,11.242
+fus_svr,"5-fold, patients held out",0,2,"{""C"": 100}",144.5,2123,11.473
+fus_svr,"5-fold, patients held out",0,3,"{""C"": 100}",136.9,2202,9.111
+fus_svr,"5-fold, patients held out",0,4,"{""C"": 100}",171.9,2272,10.351
+fus_svr,"5-fold, patients held out",1,0,"{""C"": 100}",145.9,2245,7.359
+fus_svr,"5-fold, patients held out",1,1,"{""C"": 100}",135.0,2191,10.161
+fus_svr,"5-fold, patients held out",1,2,"{""C"": 100}",145.6,2260,11.449
+fus_svr,"5-fold, patients held out",1,3,"{""C"": 100}",152.4,2100,9.376
+fus_svr,"5-fold, patients held out",1,4,"{""C"": 100}",127.9,2222,12.361
+fus_svr,"5-fold, patients held out",2,0,"{""C"": 100}",146.1,2216,9.847
+fus_svr,"5-fold, patients held out",2,1,"{""C"": 100}",135.3,2216,10.991
+fus_svr,"5-fold, patients held out",2,2,"{""C"": 100}",126.2,2129,12.513
+fus_svr,"5-fold, patients held out",2,3,"{""C"": 100}",151.3,2219,7.307
+fus_svr,"5-fold, patients held out",2,4,"{""C"": 100}",111.0,2238,10.863
+fus_svr,"train EmpkinS, test Guardian",0,,"{""C"": 100}",37.0,6087,16.192
+fus_svr,"train Guardian, test EmpkinS",0,,"{""C"": 100}",61.6,4931,28.572
+sheikh_ada,"5-fold, patients held out",0,0,"{""lr"": 0.1, ""depth"": 20}",3062.6,2260,5.666
+sheikh_ada,"5-fold, patients held out",0,1,"{""lr"": 0.1, ""depth"": 20}",2952.0,2161,7.476
+sheikh_ada,"5-fold, patients held out",0,2,"{""lr"": 0.1, ""depth"": 20}",2998.2,2123,7.336
+sheikh_ada,"5-fold, patients held out",0,3,"{""lr"": 1.0, ""depth"": 20}",2807.4,2202,6.733
+sheikh_ada,"5-fold, patients held out",0,4,"{""lr"": 0.1, ""depth"": 20}",3043.7,2272,6.534
+sheikh_ada,"train EmpkinS, test Guardian",0,,"{""lr"": 1.0, ""depth"": 20}",1419.1,6087,13.051
+sheikh_ada,"train Guardian, test EmpkinS",0,,"{""lr"": 0.1, ""depth"": 20}",2077.5,4931,31.586
+sheikh_lgbm,"5-fold, patients held out",0,0,"{""nl"": 31, ""lr"": 0.03}",65.9,2260,7.017
+sheikh_lgbm,"5-fold, patients held out",0,1,"{""nl"": 31, ""lr"": 0.03}",64.0,2161,9.099
+sheikh_lgbm,"5-fold, patients held out",0,2,"{""nl"": 31, ""lr"": 0.03}",62.9,2123,9.22
+sheikh_lgbm,"5-fold, patients held out",0,3,"{""nl"": 31, ""lr"": 0.03}",66.2,2202,7.759
+sheikh_lgbm,"5-fold, patients held out",0,4,"{""nl"": 31, ""lr"": 0.03}",65.7,2272,8.264
+sheikh_lgbm,"5-fold, patients held out",1,0,"{""nl"": 31, ""lr"": 0.03}",62.9,2245,5.957
+sheikh_lgbm,"5-fold, patients held out",1,1,"{""nl"": 31, ""lr"": 0.03}",71.8,2191,8.014
+sheikh_lgbm,"5-fold, patients held out",1,2,"{""nl"": 31, ""lr"": 0.03}",71.2,2260,9.032
+sheikh_lgbm,"5-fold, patients held out",1,3,"{""nl"": 31, ""lr"": 0.03}",71.0,2100,8.056
+sheikh_lgbm,"5-fold, patients held out",1,4,"{""nl"": 31, ""lr"": 0.03}",62.8,2222,10.07
+sheikh_lgbm,"5-fold, patients held out",2,0,"{""nl"": 31, ""lr"": 0.03}",63.0,2216,8.573
+sheikh_lgbm,"5-fold, patients held out",2,1,"{""nl"": 31, ""lr"": 0.03}",73.7,2216,8.454
+sheikh_lgbm,"5-fold, patients held out",2,2,"{""nl"": 31, ""lr"": 0.03}",67.9,2129,9.971
+sheikh_lgbm,"5-fold, patients held out",2,3,"{""nl"": 31, ""lr"": 0.03}",69.0,2219,6.388
+sheikh_lgbm,"5-fold, patients held out",2,4,"{""nl"": 31, ""lr"": 0.03}",72.8,2238,8.433
+sheikh_lgbm,"train EmpkinS, test Guardian",0,,"{""nl"": 31, ""lr"": 0.03}",64.1,6087,16.123
+sheikh_lgbm,"train Guardian, test EmpkinS",0,,"{""nl"": 31, ""lr"": 0.03}",60.9,4931,33.5
+sheikh_rf,"5-fold, patients held out",0,0,"{""mf"": 0.6, ""leaf"": 5}",5318.6,2260,6.791
+sheikh_rf,"5-fold, patients held out",0,1,"{""mf"": 1.0, ""leaf"": 5}",5383.2,2161,8.658
+sheikh_rf,"5-fold, patients held out",0,2,"{""mf"": 0.6, ""leaf"": 5}",5269.7,2123,8.424
+sheikh_rf,"5-fold, patients held out",0,3,"{""mf"": 0.3, ""leaf"": 1}",4910.0,2202,7.374
+sheikh_rf,"5-fold, patients held out",0,4,"{""mf"": 0.6, ""leaf"": 5}",5092.8,2272,7.784
+sheikh_rf,"5-fold, patients held out",1,0,"{""mf"": 0.3, ""leaf"": 5}",5010.9,2245,5.456
+sheikh_rf,"5-fold, patients held out",1,1,"{""mf"": 1.0, ""leaf"": 5}",5385.0,2191,7.642
+sheikh_rf,"5-fold, patients held out",1,2,"{""mf"": 0.6, ""leaf"": 5}",5191.3,2260,8.709
+sheikh_rf,"5-fold, patients held out",1,3,"{""mf"": 0.3, ""leaf"": 5}",5008.2,2100,7.434
+sheikh_rf,"5-fold, patients held out",1,4,"{""mf"": 0.3, ""leaf"": 5}",4857.8,2222,9.945
+sheikh_rf,"5-fold, patients held out",2,0,"{""mf"": 0.6, ""leaf"": 5}",4935.7,2216,8.196
+sheikh_rf,"5-fold, patients held out",2,1,"{""mf"": 1.0, ""leaf"": 5}",5454.7,2216,7.859
+sheikh_rf,"5-fold, patients held out",2,2,"{""mf"": 0.3, ""leaf"": 5}",5039.3,2129,9.02
+sheikh_rf,"5-fold, patients held out",2,3,"{""mf"": 0.6, ""leaf"": 5}",5217.5,2219,6.026
+sheikh_rf,"5-fold, patients held out",2,4,"{""mf"": 0.3, ""leaf"": 5}",4916.7,2238,8.131
+sheikh_rf,"train EmpkinS, test Guardian",0,,"{""mf"": 0.3, ""leaf"": 5}",2508.2,6087,16.324
+sheikh_rf,"train Guardian, test EmpkinS",0,,"{""mf"": 0.3, ""leaf"": 5}",3330.1,4931,41.525
+sheikh_ridge,"5-fold, patients held out",0,0,"{""alpha"": 1}",1.4,2260,12.332
+sheikh_ridge,"5-fold, patients held out",0,1,"{""alpha"": 1}",1.9,2161,14.468
+sheikh_ridge,"5-fold, patients held out",0,2,"{""alpha"": 1}",1.9,2123,15.54
+sheikh_ridge,"5-fold, patients held out",0,3,"{""alpha"": 1}",1.8,2202,12.076
+sheikh_ridge,"5-fold, patients held out",0,4,"{""alpha"": 10}",1.7,2272,13.882
+sheikh_ridge,"5-fold, patients held out",1,0,"{""alpha"": 10}",1.7,2245,10.501
+sheikh_ridge,"5-fold, patients held out",1,1,"{""alpha"": 1}",1.7,2191,14.693
+sheikh_ridge,"5-fold, patients held out",1,2,"{""alpha"": 10}",1.7,2260,14.688
+sheikh_ridge,"5-fold, patients held out",1,3,"{""alpha"": 10}",1.5,2100,12.692
+sheikh_ridge,"5-fold, patients held out",1,4,"{""alpha"": 1}",1.7,2222,15.672
+sheikh_ridge,"5-fold, patients held out",2,0,"{""alpha"": 10}",1.5,2216,12.602
+sheikh_ridge,"5-fold, patients held out",2,1,"{""alpha"": 10}",1.7,2216,14.98
+sheikh_ridge,"5-fold, patients held out",2,2,"{""alpha"": 10}",1.6,2129,13.909
+sheikh_ridge,"5-fold, patients held out",2,3,"{""alpha"": 1}",1.8,2219,11.962
+sheikh_ridge,"5-fold, patients held out",2,4,"{""alpha"": 1}",1.6,2238,14.455
+sheikh_ridge,"train EmpkinS, test Guardian",0,,"{""alpha"": 10}",1.2,6087,17.51
+sheikh_ridge,"train Guardian, test EmpkinS",0,,"{""alpha"": 100}",1.1,4931,34.309
+sheikh_svr,"5-fold, patients held out",0,0,"{""C"": 100}",161.6,2260,8.597
+sheikh_svr,"5-fold, patients held out",0,1,"{""C"": 100}",111.8,2161,12.015
+sheikh_svr,"5-fold, patients held out",0,2,"{""C"": 100}",115.7,2123,12.405
+sheikh_svr,"5-fold, patients held out",0,3,"{""C"": 100}",193.0,2202,9.422
+sheikh_svr,"5-fold, patients held out",0,4,"{""C"": 100}",161.1,2272,11.05
+sheikh_svr,"5-fold, patients held out",1,0,"{""C"": 100}",161.4,2245,7.509
+sheikh_svr,"5-fold, patients held out",1,1,"{""C"": 100}",172.5,2191,11.094
+sheikh_svr,"5-fold, patients held out",1,2,"{""C"": 100}",140.0,2260,11.892
+sheikh_svr,"5-fold, patients held out",1,3,"{""C"": 100}",154.4,2100,9.721
+sheikh_svr,"5-fold, patients held out",1,4,"{""C"": 100}",110.2,2222,13.159
+sheikh_svr,"5-fold, patients held out",2,0,"{""C"": 100}",111.0,2216,10.28
+sheikh_svr,"5-fold, patients held out",2,1,"{""C"": 100}",155.4,2216,11.884
+sheikh_svr,"5-fold, patients held out",2,2,"{""C"": 100}",155.8,2129,11.619
+sheikh_svr,"5-fold, patients held out",2,3,"{""C"": 100}",141.5,2219,7.648
+sheikh_svr,"5-fold, patients held out",2,4,"{""C"": 100}",139.3,2238,11.257
+sheikh_svr,"train EmpkinS, test Guardian",0,,"{""C"": 100}",39.8,6087,17.072
+sheikh_svr,"train Guardian, test EmpkinS",0,,"{""C"": 100}",63.9,4931,26.886

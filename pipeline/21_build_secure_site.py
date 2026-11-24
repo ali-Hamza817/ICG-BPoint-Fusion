@@ -43,6 +43,8 @@ n = 0
 for f in sorted(DATA.glob("*.json")): put(f"data/{f.name}", f.read_bytes()); n += 1
 for f in sorted(FIG.glob("*.png")): put(f"task2/{f.name}", f.read_bytes()); put(f"task2/thumbs/{f.name}", thumb(f, 900)); n += 2
 for f in sorted((FIG / "strips").glob("*.png")): put(f"task2/strips/{f.name}", f.read_bytes()); put(f"task2/thumbs/strip_{f.name}", thumb(f, 640)); n += 2
+EVS = ROOT / "evidence" / "screens"                               # screenshots of real runs (step 29)
+for f in sorted(EVS.glob("*.png")) if EVS.exists() else []: put(f"evidence/{f.name}", f.read_bytes()); put(f"evidence/thumbs/{f.name}", thumb(f, 900)); n += 2
 LAB = ROOT / "deploy_task1" / "lab"                                    # data for the in-browser Lab (step 26)
 for f in sorted(LAB.glob("*")) if LAB.exists() else []: put(f"lab/{f.name}", f.read_bytes()); n += 1
 

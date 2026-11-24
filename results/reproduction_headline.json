@@ -1,0 +1,125 @@
+{
+ "all_identical": true,
+ "runs": [
+  {
+   "key": "pooled__sheikh_ada__r0f0",
+   "kind": "pooled",
+   "fold": 0,
+   "config": {
+    "lr": 0.1,
+    "depth": 20
+   },
+   "n_train": 8758,
+   "n_test": 2260,
+   "seconds_new": 1490.3,
+   "seconds_original": 3062.6,
+   "mae_new": 5.666067404159136,
+   "mae_stored": 5.666067404159136,
+   "max_abs_pred_diff": 0.0,
+   "identical": true
+  },
+  {
+   "key": "pooled__sheikh_ada__r0f1",
+   "kind": "pooled",
+   "fold": 1,
+   "config": {
+    "lr": 0.1,
+    "depth": 20
+   },
+   "n_train": 8857,
+   "n_test": 2161,
+   "seconds_new": 1464.9,
+   "seconds_original": 2952.0,
+   "mae_new": 7.476297651767162,
+   "mae_stored": 7.476297651767162,
+   "max_abs_pred_diff": 0.0,
+   "identical": true
+  },
+  {
+   "key": "pooled__sheikh_ada__r0f2",
+   "kind": "pooled",
+   "fold": 2,
+   "config": {
+    "lr": 0.1,
+    "depth": 20
+   },
+   "n_train": 8895,
+   "n_test": 2123,
+   "seconds_new": 1497.4,
+   "seconds_original": 2998.2,
+   "mae_new": 7.335688545092931,
+   "mae_stored": 7.335688545092931,
+   "max_abs_pred_diff": 0.0,
+   "identical": true
+  },
+  {
+   "key": "pooled__sheikh_ada__r0f3",
+   "kind": "pooled",
+   "fold": 3,
+   "config": {
+    "lr": 1.0,
+    "depth": 20
+   },
+   "n_train": 8816,
+   "n_test": 2202,
+   "seconds_new": 1316.3,
+   "seconds_original": 2807.4,
+   "mae_new": 6.732571263066018,
+   "mae_stored": 6.732571263066018,
+   "max_abs_pred_diff": 0.0,
+   "identical": true
+  },
+  {
+   "key": "pooled__sheikh_ada__r0f4",
+   "kind": "pooled",
+   "fold": 4,
+   "config": {
+    "lr": 0.1,
+    "depth": 20
+   },
+   "n_train": 8746,
+   "n_test": 2272,
+   "seconds_new": 1475.3,
+   "seconds_original": 3043.7,
+   "mae_new": 6.533813704636158,
+   "mae_stored": 6.533813704636158,
+   "max_abs_pred_diff": 0.0,
+   "identical": true
+  },
+  {
+   "key": "x_e2g__sheikh_ada__r0f0",
+   "kind": "x_e2g",
+   "fold": 0,
+   "config": {
+    "lr": 1.0,
+    "depth": 20
+   },
+   "n_train": 4931,
+   "n_test": 6087,
+   "seconds_new": 685.1,
+   "seconds_original": 1419.1,
+   "mae_new": 13.051025970055028,
+   "mae_stored": 13.051025970055028,
+   "max_abs_pred_diff": 0.0,
+   "identical": true
+  },
+  {
+   "key": "x_g2e__sheikh_ada__r0f0",
+   "kind": "x_g2e",
+   "fold": 0,
+   "config": {
+    "lr": 0.1,
+    "depth": 20
+   },
+   "n_train": 6087,
+   "n_test": 4931,
+   "seconds_new": 1005.2,
+   "seconds_original": 2077.5,
+   "mae_new": 31.585789301133484,
+   "mae_stored": 31.585789301133484,
+   "max_abs_pred_diff": 0.0,
+   "identical": true
+  }
+ ],
+ "finished": "2026-11-24 08:09:16"
+}

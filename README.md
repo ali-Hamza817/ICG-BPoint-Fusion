@@ -59,46 +59,54 @@ The raw data are not stored in the repository; `download_datasets.sh` fetches th
 - **Faithful re-implementations.** Abel's 12 B-point algorithms run unmodified (`external/` shim, fetched on demand); Sheikh's `feat_vec_465.m` ported line by line to Python and validated against his demo output (0.0 deviation on his two demo beats).
 - **Model comparison.** Abel's design vs Sheikh's AdaBoost vs a fusion, subject-wise nested cross-validation and a cross-dataset test. → [`reports/`](reports)
 - **Ensemble-averaging analysis.** Sheikh's three-stage averaging algorithm ported and applied to Abel's beats, to compare single-beat and averaged-beat evaluation.
-- **Website** with a login gate (section 8): patient pages, Task 2 page, and a **Visualization** tab (animated heartbeat monitor, ridgeline of beats, constellation of all 39 patients) a **Lab** tab for plug-and-play exploration and experiments (below), and a concise Summary tab that is prepared in the code and currently hidden.
+- **Website** with a login gate (section 8): patient pages, Task 2 page, and a **Visualization** tab (animated heartbeat monitor, ridgeline of beats, constellation of all 39 patients) a **Lab** tab for plug-and-play exploration and a **Final Results** tab (charts, reproduction proof, logs, screenshots) and experiments (below), and a concise Summary tab that is prepared in the code and currently hidden.
 
 ## 5. Repository layout
 ```
-pipeline/            numbered analysis steps (01 ... 22), shared helpers in common.py
-dataset_beats/       Task 1: all beats of all patients (CSV + waveform files)
-dataset_task2/       Task 2: ECG+ICG+B/PEP/C dataset, MATLAB-format files, 465-feature matrix
-figures/             EDA, per-patient, Task 2 and result figures
-reports/             written reports (EDA, feature comparison, results)
-results/             tables, model outputs, validation files
-site_src/            website source (login + viewer)
-site_secure/         encrypted website build (what is published)
-docs/                earlier unencrypted viewer (no longer served)
-run_*.sh             resumable end-to-end runners
-2022_Sheikh_*.pdf, 2026_Abel_*.pdf   the two reference papers
+pipeline/       numbered analysis steps (01 ... 29) and shared helpers (common.py)
+evidence/       proof the results are real: training logs, per-fold settings, every beat's prediction, screenshots
+dataset_beats/  all beats of all patients (CSV + waveform files)
+dataset_task2/  ECG + ICG + B/PEP/C per beat in the input format of feat_vec_465.m, plus the 465-feature matrix
+deploy_task1/   viewer data used to build the website
+figures/        EDA, per-patient, dataset and result figures
+reports/        written reports
+results/        tables, stored model predictions (results/tasks_v4), audit
+site_src/       website source (login, viewer, Lab, Final Results)
+run_pipeline.sh end-to-end runner
 ```
-`data/` (raw datasets), `external/` (third-party code clones) and `private/` (login) are git-ignored.
+`data/` (raw datasets), `external/` (third-party code), `private/` (login) are git-ignored; the built website lives on the `gh-pages` branch.
 
 ## 6. Pipeline steps
 | Step | Script | Purpose |
 |---|---|---|
 | 0 | `download_datasets.sh` | Download and verify the two OSF datasets |
-| 1 | `01_build_beats.py` | Beat table + 1 kHz ECG/ICG windows (R−100 to R+600 ms) |
-| 2, 6 | `02_eda.py`, `06_eda_report.py` | Exploratory analysis, 14 figures |
-| 3, 3b, **3c** | `03_*`, `03c_sheikh_features_v2.py` | Sheikh features; **3c is the line-by-line port of `feat_vec_465.m`** |
-| 4, 5, 7 | `04_models.py` ... | First model round (superseded) |
-| 8–10 | `08`–`10` | Early fair-evaluation attempt (paused, superseded by 13–15) |
-| 11 | `11_beat_table.py` | **Task 1** beat table and per-patient figures |
+| 1 | `01_build_beats.py` | Beat table + 1 kHz ECG/ICG windows (R-100 to R+600 ms) |
+| 2, 6 | `02_eda.py`, `06_eda_report.py` | Exploratory analysis |
+| 3, 3b, 3c | `03_*`, `03c_sheikh_features_v2.py` | Sheikh features; 3c is the line-by-line port of `feat_vec_465.m` |
+| 4 | `04_models.py` | Model helpers (imported by 14) |
+| 11 | `11_beat_table.py` | Beat table and per-patient figures |
 | 12 | `12_validate_sheikh_port.py` | Validate the port against Sheikh's demo output |
-| 13 | `13_abel_real_features.py` | Abel's real 12 algorithms → 13 features |
-| 14, 15 | `14_models_v3.py`, `15_report_v3.py` | Sheikh features vs fusion with Abel's features; AdaBoost, RF, LightGBM, SVR; tables |
-| 16, 17 | `16_ensemble_beats.py`, `17_ea_vs_single.py` | Ensemble-averaged beats and comparison |
+| 13 | `13_abel_real_features.py` | Abel's 12 algorithms, run unmodified, giving his 13 features |
+| 14, 15 | `14_models_v3.py`, `15_report_v3.py` | AdaBoost, RF, LightGBM, SVR on 465 and 465+13 features; tables |
+| 16, 17 | `16_ensemble_beats.py`, `17_ea_vs_single.py` | Ensemble-averaged beats vs single beats |
 | 18 | `18_export_patient_viewer.py` | Data export for the website |
-| 19, 20 | `19_task2_dataset.py`, `20_task2_plots.py` | **Task 2** dataset, features, plots |
+| 19, 20 | `19_task2_dataset.py`, `20_task2_plots.py` | Dataset in `feat_vec_465.m` format, plots |
 | 21 | `21_build_secure_site.py` | Build the encrypted website |
 | 22 | `22_artefact_flags.py` | Flag and remove artefact-labelled points |
-| 23 | `23_ada_cross_all_configs.py` | Cross-dataset AdaBoost, all 4 settings (sensitivity) |
-| 24 | `24_final_report.py` | Final results vs Abel's published numbers, `reports/RESULTS.md` |
-| 25 | `25_summary_data.py` | Numbers for the website's Summary tab (generated from the result files) |
-| 26 | `26_lab_data.py` | Data for the website's Lab (waveforms, morphology features, Abel's estimates; checks that features 1–450 rebuild bit-identically) |
+| 23 | `23_ada_cross_all_configs.py` | Cross-dataset AdaBoost, all 4 settings |
+| 24 | `24_final_report.py` | Final results vs Abel's published numbers |
+| 25, 26 | `25_summary_data.py`, `26_lab_data.py` | Data for the website (generated from result files) |
+| 27 | `27_reproduce_headline.py` | Retrain the headline AdaBoost models from scratch and compare with the stored predictions |
+| 28 | `28_audit.py` | Recompute every reported MAE from the raw predictions; check the quoted figures of Abel's paper |
+| 29 | `29_evidence.py` | Build `evidence/` and the data of the Final Results tab |
+
+## Evidence
+Everything reported here can be checked:
+- `evidence/predictions.csv.gz`: true B point and the prediction of every final model for every beat. The MAE of any row is one line of pandas.
+- `evidence/fold_log.csv`: all 184 final training tasks with the settings chosen by inner cross-validation, training time and test MAE.
+- `evidence/model_run_log.txt`, `evidence/reproduction_log.txt`, `evidence/audit_log.txt`: logs of the runs.
+- `evidence/screens/`: screenshots of real runs of the in-browser Lab.
+- The same material is shown in the website's **Final Results** tab.
 
 ## 7. Key findings
 All numbers are computed from saved predictions on the **clean beats** (11,694 usable; 11,018 evaluated, i.e. beats with at least one rule estimate). Abel's figures are his **published** results, used as the reference; his cohort (11,239 cycles) and folds differ from ours, so differences are indicative, not like-for-like. Full tables: [`reports/RESULTS.md`](reports/RESULTS.md).
@@ -159,9 +167,10 @@ python 13_abel_real_features.py              # needs external/biopsykit_shim (se
 TASKS_TAG=v4 python 14_models_v3.py 40       # resumable; heavy (AdaBoost ~2 s per tree)
 python 19_task2_dataset.py && python 20_task2_plots.py
 python 23_ada_cross_all_configs.py && python 24_final_report.py   # final results vs Abel's published numbers
-python 18_export_patient_viewer.py && python 21_build_secure_site.py --id <login>   # new random password -> private/credentials.txt
+python 28_audit.py && python 27_reproduce_headline.py             # verify
+python 29_evidence.py && python 18_export_patient_viewer.py && python 21_build_secure_site.py --id <login>   # new random password -> private/credentials.txt
 ```
-Long steps run detached and resume where they stopped (`run_v4.sh`).
+`./run_pipeline.sh` runs the chain end to end; long steps resume where they stopped.
 
 ## 10. Limitations
 - Abel's published figures are the reference; his cohort and folds differ from ours, so comparisons are indicative. AdaBoost was run once with a small tuning grid inside Sheikh's published range, and cross-dataset results depend on the model setting (hence the 4-setting ranges).
